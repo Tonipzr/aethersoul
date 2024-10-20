@@ -1,0 +1,38 @@
+name: Bug Report
+description: Create an Issue that details broken or unexpected behaviour
+labels: ["type:bug"]
+assignees: "Tonipzr"
+body:
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Describe the issue in detail.
+      placeholder: |
+        1. In environment with config...
+        2. Do...
+        3. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Copy and paste any relevant log output. This will be automatically formatted into code.
+      render: Shell
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Result
+      description: Describe the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: howto
+    attributes:
+      label: How to Reproduce
+      description: Short guide how to reproduce the issue.
+    validations:
+      required: true
