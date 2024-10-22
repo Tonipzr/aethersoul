@@ -8,7 +8,6 @@ partial struct EscarlinaAnimationSystem : ISystem
 {
     private EntityManager _entityManager;
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         if (!SystemAPI.ManagedAPI.TryGetSingleton(out AnimationVisualsPrefabs animationVisualsPrefabs))
