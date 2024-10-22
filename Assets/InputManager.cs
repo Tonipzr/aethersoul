@@ -38,7 +38,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Dash"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""37cc8e17-52dc-4029-9867-d4a1df17a27e"",
                     ""expectedControlType"": """",
                     ""processors"": """",

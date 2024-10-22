@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -32,16 +33,35 @@ partial struct MovementSystem : ISystem
         Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
         InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
 
-        // Update the player's position
-        LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
-        playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime, 0);
+        if (inputComponent.pressingSpace)
+        {
+            // Update the player's position
+            LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
+            playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime * 100, 0);
 
-        _entityManager.SetComponentData(playerEntity, playerTransform);
+            _entityManager.SetComponentData(playerEntity, playerTransform);
 
-        // Update the player's position component
-        PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
-        positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+            // Update the player's position component
+            PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
+            positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
 
-        _entityManager.SetComponentData(playerEntity, positionComponent);
+            _entityManager.SetComponentData(playerEntity, positionComponent);
+        }
+        else
+        {
+            // Update the player's position
+            LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
+            playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime, 0);
+
+            UnityEngine.Debug.Log(inputComponent.pressingSpace);
+
+            _entityManager.SetComponentData(playerEntity, playerTransform);
+
+            // Update the player's position component
+            PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
+            positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+
+            _entityManager.SetComponentData(playerEntity, positionComponent);
+        }
     }
 }

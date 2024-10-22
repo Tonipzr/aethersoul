@@ -19,7 +19,7 @@ public partial class InputSystem : SystemBase
     protected override void OnUpdate()
     {
         Vector2 movementVector = controls.FindAction("Movement").ReadValue<Vector2>();
-        bool pressingSpace = controls.FindAction("Dash").ReadValue<float>() > 0;
+        bool pressingSpace = controls.FindAction("Dash").triggered;
         bool pressingInteract = controls.FindAction("Interact").triggered;
 
         SystemAPI.SetSingleton(new InputComponent
