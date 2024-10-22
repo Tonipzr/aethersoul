@@ -53,8 +53,6 @@ partial struct MovementSystem : ISystem
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
             playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime, 0);
 
-            UnityEngine.Debug.Log(inputComponent.pressingSpace);
-
             _entityManager.SetComponentData(playerEntity, playerTransform);
 
             // Update the player's position component
