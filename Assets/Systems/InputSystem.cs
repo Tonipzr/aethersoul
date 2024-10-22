@@ -1,5 +1,4 @@
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 
 public partial class InputSystem : SystemBase
@@ -21,11 +20,13 @@ public partial class InputSystem : SystemBase
     {
         Vector2 movementVector = controls.FindAction("Movement").ReadValue<Vector2>();
         bool pressingSpace = controls.FindAction("Dash").ReadValue<float>() > 0;
+        bool pressingInteract = controls.FindAction("Interact").triggered;
 
         SystemAPI.SetSingleton(new InputComponent
         {
             movement = movementVector,
-            pressingSpace = pressingSpace
+            pressingSpace = pressingSpace,
+            pressingInteract = pressingInteract
         });
     }
 }

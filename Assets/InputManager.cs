@@ -44,6 +44,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c3bd690-fb2d-4357-a2cc-610f2c968f15"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af7b202c-a920-49ad-96b5-5fc1e5a0aa92"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,6 +197,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayInputMap = asset.FindActionMap("PlayInputMap", throwIfNotFound: true);
         m_PlayInputMap_Movement = m_PlayInputMap.FindAction("Movement", throwIfNotFound: true);
         m_PlayInputMap_Dash = m_PlayInputMap.FindAction("Dash", throwIfNotFound: true);
+        m_PlayInputMap_Interact = m_PlayInputMap.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -245,12 +266,14 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private List<IPlayInputMapActions> m_PlayInputMapActionsCallbackInterfaces = new List<IPlayInputMapActions>();
     private readonly InputAction m_PlayInputMap_Movement;
     private readonly InputAction m_PlayInputMap_Dash;
+    private readonly InputAction m_PlayInputMap_Interact;
     public struct PlayInputMapActions
     {
         private @InputManager m_Wrapper;
         public PlayInputMapActions(@InputManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayInputMap_Movement;
         public InputAction @Dash => m_Wrapper.m_PlayInputMap_Dash;
+        public InputAction @Interact => m_Wrapper.m_PlayInputMap_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +289,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayInputMapActions instance)
@@ -276,6 +302,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayInputMapActions instance)
@@ -297,5 +326,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

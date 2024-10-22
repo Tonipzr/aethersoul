@@ -5,4 +5,6 @@ public struct InputComponent : IComponentData
 {
     public float2 movement;
     public bool pressingSpace;
+
+    public bool pressingInteract;
 }
