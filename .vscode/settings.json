@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "aethersoul.sln"
+    "dotnet.defaultSolution": "aethersoul.sln",
+    "editor.formatOnSave": true,
 }
