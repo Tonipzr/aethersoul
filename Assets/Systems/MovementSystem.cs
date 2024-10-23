@@ -27,6 +27,7 @@ partial struct MovementSystem : ISystem
         }
     }
 
+    [BurstCompile]
     private void MovePlayer(float velocity, ref SystemState state)
     {
         Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
