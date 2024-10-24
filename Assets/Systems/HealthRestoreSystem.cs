@@ -7,6 +7,7 @@ partial struct HealthRestoreSystem : ISystem
 {
     private EntityManager _entityManager;
 
+    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
 
@@ -40,6 +41,7 @@ partial struct HealthRestoreSystem : ISystem
         entityCommandBuffer.Dispose();
     }
 
+    [BurstCompile]
     public void OnDestroy(ref SystemState state)
     {
 

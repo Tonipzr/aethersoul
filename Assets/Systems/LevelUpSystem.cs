@@ -1,9 +1,8 @@
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 
-partial struct HealthSystem : ISystem
+partial struct LevelUpSystem : ISystem
 {
     private EntityManager _entityManager;
 
@@ -20,13 +19,13 @@ partial struct HealthSystem : ISystem
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>().WithEntityAccess())
+        foreach (var (level, experience, levelUp, entity) in SystemAPI.Query<RefRW<LevelComponent>, RefRW<ExperienceComponent>, RefRO<LevelUpComponent>>().WithEntityAccess())
         {
-            if (health.ValueRO.CurrentHealth <= 0)
-            {
-                entityCommandBuffer.AddComponent(entity, new DeathComponent { });
-                continue;
-            }
+            entityCommandBuffer.RemoveComponent<LevelUpComponent>(entity);
+
+            experience.ValueRW.Experience = levelUp.ValueRO.OverflowExperience;
+            level.ValueRW.Level++;
+            experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level);
         }
 
         entityCommandBuffer.Playback(_entityManager);
