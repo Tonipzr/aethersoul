@@ -53,6 +53,42 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Spell_Slot_1"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9af80a9-1a4d-4232-b0bd-2891b11c49a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell_Slot_2"",
+                    ""type"": ""Button"",
+                    ""id"": ""84d48669-7554-4be4-83cc-09e1ee93fff1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell_Slot_3"",
+                    ""type"": ""Button"",
+                    ""id"": ""4be861f1-402e-4bc1-8843-0aac6dbf7912"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spelll_Slot_4"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa6fe8a4-3910-4003-b8c4-92a44991f2dc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -187,6 +223,50 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dac1199-86fd-43f9-92bf-274e73bca45c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_Slot_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""219c52b5-5e70-46d4-8249-fd7934772c44"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_Slot_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cc97ae6-6f66-4db0-b81f-286ab92e3878"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell_Slot_3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2d03b9b-8f99-45fe-b55d-216912ed0bd8"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spelll_Slot_4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +278,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayInputMap_Movement = m_PlayInputMap.FindAction("Movement", throwIfNotFound: true);
         m_PlayInputMap_Dash = m_PlayInputMap.FindAction("Dash", throwIfNotFound: true);
         m_PlayInputMap_Interact = m_PlayInputMap.FindAction("Interact", throwIfNotFound: true);
+        m_PlayInputMap_Spell_Slot_1 = m_PlayInputMap.FindAction("Spell_Slot_1", throwIfNotFound: true);
+        m_PlayInputMap_Spell_Slot_2 = m_PlayInputMap.FindAction("Spell_Slot_2", throwIfNotFound: true);
+        m_PlayInputMap_Spell_Slot_3 = m_PlayInputMap.FindAction("Spell_Slot_3", throwIfNotFound: true);
+        m_PlayInputMap_Spelll_Slot_4 = m_PlayInputMap.FindAction("Spelll_Slot_4", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -267,6 +351,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayInputMap_Movement;
     private readonly InputAction m_PlayInputMap_Dash;
     private readonly InputAction m_PlayInputMap_Interact;
+    private readonly InputAction m_PlayInputMap_Spell_Slot_1;
+    private readonly InputAction m_PlayInputMap_Spell_Slot_2;
+    private readonly InputAction m_PlayInputMap_Spell_Slot_3;
+    private readonly InputAction m_PlayInputMap_Spelll_Slot_4;
     public struct PlayInputMapActions
     {
         private @InputManager m_Wrapper;
@@ -274,6 +362,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_PlayInputMap_Movement;
         public InputAction @Dash => m_Wrapper.m_PlayInputMap_Dash;
         public InputAction @Interact => m_Wrapper.m_PlayInputMap_Interact;
+        public InputAction @Spell_Slot_1 => m_Wrapper.m_PlayInputMap_Spell_Slot_1;
+        public InputAction @Spell_Slot_2 => m_Wrapper.m_PlayInputMap_Spell_Slot_2;
+        public InputAction @Spell_Slot_3 => m_Wrapper.m_PlayInputMap_Spell_Slot_3;
+        public InputAction @Spelll_Slot_4 => m_Wrapper.m_PlayInputMap_Spelll_Slot_4;
         public InputActionMap Get() { return m_Wrapper.m_PlayInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -292,6 +384,18 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Spell_Slot_1.started += instance.OnSpell_Slot_1;
+            @Spell_Slot_1.performed += instance.OnSpell_Slot_1;
+            @Spell_Slot_1.canceled += instance.OnSpell_Slot_1;
+            @Spell_Slot_2.started += instance.OnSpell_Slot_2;
+            @Spell_Slot_2.performed += instance.OnSpell_Slot_2;
+            @Spell_Slot_2.canceled += instance.OnSpell_Slot_2;
+            @Spell_Slot_3.started += instance.OnSpell_Slot_3;
+            @Spell_Slot_3.performed += instance.OnSpell_Slot_3;
+            @Spell_Slot_3.canceled += instance.OnSpell_Slot_3;
+            @Spelll_Slot_4.started += instance.OnSpelll_Slot_4;
+            @Spelll_Slot_4.performed += instance.OnSpelll_Slot_4;
+            @Spelll_Slot_4.canceled += instance.OnSpelll_Slot_4;
         }
 
         private void UnregisterCallbacks(IPlayInputMapActions instance)
@@ -305,6 +409,18 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Spell_Slot_1.started -= instance.OnSpell_Slot_1;
+            @Spell_Slot_1.performed -= instance.OnSpell_Slot_1;
+            @Spell_Slot_1.canceled -= instance.OnSpell_Slot_1;
+            @Spell_Slot_2.started -= instance.OnSpell_Slot_2;
+            @Spell_Slot_2.performed -= instance.OnSpell_Slot_2;
+            @Spell_Slot_2.canceled -= instance.OnSpell_Slot_2;
+            @Spell_Slot_3.started -= instance.OnSpell_Slot_3;
+            @Spell_Slot_3.performed -= instance.OnSpell_Slot_3;
+            @Spell_Slot_3.canceled -= instance.OnSpell_Slot_3;
+            @Spelll_Slot_4.started -= instance.OnSpelll_Slot_4;
+            @Spelll_Slot_4.performed -= instance.OnSpelll_Slot_4;
+            @Spelll_Slot_4.canceled -= instance.OnSpelll_Slot_4;
         }
 
         public void RemoveCallbacks(IPlayInputMapActions instance)
@@ -327,5 +443,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSpell_Slot_1(InputAction.CallbackContext context);
+        void OnSpell_Slot_2(InputAction.CallbackContext context);
+        void OnSpell_Slot_3(InputAction.CallbackContext context);
+        void OnSpelll_Slot_4(InputAction.CallbackContext context);
     }
 }

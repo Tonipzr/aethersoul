@@ -31,6 +31,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Spell_Slot_1",
+                    "type": "Button",
+                    "id": "d9af80a9-1a4d-4232-b0bd-2891b11c49a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell_Slot_2",
+                    "type": "Button",
+                    "id": "84d48669-7554-4be4-83cc-09e1ee93fff1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell_Slot_3",
+                    "type": "Button",
+                    "id": "4be861f1-402e-4bc1-8843-0aac6dbf7912",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spelll_Slot_4",
+                    "type": "Button",
+                    "id": "aa6fe8a4-3910-4003-b8c4-92a44991f2dc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -163,6 +199,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4dac1199-86fd-43f9-92bf-274e73bca45c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell_Slot_1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "219c52b5-5e70-46d4-8249-fd7934772c44",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell_Slot_2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6cc97ae6-6f66-4db0-b81f-286ab92e3878",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell_Slot_3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2d03b9b-8f99-45fe-b55d-216912ed0bd8",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spelll_Slot_4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
