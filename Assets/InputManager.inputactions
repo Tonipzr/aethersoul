@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Spelll_Slot_4",
+                    "name": "Spell_Slot_4",
                     "type": "Button",
                     "id": "aa6fe8a4-3910-4003-b8c4-92a44991f2dc",
                     "expectedControlType": "",
@@ -242,7 +242,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Spelll_Slot_4",
+                    "action": "Spell_Slot_4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -82,7 +82,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Spelll_Slot_4"",
+                    ""name"": ""Spell_Slot_4"",
                     ""type"": ""Button"",
                     ""id"": ""aa6fe8a4-3910-4003-b8c4-92a44991f2dc"",
                     ""expectedControlType"": """",
@@ -264,7 +264,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spelll_Slot_4"",
+                    ""action"": ""Spell_Slot_4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -281,7 +281,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayInputMap_Spell_Slot_1 = m_PlayInputMap.FindAction("Spell_Slot_1", throwIfNotFound: true);
         m_PlayInputMap_Spell_Slot_2 = m_PlayInputMap.FindAction("Spell_Slot_2", throwIfNotFound: true);
         m_PlayInputMap_Spell_Slot_3 = m_PlayInputMap.FindAction("Spell_Slot_3", throwIfNotFound: true);
-        m_PlayInputMap_Spelll_Slot_4 = m_PlayInputMap.FindAction("Spelll_Slot_4", throwIfNotFound: true);
+        m_PlayInputMap_Spell_Slot_4 = m_PlayInputMap.FindAction("Spell_Slot_4", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -354,7 +354,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayInputMap_Spell_Slot_1;
     private readonly InputAction m_PlayInputMap_Spell_Slot_2;
     private readonly InputAction m_PlayInputMap_Spell_Slot_3;
-    private readonly InputAction m_PlayInputMap_Spelll_Slot_4;
+    private readonly InputAction m_PlayInputMap_Spell_Slot_4;
     public struct PlayInputMapActions
     {
         private @InputManager m_Wrapper;
@@ -365,7 +365,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Spell_Slot_1 => m_Wrapper.m_PlayInputMap_Spell_Slot_1;
         public InputAction @Spell_Slot_2 => m_Wrapper.m_PlayInputMap_Spell_Slot_2;
         public InputAction @Spell_Slot_3 => m_Wrapper.m_PlayInputMap_Spell_Slot_3;
-        public InputAction @Spelll_Slot_4 => m_Wrapper.m_PlayInputMap_Spelll_Slot_4;
+        public InputAction @Spell_Slot_4 => m_Wrapper.m_PlayInputMap_Spell_Slot_4;
         public InputActionMap Get() { return m_Wrapper.m_PlayInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -393,9 +393,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Spell_Slot_3.started += instance.OnSpell_Slot_3;
             @Spell_Slot_3.performed += instance.OnSpell_Slot_3;
             @Spell_Slot_3.canceled += instance.OnSpell_Slot_3;
-            @Spelll_Slot_4.started += instance.OnSpelll_Slot_4;
-            @Spelll_Slot_4.performed += instance.OnSpelll_Slot_4;
-            @Spelll_Slot_4.canceled += instance.OnSpelll_Slot_4;
+            @Spell_Slot_4.started += instance.OnSpell_Slot_4;
+            @Spell_Slot_4.performed += instance.OnSpell_Slot_4;
+            @Spell_Slot_4.canceled += instance.OnSpell_Slot_4;
         }
 
         private void UnregisterCallbacks(IPlayInputMapActions instance)
@@ -418,9 +418,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Spell_Slot_3.started -= instance.OnSpell_Slot_3;
             @Spell_Slot_3.performed -= instance.OnSpell_Slot_3;
             @Spell_Slot_3.canceled -= instance.OnSpell_Slot_3;
-            @Spelll_Slot_4.started -= instance.OnSpelll_Slot_4;
-            @Spelll_Slot_4.performed -= instance.OnSpelll_Slot_4;
-            @Spelll_Slot_4.canceled -= instance.OnSpelll_Slot_4;
+            @Spell_Slot_4.started -= instance.OnSpell_Slot_4;
+            @Spell_Slot_4.performed -= instance.OnSpell_Slot_4;
+            @Spell_Slot_4.canceled -= instance.OnSpell_Slot_4;
         }
 
         public void RemoveCallbacks(IPlayInputMapActions instance)
@@ -446,6 +446,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnSpell_Slot_1(InputAction.CallbackContext context);
         void OnSpell_Slot_2(InputAction.CallbackContext context);
         void OnSpell_Slot_3(InputAction.CallbackContext context);
-        void OnSpelll_Slot_4(InputAction.CallbackContext context);
+        void OnSpell_Slot_4(InputAction.CallbackContext context);
     }
 }
