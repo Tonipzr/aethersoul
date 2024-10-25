@@ -33,11 +33,18 @@ partial class UISystem : SystemBase
             entityCommandBuffer.RemoveComponent<HealthUpdatedComponent>(entity);
         }
 
-        foreach (var (health, _, entity) in SystemAPI.Query<RefRO<ExperienceUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
+        foreach (var (experience, _, entity) in SystemAPI.Query<RefRO<ExperienceUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
         {
-            UIManager.Instance.UpdateMana(health.ValueRO.CurrentExperience, health.ValueRO.MaxExperience);
+            UIManager.Instance.UpdateMana(experience.ValueRO.CurrentExperience, experience.ValueRO.MaxExperience);
 
             entityCommandBuffer.RemoveComponent<ExperienceUpdatedComponent>(entity);
+        }
+
+        foreach (var (mana, _, entity) in SystemAPI.Query<RefRO<ManaUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
+        {
+            UIManager.Instance.UpdateMana(mana.ValueRO.CurrentMana, mana.ValueRO.MaxMana);
+
+            entityCommandBuffer.RemoveComponent<ManaUpdatedComponent>(entity);
         }
 
         entityCommandBuffer.Playback(_entityManager);
