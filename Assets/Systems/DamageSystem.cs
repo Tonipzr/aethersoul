@@ -27,8 +27,6 @@ partial struct DamageSystem : ISystem
             {
                 CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage.ValueRO.DamageAmount),
                 MaxHealth = health.ValueRO.MaxHealth,
-                BeforeHealth = health.ValueRO.CurrentHealth,
-                BeforeMaxHealth = health.ValueRO.MaxHealth
             });
 
             health.ValueRW.CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage.ValueRO.DamageAmount);

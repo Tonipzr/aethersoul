@@ -1,0 +1,24 @@
+{
+    "Spells": [
+        {
+            "SpellID": 1,
+            "Name": "Fireball",
+            "SpellType": "SkillShot",
+            "Target": "Targeted",
+            "Damage": 50,
+            "Range": "Ten",
+            "Cost": 10,
+            "Cooldown": 5
+        },
+        {
+            "SpellID": 2,
+            "Name": "Frost Nova",
+            "SpellType": "AreaOfEffect",
+            "Target": "Self",
+            "Damage": 25,
+            "Range": "Five",
+            "Cost": 10,
+            "Cooldown": 5
+        }
+    ]
+}
