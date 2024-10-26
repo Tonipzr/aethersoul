@@ -89,6 +89,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleSpellBook"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0f3a02e-3c73-40a4-87e4-598f21e537a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -267,6 +276,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Spell_Slot_4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66e81bdf-060f-4de3-8814-0a8fab43aa10"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleSpellBook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -282,6 +302,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayInputMap_Spell_Slot_2 = m_PlayInputMap.FindAction("Spell_Slot_2", throwIfNotFound: true);
         m_PlayInputMap_Spell_Slot_3 = m_PlayInputMap.FindAction("Spell_Slot_3", throwIfNotFound: true);
         m_PlayInputMap_Spell_Slot_4 = m_PlayInputMap.FindAction("Spell_Slot_4", throwIfNotFound: true);
+        m_PlayInputMap_ToggleSpellBook = m_PlayInputMap.FindAction("ToggleSpellBook", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -355,6 +376,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayInputMap_Spell_Slot_2;
     private readonly InputAction m_PlayInputMap_Spell_Slot_3;
     private readonly InputAction m_PlayInputMap_Spell_Slot_4;
+    private readonly InputAction m_PlayInputMap_ToggleSpellBook;
     public struct PlayInputMapActions
     {
         private @InputManager m_Wrapper;
@@ -366,6 +388,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Spell_Slot_2 => m_Wrapper.m_PlayInputMap_Spell_Slot_2;
         public InputAction @Spell_Slot_3 => m_Wrapper.m_PlayInputMap_Spell_Slot_3;
         public InputAction @Spell_Slot_4 => m_Wrapper.m_PlayInputMap_Spell_Slot_4;
+        public InputAction @ToggleSpellBook => m_Wrapper.m_PlayInputMap_ToggleSpellBook;
         public InputActionMap Get() { return m_Wrapper.m_PlayInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -396,6 +419,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Spell_Slot_4.started += instance.OnSpell_Slot_4;
             @Spell_Slot_4.performed += instance.OnSpell_Slot_4;
             @Spell_Slot_4.canceled += instance.OnSpell_Slot_4;
+            @ToggleSpellBook.started += instance.OnToggleSpellBook;
+            @ToggleSpellBook.performed += instance.OnToggleSpellBook;
+            @ToggleSpellBook.canceled += instance.OnToggleSpellBook;
         }
 
         private void UnregisterCallbacks(IPlayInputMapActions instance)
@@ -421,6 +447,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Spell_Slot_4.started -= instance.OnSpell_Slot_4;
             @Spell_Slot_4.performed -= instance.OnSpell_Slot_4;
             @Spell_Slot_4.canceled -= instance.OnSpell_Slot_4;
+            @ToggleSpellBook.started -= instance.OnToggleSpellBook;
+            @ToggleSpellBook.performed -= instance.OnToggleSpellBook;
+            @ToggleSpellBook.canceled -= instance.OnToggleSpellBook;
         }
 
         public void RemoveCallbacks(IPlayInputMapActions instance)
@@ -447,5 +476,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnSpell_Slot_2(InputAction.CallbackContext context);
         void OnSpell_Slot_3(InputAction.CallbackContext context);
         void OnSpell_Slot_4(InputAction.CallbackContext context);
+        void OnToggleSpellBook(InputAction.CallbackContext context);
     }
 }

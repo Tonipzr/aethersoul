@@ -30,6 +30,14 @@ partial class UISystem : SystemBase
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
+        Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
+        InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
+
+        if (inputComponent.pressingSpellBookToggle)
+        {
+            UIManager.Instance.ToggleSpellBook();
+        }
+
         foreach (var (health, _, entity) in SystemAPI.Query<RefRO<HealthUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
         {
             UIManager.Instance.UpdateHP(health.ValueRO.CurrentHealth, health.ValueRO.MaxHealth);

@@ -9,4 +9,5 @@ public class SpellData
     public string Range;
     public int Cost;
     public int Cooldown;
+    public string Element;
 }

@@ -21,12 +21,14 @@ public partial class InputSystem : SystemBase
         Vector2 movementVector = controls.FindAction("Movement").ReadValue<Vector2>();
         bool pressingSpace = controls.FindAction("Dash").triggered;
         bool pressingInteract = controls.FindAction("Interact").triggered;
+        bool pressingSpellBookToggle = controls.FindAction("ToggleSpellBook").triggered;
 
         SystemAPI.SetSingleton(new InputComponent
         {
             movement = movementVector,
             pressingSpace = pressingSpace,
-            pressingInteract = pressingInteract
+            pressingInteract = pressingInteract,
+            pressingSpellBookToggle = pressingSpellBookToggle
         });
     }
 }

@@ -21,3 +21,11 @@ public enum SpellTarget
     Targeted,
     AreaOfEffect
 }
+
+public enum SpellElement
+{
+    Fire,
+    Water,
+    Earth,
+    Air
+}

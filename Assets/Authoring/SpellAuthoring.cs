@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Entities;
-using Unity.VisualScripting;
 using UnityEngine;
 
 class SpellAuthoring : MonoBehaviour
@@ -34,6 +33,7 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
             Enum.TryParse(spell.SpellType, out SpellType spellType);
             Enum.TryParse(spell.Range, out SpellRange spellRange);
             Enum.TryParse(spell.Target, out SpellTarget spellTarget);
+            Enum.TryParse(spell.Element, out SpellElement element);
 
             AddComponent(spellEntity, new SpellComponent { SpellID = spell.SpellID, SpellType = spellType });
 
@@ -44,6 +44,7 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
                 AddComponent(spellEntity, new SpellDamageComponent { Damage = spell.Damage });
                 AddComponent(spellEntity, new SpellCostComponent { Cost = spell.Cost });
                 AddComponent(spellEntity, new SpellCooldownComponent { Cooldown = spell.Cooldown });
+                AddComponent(spellEntity, new SpellElementComponent { Element = element });
             }
         }
     }

@@ -7,4 +7,6 @@ public struct InputComponent : IComponentData
     public bool pressingSpace;
 
     public bool pressingInteract;
+
+    public bool pressingSpellBookToggle;
 }
