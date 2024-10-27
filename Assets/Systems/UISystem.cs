@@ -59,6 +59,16 @@ partial class UISystem : SystemBase
             entityCommandBuffer.RemoveComponent<ManaUpdatedComponent>(entity);
         }
 
+        foreach (var (availableSpells, _) in SystemAPI.Query<DynamicBuffer<PlayerAvailableSpellsComponent>, RefRO<PlayerComponent>>())
+        {
+            if (availableSpells.Length == 0) continue;
+
+            for (int i = 0; i < availableSpells.Length; i++)
+            {
+                UIManager.Instance.LearnSpell(availableSpells[i].SpellID);
+            }
+        }
+
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
     }

@@ -109,6 +109,61 @@
             "Cost": 25,
             "Cooldown": 7,
             "Element": "Air"
+        },
+        {
+            "SpellID": 11,
+            "Name": "Fire Orbs",
+            "SpellType": "Passive",
+            "Target": "Self",
+            "Damage": 15,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Fire"
+        },
+        {
+            "SpellID": 12,
+            "Name": "Gale Shield",
+            "SpellType": "Passive",
+            "Target": "Self",
+            "Damage": 10,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Air"
+        },
+        {
+            "SpellID": 13,
+            "Name": "Fiery Eruption",
+            "SpellType": "Passive",
+            "Target": "AreaOfEffect",
+            "Damage": 20,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Fire"
+        },
+        {
+            "SpellID": 14,
+            "Name": "Storm Clouds",
+            "SpellType": "Passive",
+            "Target": "Self",
+            "Damage": 5,
+            "Range": "Ten",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Air"
+        },
+        {
+            "SpellID": 15,
+            "Name": "Blazing Aura",
+            "SpellType": "Passive",
+            "Target": "Self",
+            "Damage": 5,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Fire"
         }
     ]
 }

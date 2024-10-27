@@ -20,6 +20,8 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ManaComponent { MaxMana = 100, CurrentMana = 100 });
         AddComponent(playerEntity, new LevelComponent { Level = 1 });
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(0) });
+        AddBuffer<PlayerSelectedSpellsComponent>(playerEntity);
+        AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }

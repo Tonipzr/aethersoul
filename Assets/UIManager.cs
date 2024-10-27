@@ -96,6 +96,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void LearnSpell(int spellID)
+    {
+        if (learnedSpells[spellID] == 1) return;
+
+        learnedSpells[spellID] = 1;
+
+        for (int i = 0; i < allSpells.Count; i++)
+        {
+            if (allSpells[i].SpellID == spellID)
+            {
+                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
+                spellBookEntry.GetComponent<Button>().interactable = false;
+                spellBookEntry.GetComponentInChildren<Image>().color = learnedColor;
+                break;
+            }
+        }
+    }
+
     public void ToggleSpellBook()
     {
         spellBook.SetActive(!spellBook.activeSelf);
