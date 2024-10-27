@@ -19,6 +19,7 @@ public partial class InputSystem : SystemBase
     protected override void OnUpdate()
     {
         Vector2 movementVector = controls.FindAction("Movement").ReadValue<Vector2>();
+        Vector2 mousePosition = controls.FindAction("MousePosition").ReadValue<Vector2>();
         bool pressingSpace = controls.FindAction("Dash").triggered;
         bool pressingInteract = controls.FindAction("Interact").triggered;
         bool pressingSpellBookToggle = controls.FindAction("ToggleSpellBook").triggered;
@@ -31,6 +32,7 @@ public partial class InputSystem : SystemBase
         SystemAPI.SetSingleton(new InputComponent
         {
             movement = movementVector,
+            mousePosition = mousePosition,
             pressingSpace = pressingSpace,
             pressingInteract = pressingInteract,
             pressingSpellBookToggle = pressingSpellBookToggle,
