@@ -33,11 +33,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI spell1Id;
     [SerializeField]
+    private Image spell1CooldownVisual;
+    [SerializeField]
     private TextMeshProUGUI spell2Id;
+    [SerializeField]
+    private Image spell2CooldownVisual;
     [SerializeField]
     private TextMeshProUGUI spell3Id;
     [SerializeField]
+    private Image spell3CooldownVisual;
+    [SerializeField]
     private TextMeshProUGUI spell4Id;
+    [SerializeField]
+    private Image spell4CooldownVisual;
 
     [Header("Spell Book")]
     [SerializeField]
@@ -53,6 +61,7 @@ public class UIManager : MonoBehaviour
     private int spellBookEntryPerRow = 10;
     private List<SpellData> allSpells;
     private int[] learnedSpells;
+    private int[] selectedSpells = new int[4];
     private Color learnedColor = new(0.1843137f, 0.7882353f, 1f);
 
     #endregion
@@ -83,16 +92,62 @@ public class UIManager : MonoBehaviour
         {
             case 1:
                 spell1Id.text = spellId;
+                selectedSpells[0] = int.Parse(spellId);
                 break;
             case 2:
                 spell2Id.text = spellId;
+                selectedSpells[1] = int.Parse(spellId);
                 break;
             case 3:
                 spell3Id.text = spellId;
+                selectedSpells[2] = int.Parse(spellId);
                 break;
             case 4:
                 spell4Id.text = spellId;
+                selectedSpells[3] = int.Parse(spellId);
                 break;
+        }
+    }
+
+    public void UpdateSpellCooldown(int spellID, float elapsedTime, float cooldown)
+    {
+        Image cooldownVisual = null;
+
+        for (int i = 0; i < selectedSpells.Length; i++)
+        {
+            if (selectedSpells[i] == spellID)
+            {
+                switch (i)
+                {
+                    case 0:
+                        cooldownVisual = spell1CooldownVisual;
+                        break;
+                    case 1:
+                        cooldownVisual = spell2CooldownVisual;
+                        break;
+                    case 2:
+                        cooldownVisual = spell3CooldownVisual;
+                        break;
+                    case 3:
+                        cooldownVisual = spell4CooldownVisual;
+                        break;
+                    default:
+                        return;
+                }
+
+                break;
+            }
+        }
+
+        if (cooldownVisual == null) return;
+
+        if (elapsedTime >= cooldown)
+        {
+            cooldownVisual.fillAmount = 0;
+        }
+        else
+        {
+            cooldownVisual.fillAmount = 1 - elapsedTime / cooldown;
         }
     }
 

@@ -43,7 +43,11 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
                 AddComponent(spellEntity, new SpellRangeComponent { Range = spellRange });
                 AddComponent(spellEntity, new SpellDamageComponent { Damage = spell.Damage });
                 AddComponent(spellEntity, new SpellCostComponent { Cost = spell.Cost });
+
                 AddComponent(spellEntity, new SpellCooldownComponent { Cooldown = spell.Cooldown });
+                AddComponent(spellEntity, new SpellOnCooldownComponent());
+                SetComponentEnabled<SpellOnCooldownComponent>(spellEntity, false);
+
                 AddComponent(spellEntity, new SpellElementComponent { Element = element });
             }
         }

@@ -22,10 +22,10 @@ partial class UISystem : SystemBase
             UIManager.Instance.UpdateHP(100, 100);
             UIManager.Instance.UpdateMana(100, 100);
             UIManager.Instance.UpdateExp(0, ExperienceToNextLevel.CalculateExperienceToNextLevel(1));
-            UIManager.Instance.UpdateSpellSlot(1, "X");
-            UIManager.Instance.UpdateSpellSlot(2, "X");
-            UIManager.Instance.UpdateSpellSlot(3, "X");
-            UIManager.Instance.UpdateSpellSlot(4, "X");
+            UIManager.Instance.UpdateSpellSlot(1, "0");
+            UIManager.Instance.UpdateSpellSlot(2, "0");
+            UIManager.Instance.UpdateSpellSlot(3, "0");
+            UIManager.Instance.UpdateSpellSlot(4, "0");
         }
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
@@ -67,6 +67,19 @@ partial class UISystem : SystemBase
             {
                 UIManager.Instance.LearnSpell(availableSpells[i].SpellID);
             }
+        }
+
+        foreach (var (_, selectedSpellsBuffer) in SystemAPI.Query<RefRO<PlayerComponent>, DynamicBuffer<PlayerSelectedSpellsComponent>>())
+        {
+            for (int i = 0; i < selectedSpellsBuffer.Length; i++)
+            {
+                UIManager.Instance.UpdateSpellSlot(i + 1, selectedSpellsBuffer[i].SpellID.ToString());
+            }
+        }
+
+        foreach (var (spell, _, timer) in SystemAPI.Query<RefRO<SpellComponent>, RefRO<SpellOnCooldownComponent>, RefRO<TimeCounterComponent>>())
+        {
+            UIManager.Instance.UpdateSpellCooldown(spell.ValueRO.SpellID, timer.ValueRO.ElapsedTime, timer.ValueRO.EndTime);
         }
 
         entityCommandBuffer.Playback(_entityManager);

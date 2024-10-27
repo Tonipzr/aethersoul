@@ -23,12 +23,21 @@ public partial class InputSystem : SystemBase
         bool pressingInteract = controls.FindAction("Interact").triggered;
         bool pressingSpellBookToggle = controls.FindAction("ToggleSpellBook").triggered;
 
+        bool pressingSpellSlot1 = controls.FindAction("Spell_Slot_1").triggered;
+        bool pressingSpellSlot2 = controls.FindAction("Spell_Slot_2").triggered;
+        bool pressingSpellSlot3 = controls.FindAction("Spell_Slot_3").triggered;
+        bool pressingSpellSlot4 = controls.FindAction("Spell_Slot_4").triggered;
+
         SystemAPI.SetSingleton(new InputComponent
         {
             movement = movementVector,
             pressingSpace = pressingSpace,
             pressingInteract = pressingInteract,
-            pressingSpellBookToggle = pressingSpellBookToggle
+            pressingSpellBookToggle = pressingSpellBookToggle,
+            pressingSpellSlot1 = pressingSpellSlot1,
+            pressingSpellSlot2 = pressingSpellSlot2,
+            pressingSpellSlot3 = pressingSpellSlot3,
+            pressingSpellSlot4 = pressingSpellSlot4
         });
     }
 }

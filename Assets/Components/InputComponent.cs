@@ -9,4 +9,9 @@ public struct InputComponent : IComponentData
     public bool pressingInteract;
 
     public bool pressingSpellBookToggle;
+
+    public bool pressingSpellSlot1;
+    public bool pressingSpellSlot2;
+    public bool pressingSpellSlot3;
+    public bool pressingSpellSlot4;
 }
