@@ -31,6 +31,10 @@ partial struct ExperienceSystem : ISystem
                 int experienceOverflow = Math.Max(0, experience.ValueRO.Experience - experience.ValueRO.ExperienceToNextLevel);
                 entityCommandBuffer.AddComponent(entity, new LevelUpComponent { OverflowExperience = experienceOverflow });
             }
+            else
+            {
+                entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel });
+            }
         }
 
         entityCommandBuffer.Playback(_entityManager);

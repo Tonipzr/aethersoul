@@ -1,0 +1,63 @@
+{
+    "Spells": [
+        {
+            "SpellID": 1,
+            "Name": "Fireslash",
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
+            "Damage": 50,
+            "Range": "Three",
+            "Cost": 10,
+            "Cooldown": 5,
+            "Element": "Fire",
+            "Duration": 1
+        },
+        {
+            "SpellID": 2,
+            "Name": "Flame Nova",
+            "SpellType": "AreaOfEffect",
+            "Target": "Self",
+            "Damage": 30,
+            "Range": "Five",
+            "Cost": 15,
+            "Cooldown": 6,
+            "Element": "Fire",
+            "Duration": 2
+        },
+        {
+            "SpellID": 3,
+            "Name": "Meteor Strike",
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
+            "Damage": 70,
+            "Range": "Infinite",
+            "Cost": 40,
+            "Cooldown": 12,
+            "Element": "Fire",
+            "Duration": 5
+        },
+        {
+            "SpellID": 4,
+            "Name": "Inferno Burst",
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
+            "Damage": 60,
+            "Range": "Five",
+            "Cost": 25,
+            "Cooldown": 5,
+            "Element": "Fire",
+            "Duration": 3
+        },
+        {
+            "SpellID": 5,
+            "Name": "Gust",
+            "SpellType": "SkillShot",
+            "Target": "MousePosition",
+            "Damage": 20,
+            "Range": "Five",
+            "Cost": 5,
+            "Cooldown": 0.5,
+            "Element": "Air"
+        }
+    ]
+}

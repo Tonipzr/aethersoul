@@ -26,6 +26,8 @@ partial struct LevelUpSystem : ISystem
             experience.ValueRW.Experience = levelUp.ValueRO.OverflowExperience;
             level.ValueRW.Level++;
             experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level);
+
+            entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel });
         }
 
         entityCommandBuffer.Playback(_entityManager);
