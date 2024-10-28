@@ -212,6 +212,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireBallPrefab: {fileID: 7890949810695243266, guid: 8b72fb9c154a16349af42c447ab866ef, type: 3}
+  flameNovaPrefab: {fileID: 3704293236158683398, guid: 1dd6445cfe2350d418085a83a48da30e, type: 3}
+  meteorstormPrefab: {fileID: 4241185428154036538, guid: 0637e7c9951e51845bb6c8e69b5dcef4, type: 3}
+  infernoburstPrefab: {fileID: 7461329264248713094, guid: 770734f7540f719488f4880a5259266b, type: 3}
+  gustPrefab: {fileID: 4756378374948392508, guid: e3da14670f63dc64ab7dbc6167e9fa75, type: 3}
 --- !u!1 &1563941216
 GameObject:
   m_ObjectHideFlags: 0
