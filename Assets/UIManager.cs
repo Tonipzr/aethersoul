@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using TMPro;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,12 +56,17 @@ public class UIManager : MonoBehaviour
     private GameObject spellBookEntryPrefab;
     [SerializeField]
     private TextAsset spellsJSON;
+    [SerializeField]
+    private TMP_InputField spellBookSearchInput;
+    [SerializeField]
+    private GameObject spellBookLearnDebugButtonContainer;
 
 
     #region private fields
 
     private int spellBookEntryPerRow = 10;
     private List<SpellData> allSpells;
+    private List<SpellData> searchedSpells;
     private int[] learnedSpells;
     private int[] selectedSpells = new int[4];
     private Color learnedColor = new(0.1843137f, 0.7882353f, 1f);
@@ -153,9 +160,9 @@ public class UIManager : MonoBehaviour
 
     public void LearnSpell(int spellID)
     {
-        if (learnedSpells[spellID] == 1) return;
+        if (learnedSpells[spellID - 1] == 1) return;
 
-        learnedSpells[spellID] = 1;
+        learnedSpells[spellID - 1] = 1;
 
         for (int i = 0; i < allSpells.Count; i++)
         {
@@ -209,5 +216,57 @@ public class UIManager : MonoBehaviour
 
         spellBook.SetActive(false);
         learnedSpells = new int[allSpells.Count];
+
+        spellBookSearchInput.onValueChanged.AddListener(OnSpellSearchValueChanged);
+
+        // Debug button
+        spellBookLearnDebugButtonContainer.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(1));
+        spellBookLearnDebugButtonContainer.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(2));
+        spellBookLearnDebugButtonContainer.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(3));
+        spellBookLearnDebugButtonContainer.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(4));
+        spellBookLearnDebugButtonContainer.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(5));
+    }
+
+    private void debugLearnSpell(int SpellID)
+    {
+        EntityManager entityMananger = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        Entity playerEntity = entityMananger.CreateEntityQuery(typeof(PlayerComponent)).GetSingletonEntity();
+
+        entityMananger.AddComponentData(playerEntity, new SpellLearnComponent { SpellID = SpellID });
+    }
+
+    private void OnSpellSearchValueChanged(string input)
+    {
+        List<SpellData> filteredSpells = searchSpellByName(input);
+
+        for (int i = 0; i < allSpells.Count; i++)
+        {
+            if (filteredSpells.IndexOf(allSpells[i]) != -1)
+            {
+                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
+                spellBookEntry.SetActive(true);
+            }
+            else
+            {
+                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
+                spellBookEntry.SetActive(false);
+            }
+        }
+    }
+
+    private List<SpellData> searchSpellByName(string name)
+    {
+        List<SpellData> result = new();
+
+        foreach (var spell in allSpells)
+        {
+            if (spell.Name.ToLower().Contains(name.ToLower()))
+            {
+                result.Add(spell);
+            }
+        }
+
+        return result;
     }
 }
