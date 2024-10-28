@@ -27,10 +27,8 @@ partial struct HealthRestoreSystem : ISystem
                 entityCommandBuffer.RemoveComponent<HealthRestoreComponent>(entity);
                 entityCommandBuffer.AddComponent(entity, new HealthUpdatedComponent
                 {
-                    CurrentHealth = health.ValueRO.CurrentHealth,
+                    CurrentHealth = Math.Min(health.ValueRO.MaxHealth, health.ValueRO.CurrentHealth + heal.ValueRO.HealAmount),
                     MaxHealth = health.ValueRO.MaxHealth,
-                    BeforeHealth = Math.Min(health.ValueRO.MaxHealth, health.ValueRO.CurrentHealth + heal.ValueRO.HealAmount),
-                    BeforeMaxHealth = health.ValueRO.MaxHealth
                 });
 
                 health.ValueRW.CurrentHealth = Math.Min(health.ValueRO.MaxHealth, health.ValueRO.CurrentHealth + heal.ValueRO.HealAmount);
