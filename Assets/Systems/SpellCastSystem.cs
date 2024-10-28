@@ -20,7 +20,10 @@ partial struct SpellCastSystem : ISystem
 
         Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
         InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
-        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
+
+        if (!SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity)) return;
+
+        // Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
         DynamicBuffer<PlayerSelectedSpellsComponent> selectedSpellsBuffer = _entityManager.GetBuffer<PlayerSelectedSpellsComponent>(playerEntity);
 
         if (selectedSpellsBuffer.Length == 0)

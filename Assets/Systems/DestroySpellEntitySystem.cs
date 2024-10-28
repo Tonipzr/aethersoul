@@ -5,13 +5,11 @@ using UnityEngine;
 
 partial struct DestroySpellEntitySystem : ISystem
 {
-    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
 
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
@@ -28,7 +26,6 @@ partial struct DestroySpellEntitySystem : ISystem
         entityCommandBuffer.Dispose();
     }
 
-    [BurstCompile]
     public void OnDestroy(ref SystemState state)
     {
 
