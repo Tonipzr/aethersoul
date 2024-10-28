@@ -5,13 +5,11 @@ using UnityEngine;
 
 partial struct MoveSpellSkillShotSystem : ISystem
 {
-    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
 
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
@@ -36,7 +34,6 @@ partial struct MoveSpellSkillShotSystem : ISystem
         entityCommandBuffer.Dispose();
     }
 
-    [BurstCompile]
     public void OnDestroy(ref SystemState state)
     {
 
