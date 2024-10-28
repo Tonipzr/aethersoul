@@ -31,6 +31,13 @@ partial struct TimeCounterSystem : ISystem
                     entityCommandBuffer.SetComponentEnabled<SpellOnCooldownComponent>(entity, false);
                     entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
                 }
+
+                if (
+                    SystemAPI.HasComponent<SpellAoEEntityComponent>(entity)
+                )
+                {
+                    entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(entity);
+                }
             }
         }
 

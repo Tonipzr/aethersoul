@@ -2,14 +2,15 @@
     "Spells": [
         {
             "SpellID": 1,
-            "Name": "Fireball",
-            "SpellType": "SkillShot",
-            "Target": "Targeted",
+            "Name": "Fireslash",
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
             "Damage": 50,
-            "Range": "Ten",
+            "Range": "Three",
             "Cost": 10,
             "Cooldown": 5,
-            "Element": "Fire"
+            "Element": "Fire",
+            "Duration": 1
         },
         {
             "SpellID": 2,
@@ -20,150 +21,43 @@
             "Range": "Five",
             "Cost": 15,
             "Cooldown": 6,
-            "Element": "Fire"
+            "Element": "Fire",
+            "Duration": 2
         },
         {
             "SpellID": 3,
             "Name": "Meteor Strike",
-            "SpellType": "SkillShot",
-            "Target": "Targeted",
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
             "Damage": 70,
             "Range": "Infinite",
             "Cost": 40,
             "Cooldown": 12,
-            "Element": "Fire"
+            "Element": "Fire",
+            "Duration": 5
         },
         {
             "SpellID": 4,
             "Name": "Inferno Burst",
             "SpellType": "AreaOfEffect",
-            "Target": "AreaOfEffect",
+            "Target": "MousePosition",
             "Damage": 60,
             "Range": "Five",
             "Cost": 25,
-            "Cooldown": 10,
-            "Element": "Fire"
+            "Cooldown": 5,
+            "Element": "Fire",
+            "Duration": 3
         },
         {
             "SpellID": 5,
             "Name": "Gust",
             "SpellType": "SkillShot",
-            "Target": "Targeted",
+            "Target": "MousePosition",
             "Damage": 20,
             "Range": "Five",
             "Cost": 5,
-            "Cooldown": 3,
+            "Cooldown": 0.5,
             "Element": "Air"
-        },
-        {
-            "SpellID": 6,
-            "Name": "Cyclone",
-            "SpellType": "AreaOfEffect",
-            "Target": "AreaOfEffect",
-            "Damage": 45,
-            "Range": "Ten",
-            "Cost": 15,
-            "Cooldown": 8,
-            "Element": "Air"
-        },
-        {
-            "SpellID": 7,
-            "Name": "Blazing Shield",
-            "SpellType": "Buff",
-            "Target": "Self",
-            "Damage": 0,
-            "Range": "Melee",
-            "Cost": 20,
-            "Cooldown": 15,
-            "Element": "Fire"
-        },
-        {
-            "SpellID": 8,
-            "Name": "Wind Barrier",
-            "SpellType": "Buff",
-            "Target": "Self",
-            "Damage": 0,
-            "Range": "Melee",
-            "Cost": 10,
-            "Cooldown": 12,
-            "Element": "Air"
-        },
-        {
-            "SpellID": 9,
-            "Name": "Scorching Ray",
-            "SpellType": "SkillShot",
-            "Target": "Targeted",
-            "Damage": 35,
-            "Range": "Ten",
-            "Cost": 15,
-            "Cooldown": 4,
-            "Element": "Fire"
-        },
-        {
-            "SpellID": 10,
-            "Name": "Tempest Strike",
-            "SpellType": "SkillShot",
-            "Target": "Targeted",
-            "Damage": 55,
-            "Range": "Infinite",
-            "Cost": 25,
-            "Cooldown": 7,
-            "Element": "Air"
-        },
-        {
-            "SpellID": 11,
-            "Name": "Fire Orbs",
-            "SpellType": "Passive",
-            "Target": "Self",
-            "Damage": 15,
-            "Range": "Five",
-            "Cost": 0,
-            "Cooldown": 0,
-            "Element": "Fire"
-        },
-        {
-            "SpellID": 12,
-            "Name": "Gale Shield",
-            "SpellType": "Passive",
-            "Target": "Self",
-            "Damage": 10,
-            "Range": "Five",
-            "Cost": 0,
-            "Cooldown": 0,
-            "Element": "Air"
-        },
-        {
-            "SpellID": 13,
-            "Name": "Fiery Eruption",
-            "SpellType": "Passive",
-            "Target": "AreaOfEffect",
-            "Damage": 20,
-            "Range": "Five",
-            "Cost": 0,
-            "Cooldown": 0,
-            "Element": "Fire"
-        },
-        {
-            "SpellID": 14,
-            "Name": "Storm Clouds",
-            "SpellType": "Passive",
-            "Target": "Self",
-            "Damage": 5,
-            "Range": "Ten",
-            "Cost": 0,
-            "Cooldown": 0,
-            "Element": "Air"
-        },
-        {
-            "SpellID": 15,
-            "Name": "Blazing Aura",
-            "SpellType": "Passive",
-            "Target": "Self",
-            "Damage": 5,
-            "Range": "Five",
-            "Cost": 0,
-            "Cooldown": 0,
-            "Element": "Fire"
         }
     ]
 }

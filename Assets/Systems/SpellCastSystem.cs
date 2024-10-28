@@ -1,3 +1,4 @@
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -27,31 +28,40 @@ partial struct SpellCastSystem : ISystem
             return;
         }
 
+        EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
+
         if (inputComponent.pressingSpellSlot1 && selectedSpellsBuffer.Length >= 1)
         {
-            CastSpell(selectedSpellsBuffer[0].SpellID, ref state);
+            if (CastSpell(selectedSpellsBuffer[0].SpellID, ref state, entityCommandBuffer))
+                entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[0].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot2 && selectedSpellsBuffer.Length >= 2)
         {
-            CastSpell(selectedSpellsBuffer[1].SpellID, ref state);
+            if (CastSpell(selectedSpellsBuffer[1].SpellID, ref state, entityCommandBuffer))
+                entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[1].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot3 && selectedSpellsBuffer.Length >= 3)
         {
-            CastSpell(selectedSpellsBuffer[2].SpellID, ref state);
+            if (CastSpell(selectedSpellsBuffer[2].SpellID, ref state, entityCommandBuffer))
+                entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[2].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot4 && selectedSpellsBuffer.Length >= 4)
         {
-            CastSpell(selectedSpellsBuffer[3].SpellID, ref state);
+            if (CastSpell(selectedSpellsBuffer[3].SpellID, ref state, entityCommandBuffer))
+                entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[3].SpellID });
         }
+
+        entityCommandBuffer.Playback(_entityManager);
+        entityCommandBuffer.Dispose();
     }
 
     [BurstCompile]
-    private void CastSpell(int spellID, ref SystemState state)
+    private bool CastSpell(int spellID, ref SystemState state, EntityCommandBuffer entityCommandBuffer)
     {
-        EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
+        bool castedSpell = false;
 
         foreach (var (spell, cooldown, _, entity) in SystemAPI.Query<RefRO<SpellComponent>, RefRO<SpellCooldownComponent>, RefRO<SpellOnCooldownComponent>>().WithEntityAccess().WithOptions(EntityQueryOptions.IgnoreComponentEnabledState))
         {
@@ -66,11 +76,11 @@ partial struct SpellCastSystem : ISystem
             {
                 entityCommandBuffer.SetComponentEnabled<SpellOnCooldownComponent>(entity, true);
                 entityCommandBuffer.AddComponent(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = cooldown.ValueRO.Cooldown, isInfinite = false });
+                castedSpell = true;
             }
         }
 
-        entityCommandBuffer.Playback(_entityManager);
-        entityCommandBuffer.Dispose();
+        return castedSpell;
     }
 
     [BurstCompile]

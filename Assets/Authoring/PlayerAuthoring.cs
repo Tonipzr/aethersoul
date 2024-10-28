@@ -23,6 +23,7 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(0) });
         AddBuffer<PlayerSelectedSpellsComponent>(playerEntity);
         AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
+        AddBuffer<PlayerCastAttemptComponent>(playerEntity);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }

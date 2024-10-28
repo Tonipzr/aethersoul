@@ -10,6 +10,7 @@ public enum SpellType
 public enum SpellRange
 {
     Melee,
+    Three,
     Five,
     Ten,
     Infinite
@@ -19,7 +20,7 @@ public enum SpellTarget
 {
     Self,
     Targeted,
-    AreaOfEffect
+    MousePosition
 }
 
 public enum SpellElement

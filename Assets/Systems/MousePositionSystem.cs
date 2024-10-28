@@ -1,30 +1,25 @@
-using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
+using UnityEngine;
 
 partial struct MousePositionSystem : ISystem
 {
-    private EntityManager _entityManager;
-
-    [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
 
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        _entityManager = state.EntityManager;
-        Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
-        InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
-
         foreach (var mousePosition in SystemAPI.Query<RefRW<MousePositionComponent>>())
         {
-            mousePosition.ValueRW.Position = inputComponent.mousePosition;
+            Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.ValueRW.Position = new float2(worldPosition.x, worldPosition.y);
         }
     }
 
-    [BurstCompile]
     public void OnDestroy(ref SystemState state)
     {
 

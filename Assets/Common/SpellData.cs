@@ -10,4 +10,5 @@ public class SpellData
     public int Cost;
     public int Cooldown;
     public string Element;
+    public float Duration;
 }

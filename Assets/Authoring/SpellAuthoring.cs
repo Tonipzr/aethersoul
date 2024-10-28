@@ -49,6 +49,7 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
                 SetComponentEnabled<SpellOnCooldownComponent>(spellEntity, false);
 
                 AddComponent(spellEntity, new SpellElementComponent { Element = element });
+                AddComponent(spellEntity, new SpellDurationComponent { Duration = spell.Duration });
             }
         }
     }
