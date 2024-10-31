@@ -42,11 +42,11 @@ partial struct EscarlinaAnimationSystem : ISystem
 
                 if (inputComponent.movement.x < 0)
                 {
-                    visualsReferenceComponent.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                    visualsReferenceComponent.gameObject.GetComponent<SpriteRenderer>().flipX = true;
                 }
                 else if (inputComponent.movement.x > 0)
                 {
-                    visualsReferenceComponent.gameObject.transform.localScale = new Vector3(1, 1, 1);
+                    visualsReferenceComponent.gameObject.GetComponent<SpriteRenderer>().flipX = false;
                 }
 
                 visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", movementValue);

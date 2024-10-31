@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1563941218}
   - component: {fileID: 1563941217}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AnimationVisualsPrefabs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058121194}
   - component: {fileID: 2058121195}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Escarlina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
