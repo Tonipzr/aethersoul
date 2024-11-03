@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1563941218}
   - component: {fileID: 1563941217}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AnimationVisualsPrefabs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfe8ede32a7b2a4c83b7988417ec1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escarlinaPrefab: {fileID: 462252934492095322, guid: ed32b86debb527a46b2d4fae834823bb, type: 3}
+  escarlinaPrefab: {fileID: 3934727351475627932, guid: 4b4ad9d137f72f446bfb278841508e13, type: 3}
 --- !u!4 &1563941218
 Transform:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2058121194}
   - component: {fileID: 2058121195}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Escarlina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
