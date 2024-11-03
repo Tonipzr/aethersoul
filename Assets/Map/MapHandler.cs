@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Physics.Authoring;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -13,11 +14,11 @@ public class MapHandler : MonoBehaviour
     [SerializeField] GameObject Tree1;
     [SerializeField] GameObject Tree2;
     [SerializeField] GameObject Tree3;
-
     [SerializeField] GameObject chest;
     [SerializeField] GameObject chestOpen;
-
     [SerializeField] GameObject checkPoint;
+    [SerializeField] GameObject buff;
+
 
     [SerializeField] Camera mainCamera;
     [SerializeField] float viewDistance = 20f;
@@ -25,9 +26,12 @@ public class MapHandler : MonoBehaviour
     private int chunkSize = 10;
     private Dictionary<Vector2Int, ChunkData> generatedChunks = new Dictionary<Vector2Int, ChunkData>();
 
+    private EntityManager _entityManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         GenerateChunkAtPosition(0, 0);
     }
 
@@ -87,6 +91,24 @@ public class MapHandler : MonoBehaviour
                     GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.checkpointPositions.Add(localPos);
                     newChunkData.instantiatedCheckpoints.Add(checkPointInstance);
+
+                    Entity entity = _entityManager.CreateEntity(typeof(MapCheckpointEntityComponent));
+                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY) });
+                }
+
+                if (Random.Range(0f, 75f) < 0.01f)
+                {
+                    GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                    newChunkData.buffPositions.Add(localPos, false);
+                    newChunkData.instantiatedBuffs.Add(buffInstance);
+
+                    Entity entity = _entityManager.CreateEntity(typeof(MapBuffEntityComponent));
+                    _entityManager.SetComponentData(entity, new MapBuffEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsUsed = false });
+
+                    BuffStatusController buffStatusController = buffInstance.GetComponent<BuffStatusController>();
+                    buffStatusController.SetEntity(entity);
+
+                    newChunkData.buffEntities[localPos] = entity;
                 }
 
                 world.SetTile(tilePos, tileToPlace);
@@ -126,6 +148,24 @@ public class MapHandler : MonoBehaviour
             GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(new Vector3Int(chunkPos.x * chunkSize + pos.x, chunkPos.y * chunkSize + pos.y, 0)), Quaternion.identity, world.transform);
             chunkData.instantiatedCheckpoints.Add(checkPointInstance);
         }
+
+        foreach (var buffPosition in chunkData.buffPositions)
+        {
+            Vector2Int pos = buffPosition.Key;
+            GameObject buffInstance = Instantiate(buff, map.CellToWorld(new Vector3Int(chunkPos.x * chunkSize + pos.x, chunkPos.y * chunkSize + pos.y, 0)), Quaternion.identity, world.transform);
+            chunkData.instantiatedBuffs.Add(buffInstance);
+
+            BuffStatusController buffStatusController = buffInstance.GetComponent<BuffStatusController>();
+
+            if (chunkData.buffEntities.TryGetValue(pos, out Entity entity))
+            {
+                buffStatusController.SetEntity(entity);
+            }
+            else
+            {
+                buffStatusController.SetIsUsed(true);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -133,6 +173,15 @@ public class MapHandler : MonoBehaviour
     {
         Vector3 cameraPosition = mainCamera.transform.position;
         Vector2Int cameraChunkPos = GetChunkPosition(cameraPosition);
+
+        Entity mapEntity = _entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
+        MapEntityPlayerAtChunkComponent playerAtChunk = _entityManager.GetComponentData<MapEntityPlayerAtChunkComponent>(mapEntity);
+
+        if (playerAtChunk.PlayerAtChunk != cameraChunkPos)
+        {
+            playerAtChunk.PlayerAtChunk = cameraChunkPos;
+            _entityManager.SetComponentData(mapEntity, playerAtChunk);
+        }
 
         int viewRange = Mathf.CeilToInt(viewDistance / chunkSize);
 
@@ -195,6 +244,12 @@ public class MapHandler : MonoBehaviour
                 Destroy(checkpoint);
             }
             chunkData.instantiatedCheckpoints.Clear();
+
+            foreach (GameObject buff in chunkData.instantiatedBuffs)
+            {
+                Destroy(buff);
+            }
+            chunkData.instantiatedBuffs.Clear();
         }
     }
 

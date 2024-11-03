@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics.Authoring;
 using UnityEngine;
 
 class PlayerAuthoring : MonoBehaviour
@@ -24,6 +25,9 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddBuffer<PlayerSelectedSpellsComponent>(playerEntity);
         AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
         AddBuffer<PlayerCastAttemptComponent>(playerEntity);
+        AddComponent(playerEntity, new WeatherComponent { Weather = WeatherType.Clear });
+        AddComponent(playerEntity, new IsInSafeZoneComponent());
+        SetComponentEnabled<IsInSafeZoneComponent>(playerEntity, false);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }

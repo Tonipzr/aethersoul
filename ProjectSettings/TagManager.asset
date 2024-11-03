@@ -13,7 +13,7 @@ TagManager:
   - UI
   - World
   - Decoration
-  - 
+  - Weather
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Decoration
     uniqueID: 443866411
+    locked: 0
+  - name: Weather
+    uniqueID: 2186926829
     locked: 0
