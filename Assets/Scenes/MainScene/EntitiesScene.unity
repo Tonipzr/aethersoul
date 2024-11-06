@@ -246,6 +246,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escarlinaPrefab: {fileID: 3934727351475627932, guid: 4b4ad9d137f72f446bfb278841508e13, type: 3}
+  Bat: {fileID: 7063255958775379809, guid: 74884813ed27be745828eea0fb5d4151, type: 3}
+  Crab: {fileID: 7449976013174041635, guid: 86e22ef05cc53fe4f9099dd126e5e672, type: 3}
+  Golem: {fileID: 4831380961527899263, guid: da84ff4748b91f44cbad9d3cb1a0f46d, type: 3}
+  Rat: {fileID: 7299388234505502631, guid: 8f0b73317e94a794c8173eea2d7dbf1e, type: 3}
+  Slime: {fileID: 7999771898387509369, guid: 1279efd792eb15e44a6a8a0bb33676f4, type: 3}
 --- !u!4 &1563941218
 Transform:
   m_ObjectHideFlags: 0

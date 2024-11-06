@@ -15,6 +15,8 @@ partial struct MapSystem : ISystem
         _entityManager.AddComponent<MapEntityComponent>(entity);
         _entityManager.AddComponent<MapEntityPlayerAtChunkComponent>(entity);
         _entityManager.AddComponentData(entity, new MapEntityPlayerAtChunkComponent { PlayerAtChunk = new Vector2Int(0, 0) });
+        _entityManager.AddComponent<TimeCounterComponent>(entity);
+        _entityManager.AddComponentData(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 0, isInfinite = true });
     }
 
     [BurstCompile]

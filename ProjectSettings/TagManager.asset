@@ -14,7 +14,7 @@ TagManager:
   - World
   - Decoration
   - Weather
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -50,9 +50,15 @@ TagManager:
   - name: Player
     uniqueID: 2457316553
     locked: 0
+  - name: Enemy
+    uniqueID: 2924175873
+    locked: 0
   - name: Decoration
     uniqueID: 443866411
     locked: 0
   - name: Weather
     uniqueID: 2186926829
+    locked: 0
+  - name: UI
+    uniqueID: 122067489
     locked: 0

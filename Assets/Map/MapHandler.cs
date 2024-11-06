@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics.Authoring;
 using UnityEngine;
@@ -11,6 +13,7 @@ public class MapHandler : MonoBehaviour
     [SerializeField] TileBase grassTile;
     [SerializeField] TileBase flowerTile;
     [SerializeField] TileBase stoneTile;
+    [SerializeField] GameObject spawnPointTile;
     [SerializeField] GameObject Tree1;
     [SerializeField] GameObject Tree2;
     [SerializeField] GameObject Tree3;
@@ -25,6 +28,7 @@ public class MapHandler : MonoBehaviour
 
     private int chunkSize = 10;
     private Dictionary<Vector2Int, ChunkData> generatedChunks = new Dictionary<Vector2Int, ChunkData>();
+    private Dictionary<Vector2Int, GameObject> instantiatedSpawnPoints = new Dictionary<Vector2Int, GameObject>();
 
     private EntityManager _entityManager;
 
@@ -210,6 +214,34 @@ public class MapHandler : MonoBehaviour
             if (!visibleChunks.Contains(chunkPos) && IsChunkVisibleOnTilemap(chunkPos))
             {
                 UnloadChunk(chunkPos);
+            }
+        }
+
+        EntityQuery spawnPointQuery = _entityManager.CreateEntityQuery(typeof(SpawnPointComponent));
+        NativeArray<Entity> spawnPointEntities = spawnPointQuery.ToEntityArray(Allocator.Temp);
+
+        List<Vector2Int> visitedSpawns = new List<Vector2Int>();
+        foreach (Entity entity in spawnPointEntities)
+        {
+            PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(entity);
+            Vector3Int tilePos = new Vector3Int((int)positionComponent.Position.x, (int)positionComponent.Position.y, 0);
+            Vector2Int localPos = new Vector2Int((int)positionComponent.Position.x, (int)positionComponent.Position.y);
+
+            if (!instantiatedSpawnPoints.ContainsKey(localPos))
+            {
+                GameObject spawnInstance = Instantiate(spawnPointTile, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                instantiatedSpawnPoints[localPos] = spawnInstance;
+            }
+
+            visitedSpawns.Add(localPos);
+        }
+
+        foreach (var spawn in instantiatedSpawnPoints.ToList())
+        {
+            if (!visitedSpawns.Contains(spawn.Key))
+            {
+                Destroy(spawn.Value);
+                instantiatedSpawnPoints.Remove(spawn.Key);
             }
         }
     }

@@ -2512,7 +2512,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000c9ac779251fc26de2bdd741a09264ae2edda5982
+  m_ApplyToSortingLayers: 00000000c9ac779251fc26de2bdd741a09264ae2edda598201624bae219a4607
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2590,7 +2590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108.340515, y: -38.61859}
+  m_AnchoredPosition: {x: 108.340515, y: -38.618652}
   m_SizeDelta: {x: 201.427, y: 27.2372}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &708609029
@@ -2895,6 +2895,7 @@ MonoBehaviour:
   grassTile: {fileID: 11400000, guid: 856c4b4648833084ca3c6e31553804d4, type: 2}
   flowerTile: {fileID: 11400000, guid: 650204beecfdf4049a0c7982acacef81, type: 2}
   stoneTile: {fileID: 11400000, guid: e91bdef067700bb4b82212b3dec6cfc1, type: 2}
+  spawnPointTile: {fileID: 3283307554340817527, guid: 2b9c0e2038751a948939ab36883cda9a, type: 3}
   Tree1: {fileID: 7454005954217215581, guid: 6783f334416512f47a40fb5845277548, type: 3}
   Tree2: {fileID: 627359371948027988, guid: c6e357f59bd17894ba022e25171113c8, type: 3}
   Tree3: {fileID: 3934456998733091907, guid: aad31284cff948244b7cb394a97af508, type: 3}
@@ -3756,7 +3757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.6976, y: -3.1555}
+  m_AnchoredPosition: {x: -0.69763184, y: -3.1555176}
   m_SizeDelta: {x: 744.4949, y: 393.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1433146922
@@ -4594,10 +4595,10 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634070837}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4607,7 +4608,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 122067489
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1634070841
