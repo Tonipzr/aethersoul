@@ -15,6 +15,12 @@ partial struct DeathSystem : ISystem
     {
         monsterArchetype = state.EntityManager.CreateArchetype(
                   typeof(LocalTransform),
+                  typeof(PhysicsCollider),
+                  typeof(PhysicsDamping),
+                  typeof(PhysicsGravityFactor),
+                  typeof(PhysicsMass),
+                  typeof(PhysicsVelocity),
+                  typeof(PhysicsWorldIndex),
                   typeof(PositionComponent),
                   typeof(VelocityComponent),
                   typeof(DirectionComponent),
@@ -55,6 +61,47 @@ partial struct DeathSystem : ISystem
                     Position = new float3(spawnPosition.Position.x, spawnPosition.Position.y, 0),
                     Rotation = quaternion.identity,
                     Scale = 2
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsCollider
+                {
+                    Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                    {
+                        Center = new float3(0, 0, 0),
+                        Size = new float3(1, 1, 1),
+                        Orientation = quaternion.identity,
+                        BevelRadius = 0,
+                    }, new CollisionFilter
+                    {
+                        BelongsTo = 2,
+                        CollidesWith = 1,
+                        GroupIndex = 0
+                    }),
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsDamping
+                {
+                    Linear = 0.01f,
+                    Angular = 0.05f
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsGravityFactor
+                {
+                    Value = 0
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsMass
+                {
+                    InverseInertia = 6,
+                    InverseMass = 1,
+                    AngularExpansionFactor = 0,
+                    InertiaOrientation = quaternion.identity,
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsVelocity
+                {
+                    Linear = new float3(0, 0, 0),
+                    Angular = new float3(0, 0, 0)
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new PositionComponent
