@@ -15,8 +15,8 @@ TagManager:
   - Decoration
   - Weather
   - Enemy
-  - 
-  - 
+  - Spell
+  - Experience
   - 
   - 
   - 
@@ -53,8 +53,14 @@ TagManager:
   - name: Enemy
     uniqueID: 2924175873
     locked: 0
+  - name: Experience
+    uniqueID: 1523425955
+    locked: 0
   - name: Decoration
     uniqueID: 443866411
+    locked: 0
+  - name: Spell
+    uniqueID: 3503976485
     locked: 0
   - name: Weather
     uniqueID: 2186926829

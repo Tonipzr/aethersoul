@@ -251,6 +251,11 @@ MonoBehaviour:
   Golem: {fileID: 4831380961527899263, guid: da84ff4748b91f44cbad9d3cb1a0f46d, type: 3}
   Rat: {fileID: 7299388234505502631, guid: 8f0b73317e94a794c8173eea2d7dbf1e, type: 3}
   Slime: {fileID: 7999771898387509369, guid: 1279efd792eb15e44a6a8a0bb33676f4, type: 3}
+  GreenShardExperience: {fileID: 8049473216277605023, guid: ae03862e600882d409882b225481dd76, type: 3}
+  BlueShardExperience: {fileID: 1480159157758771215, guid: e10891c977dfacc46a4948dad568c0e8, type: 3}
+  PinkShardExperience: {fileID: 2062272472122058500, guid: cfe735c6a8249814499db716090078b0, type: 3}
+  PurpleShardExperience: {fileID: 6325144554053235022, guid: 2e83f0642accd744386d257ca7a843fa, type: 3}
+  RedShardExperience: {fileID: 7171636451900755788, guid: ea84d8d060cb9eb40b657a38790ea833, type: 3}
 --- !u!4 &1563941218
 Transform:
   m_ObjectHideFlags: 0
@@ -331,7 +336,7 @@ MonoBehaviour:
     y: 0
     z: 0
   m_PrimitiveSize:
-    x: 1
+    x: 0.6
     y: 1
     z: 1
   m_PrimitiveOrientation:
@@ -345,9 +350,9 @@ MonoBehaviour:
     Radius: 0.5
     Axis: 2
   m_Cylinder:
-    Height: 1
+    Height: 0.6
     Radius: 0.5
-    Axis: 2
+    Axis: 0
   m_CylinderSideCount: 20
   m_SphereRadius: 0.5
   m_MinimumSkinnedVertexWeight: 0.1
@@ -414,7 +419,7 @@ MonoBehaviour:
         Category00: 0
         Category01: 1
         Category02: 0
-        Category03: 0
+        Category03: 1
         Category04: 0
         Category05: 0
         Category06: 0

@@ -1,6 +1,9 @@
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
+using Unity.Physics.Extensions;
+using Unity.Transforms;
 using UnityEngine;
 
 partial struct MoveSpellSkillShotSystem : ISystem
@@ -14,20 +17,38 @@ partial struct MoveSpellSkillShotSystem : ISystem
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (skillShot, velocity, entity) in SystemAPI.Query<RefRW<SpellSkillShotEntityComponent>, RefRO<VelocityComponent>>().WithEntityAccess())
+        foreach (var (skillShot, velocity, transform, position, entity) in SystemAPI.Query<RefRW<SpellSkillShotEntityComponent>, RefRO<VelocityComponent>, RefRW<LocalTransform>, RefRW<PositionComponent>>().WithEntityAccess())
         {
             SpellEntityGameObjectReferenceComponent gameObjectReference = state.EntityManager.GetComponentData<SpellEntityGameObjectReferenceComponent>(entity);
-            Vector3 currentPosition = gameObjectReference.GameObject.transform.position;
+            Vector3 currentPosition = new Vector3(position.ValueRO.Position.x, position.ValueRO.Position.y, 0);
 
-            if (new Vector3(skillShot.ValueRW.ToPosition.x, skillShot.ValueRW.ToPosition.y, currentPosition.z) == currentPosition)
+            if (state.EntityManager.HasComponent(entity, typeof(DestroySpellEntityComponent)))
+            {
+                continue;
+            }
+
+            if (
+                new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, currentPosition.z) == currentPosition ||
+                Vector3.Distance(currentPosition, new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, 0)) < 0.1f ||
+                Vector3.Distance(currentPosition, new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, 0)) > 50.0f
+            )
             {
                 entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(entity);
                 continue;
             }
 
-            Vector3 targetPosition = new Vector3(skillShot.ValueRW.ToPosition.x, skillShot.ValueRW.ToPosition.y, 0);
+            Vector3 targetPosition = new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, 0);
 
-            gameObjectReference.GameObject.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, velocity.ValueRO.Velocity * Time.deltaTime);
+            PhysicsVelocity physicsVelocity = state.EntityManager.GetComponentData<PhysicsVelocity>(entity);
+            PhysicsMass physicsMass = state.EntityManager.GetComponentData<PhysicsMass>(entity);
+
+            Vector3 direction = (targetPosition - currentPosition).normalized;
+            Vector3 forceVector = direction * velocity.ValueRO.Velocity * Time.deltaTime;
+
+            physicsVelocity.ApplyLinearImpulse(physicsMass, forceVector);
+            entityCommandBuffer.SetComponent(entity, physicsVelocity);
+            position.ValueRW.Position = new float2(transform.ValueRO.Position.x, transform.ValueRO.Position.y);
+            gameObjectReference.GameObject.transform.position = transform.ValueRO.Position;
         }
 
         entityCommandBuffer.Playback(state.EntityManager);

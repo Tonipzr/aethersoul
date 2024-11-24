@@ -41,7 +41,7 @@ public class MapHandler : MonoBehaviour
 
     void GenerateChunkAtPosition(int chunkX, int chunkY)
     {
-        Debug.Log("Generating chunk at " + chunkX + ", " + chunkY);
+        // Debug.Log("Generating chunk at " + chunkX + ", " + chunkY);
         Vector2Int chunkPos = new Vector2Int(chunkX, chunkY);
 
         if (generatedChunks.ContainsKey(chunkPos))

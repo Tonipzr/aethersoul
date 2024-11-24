@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     private Slider expBar;
     [SerializeField]
     private Image expFill;
+    [SerializeField]
+    private TextMeshProUGUI levelText;
 
     [Space(10)]
 
@@ -70,6 +72,7 @@ public class UIManager : MonoBehaviour
     private int[] selectedSpells = new int[4];
     private Color learnedColor = new(0.1843137f, 0.7882353f, 1f);
 
+    private int currentLevel = 1;
     #endregion
 
     public static UIManager Instance { get; private set; }
@@ -86,10 +89,16 @@ public class UIManager : MonoBehaviour
         manaBar.value = currentMana;
     }
 
-    public void UpdateExp(int currentExp, int maxExp)
+    public void UpdateExp(int currentExp, int maxExp, bool levelUp = false)
     {
         expBar.maxValue = maxExp;
         expBar.value = currentExp;
+
+        if (levelUp)
+        {
+            currentLevel++;
+            levelText.text = currentLevel.ToString();
+        }
     }
 
     public void UpdateSpellSlot(int slot, string spellId)

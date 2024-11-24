@@ -41,8 +41,6 @@ partial struct EnemySpawnPositionSystem : ISystem
         LevelComponent playerLevel = state.EntityManager.GetComponentData<LevelComponent>(playerEntity);
         TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
 
-
-
         NativeArray<float2> spawnPoints = new NativeArray<float2>(7, Allocator.TempJob);
         GenerateSpawnPointsJob job = new GenerateSpawnPointsJob
         {

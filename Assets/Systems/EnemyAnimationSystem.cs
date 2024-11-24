@@ -64,6 +64,8 @@ partial struct EnemyAnimationSystem : ISystem
                 visualsReferenceComponent.gameObject.transform.position = transform.Position;
                 visualsReferenceComponent.gameObject.transform.rotation = transform.Rotation;
                 visualsReferenceComponent.gameObject.transform.localScale = new Vector3(transform.Scale, transform.Scale, transform.Scale);
+
+                visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", 1);
             }
         }
 

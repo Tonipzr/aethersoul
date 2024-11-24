@@ -23,7 +23,10 @@ partial struct MovementSystem : ISystem
                     MovePlayer(velocity.ValueRW.Velocity, ref state);
                     break;
                 case MovementType.AIControlled:
-                    MoveAI(velocity.ValueRW.Velocity, entity, ref state);
+                    if (!_entityManager.HasComponent<DeathComponent>(entity) && !_entityManager.HasComponent<DestroyAfterDelayComponent>(entity))
+                    {
+                        MoveAI(velocity.ValueRW.Velocity, entity, ref state);
+                    }
                     break;
             }
         }

@@ -42,4 +42,9 @@ public partial class InputSystem : SystemBase
             pressingSpellSlot4 = pressingSpellSlot4
         });
     }
+
+    protected override void OnDestroy()
+    {
+        controls.Disable();
+    }
 }

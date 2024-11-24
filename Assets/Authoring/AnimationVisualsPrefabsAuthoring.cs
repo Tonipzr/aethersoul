@@ -15,6 +15,16 @@ public class AnimationVisualsPrefabsAuthoring : MonoBehaviour
     private GameObject Rat;
     [SerializeField]
     private GameObject Slime;
+    [SerializeField]
+    private GameObject GreenShardExperience;
+    [SerializeField]
+    private GameObject BlueShardExperience;
+    [SerializeField]
+    private GameObject PinkShardExperience;
+    [SerializeField]
+    private GameObject PurpleShardExperience;
+    [SerializeField]
+    private GameObject RedShardExperience;
 
 
     private class AnimationVisualsPrefabsBaker : Baker<AnimationVisualsPrefabsAuthoring>
@@ -30,7 +40,12 @@ public class AnimationVisualsPrefabsAuthoring : MonoBehaviour
                 Crab = authoring.Crab,
                 Golem = authoring.Golem,
                 Rat = authoring.Rat,
-                Slime = authoring.Slime
+                Slime = authoring.Slime,
+                GreenShardExperience = authoring.GreenShardExperience,
+                BlueShardExperience = authoring.BlueShardExperience,
+                PinkShardExperience = authoring.PinkShardExperience,
+                PurpleShardExperience = authoring.PurpleShardExperience,
+                RedShardExperience = authoring.RedShardExperience
             });
         }
     }
