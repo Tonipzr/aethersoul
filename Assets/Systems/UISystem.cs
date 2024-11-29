@@ -47,7 +47,7 @@ partial class UISystem : SystemBase
 
         foreach (var (experience, _, entity) in SystemAPI.Query<RefRO<ExperienceUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
         {
-            UIManager.Instance.UpdateMana(experience.ValueRO.CurrentExperience, experience.ValueRO.MaxExperience);
+            UIManager.Instance.UpdateExp(experience.ValueRO.CurrentExperience, experience.ValueRO.MaxExperience, experience.ValueRO.CurrentLevelUpdated);
 
             entityCommandBuffer.RemoveComponent<ExperienceUpdatedComponent>(entity);
         }

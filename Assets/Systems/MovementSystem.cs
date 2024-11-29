@@ -1,8 +1,10 @@
-using System.Diagnostics;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
+using Unity.Physics.Extensions;
 using Unity.Transforms;
+using UnityEngine;
 
 partial struct MovementSystem : ISystem
 {
@@ -13,7 +15,7 @@ partial struct MovementSystem : ISystem
     {
         _entityManager = state.EntityManager;
 
-        foreach (var (position, velocity, movementType) in SystemAPI.Query<RefRW<PositionComponent>, RefRW<VelocityComponent>, RefRO<MovementTypeComponent>>())
+        foreach (var (position, velocity, movementType, entity) in SystemAPI.Query<RefRW<PositionComponent>, RefRW<VelocityComponent>, RefRO<MovementTypeComponent>>().WithEntityAccess())
         {
             switch (movementType.ValueRO.MovementType)
             {
@@ -21,10 +23,40 @@ partial struct MovementSystem : ISystem
                     MovePlayer(velocity.ValueRW.Velocity, ref state);
                     break;
                 case MovementType.AIControlled:
-                    UnityEngine.Debug.Log("AI controlled movement not implemented");
+                    if (!_entityManager.HasComponent<DeathComponent>(entity) && !_entityManager.HasComponent<DestroyAfterDelayComponent>(entity))
+                    {
+                        MoveAI(velocity.ValueRW.Velocity, entity, ref state);
+                    }
                     break;
             }
         }
+    }
+
+    [BurstCompile]
+    private void MoveAI(float velocity, Entity monsterEntity, ref SystemState state)
+    {
+        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
+        PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(playerEntity);
+
+        LocalTransform monsterTransform = _entityManager.GetComponentData<LocalTransform>(monsterEntity);
+        Vector3 moveVector = Vector3.MoveTowards(monsterTransform.Position, new Vector3(playerPosition.Position.x, playerPosition.Position.y, 0), velocity * Time.deltaTime);
+        monsterTransform.Position = new float3(moveVector.x, moveVector.y, 0);
+        _entityManager.SetComponentData(monsterEntity, monsterTransform);
+
+        PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(monsterEntity);
+        positionComponent.Position = new float2(monsterTransform.Position.x, monsterTransform.Position.y);
+        _entityManager.SetComponentData(monsterEntity, positionComponent);
+
+        DirectionComponent directionComponent = _entityManager.GetComponentData<DirectionComponent>(monsterEntity);
+        if (monsterTransform.Position.x < playerPosition.Position.x)
+        {
+            directionComponent.Direction = Direction.Right;
+        }
+        else
+        {
+            directionComponent.Direction = Direction.Left;
+        }
+        _entityManager.SetComponentData(monsterEntity, directionComponent);
     }
 
     [BurstCompile]

@@ -22,11 +22,3 @@ public enum SpellTarget
     Targeted,
     MousePosition
 }
-
-public enum SpellElement
-{
-    Fire,
-    Water,
-    Earth,
-    Air
-}

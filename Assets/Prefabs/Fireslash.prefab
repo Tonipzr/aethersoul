@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3008583498762845897}
   - component: {fileID: 9217097984618688801}
   - component: {fileID: 5606991870549367843}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fireslash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -790990811
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 1314599694, guid: 7f1919e4dda917d4c8bf6c59392123ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

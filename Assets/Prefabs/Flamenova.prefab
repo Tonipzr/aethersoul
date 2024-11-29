@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6111609410209501925}
   - component: {fileID: 5492472362063104235}
   - component: {fileID: 2093468674275506196}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flamenova
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -790990811
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 54839684, guid: eb96e2e5e58d1fb44b932b2c5ff77c53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
