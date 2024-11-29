@@ -9,7 +9,6 @@ partial struct TimeCounterSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-
     }
 
     [BurstCompile]
@@ -55,6 +54,12 @@ partial struct TimeCounterSystem : ISystem
                     entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
                     entityCommandBuffer.AddComponent<TimeCounterComponent>(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 120, isInfinite = false });
 
+                }
+
+                if (SystemAPI.HasComponent<SpawnPointComponent>(entity))
+                {
+                    entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
+                    entityCommandBuffer.AddComponent<DeathComponent>(entity);
                 }
             }
         }

@@ -20,7 +20,7 @@ partial class CameraSystem : SystemBase
         if (playerObject)
         {
             _virtualCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
-            _virtualCamera.Follow = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            _virtualCamera.Follow = playerObject.GetComponent<Transform>();
         }
     }
 

@@ -33,7 +33,7 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
             Enum.TryParse(spell.SpellType, out SpellType spellType);
             Enum.TryParse(spell.Range, out SpellRange spellRange);
             Enum.TryParse(spell.Target, out SpellTarget spellTarget);
-            Enum.TryParse(spell.Element, out SpellElement element);
+            Enum.TryParse(spell.Element, out Element element);
 
             AddComponent(spellEntity, new SpellComponent { SpellID = spell.SpellID, SpellType = spellType });
 
