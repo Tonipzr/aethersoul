@@ -27,6 +27,10 @@ public class MainMenuHandler : MonoBehaviour
     public void HandleDreamCityButton()
     {
         Debug.Log("Dream City button clicked");
+
+        SceneToLoadGameObject.FromSceneToScene("MainMenuScene", "DreamCityScene");
+
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void HandleSettingsButton()
