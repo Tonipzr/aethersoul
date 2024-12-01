@@ -14,7 +14,7 @@ partial struct CollisionSystem : ISystem
     {
         public Entity EntityA;
         public Entity EntityB;
-        public NativeArray<Entity> entitiesColliding;
+        public NativeList<Entity> entitiesColliding;
 
         [BurstCompile]
         public void Execute(TriggerEvent collisionEvent)
@@ -23,8 +23,8 @@ partial struct CollisionSystem : ISystem
             Entity entityA = collisionEvent.EntityA;
             Entity entityB = collisionEvent.EntityB;
 
-            entitiesColliding[0] = entityA;
-            entitiesColliding[1] = entityB;
+            entitiesColliding.Add(entityA);
+            entitiesColliding.Add(entityB);
         }
     }
 
@@ -41,82 +41,92 @@ partial struct CollisionSystem : ISystem
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
         var simuilationSingleton = SystemAPI.GetSingleton<SimulationSingleton>();
-        NativeArray<Entity> entitiesColliding = new NativeArray<Entity>(2, Allocator.TempJob);
+        NativeList<Entity> entitiesColliding = new NativeList<Entity>(Allocator.TempJob);
         JobHandle jobHandle = new CountNumTriggerEvents
         {
             entitiesColliding = entitiesColliding
         }.Schedule(simuilationSingleton, state.Dependency);
         jobHandle.Complete();
 
-        if (entitiesColliding[0] == Entity.Null || entitiesColliding[1] == Entity.Null)
-        {
-            return;
-        }
 
-        if (IsCollisionEnemyWithPlayer(entitiesColliding[0], entitiesColliding[1]))
+        for (int i = 0; i < entitiesColliding.Length; i += 2)
         {
-            Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
-            Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
+            Entity entityA = entitiesColliding[i];
+            Entity entityB = entitiesColliding[i + 1];
 
-            if (_entityManager.HasComponent<DeathComponent>(monsterEntity))
+            if (entityA == Entity.Null || entityB == Entity.Null)
             {
-                return;
+                continue;
             }
 
-            MonsterStatsComponent monsterStatsComponent = _entityManager.GetComponentData<MonsterStatsComponent>(monsterEntity);
-
-            entityCommandBuffer.AddComponent(playerEntity, new DamageComponent
+            if (IsCollisionEnemyWithPlayer(entitiesColliding[0], entitiesColliding[1]))
             {
-                DamageAmount = monsterStatsComponent.Damage
-            });
-        }
+                Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
 
-        if (IsCollisionExperienceWithPlayer(entitiesColliding[0], entitiesColliding[1]))
-        {
-            Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
-            Entity experienceEntity = GetExperienceEntity(entitiesColliding[0], entitiesColliding[1]);
+                if (_entityManager.HasComponent<DeathComponent>(monsterEntity))
+                {
+                    return;
+                }
 
-            ExperienceShardEntityComponent experienceShardEntityComponent = _entityManager.GetComponentData<ExperienceShardEntityComponent>(experienceEntity);
+                MonsterStatsComponent monsterStatsComponent = _entityManager.GetComponentData<MonsterStatsComponent>(monsterEntity);
 
-            entityCommandBuffer.AddComponent(playerEntity, new ExperienceGainComponent
+                entityCommandBuffer.AddComponent(playerEntity, new DamageComponent
+                {
+                    DamageAmount = monsterStatsComponent.Damage
+                });
+            }
+
+            if (IsCollisionExperienceWithPlayer(entitiesColliding[0], entitiesColliding[1]))
             {
-                ExperienceGain = experienceShardEntityComponent.ExperienceQuantity
-            });
+                Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity experienceEntity = GetExperienceEntity(entitiesColliding[0], entitiesColliding[1]);
 
-            entityCommandBuffer.AddComponent(experienceEntity, new DestroyAfterDelayComponent
+                ExperienceShardEntityComponent experienceShardEntityComponent = _entityManager.GetComponentData<ExperienceShardEntityComponent>(experienceEntity);
+
+                entityCommandBuffer.AddComponent(playerEntity, new ExperienceGainComponent
+                {
+                    ExperienceGain = experienceShardEntityComponent.ExperienceQuantity
+                });
+
+                entityCommandBuffer.AddComponent(experienceEntity, new DestroyAfterDelayComponent
+                {
+                    ElapsedTime = 0,
+                    EndTime = 0
+                });
+            }
+
+            if (IsCollisionEnemyWithSpell(entitiesColliding[0], entitiesColliding[1]))
             {
-                ElapsedTime = 0,
-                EndTime = 0
-            });
-        }
+                Entity spellEntity = GetSpellEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
+                SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
+                SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
+                MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(monsterEntity);
 
-        if (IsCollisionEnemyWithSpell(entitiesColliding[0], entitiesColliding[1]))
-        {
-            Entity spellEntity = GetSpellEntity(entitiesColliding[0], entitiesColliding[1]);
-            Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
-            SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
-            SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
-            MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(monsterEntity);
+                VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
 
-            VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
+                int spellIncreasePercentage = spellElement.Element switch
+                {
+                    Element.Fire => DreamCityStatsGameObject.FireBuff,
+                    Element.Water => DreamCityStatsGameObject.WaterBuff,
+                    Element.Earth => DreamCityStatsGameObject.EarthBuff,
+                    Element.Air => DreamCityStatsGameObject.AirBuff,
+                    _ => 0
+                };
 
-            int spellIncreasePercentage = spellElement.Element switch
-            {
-                Element.Fire => DreamCityStatsGameObject.FireBuff,
-                Element.Water => DreamCityStatsGameObject.WaterBuff,
-                Element.Earth => DreamCityStatsGameObject.EarthBuff,
-                Element.Air => DreamCityStatsGameObject.AirBuff,
-                _ => 0
-            };
+                entityCommandBuffer.AddComponent(monsterEntity, new DamageComponent
+                {
+                    DamageAmount = spellDamage.Damage + Mathf.RoundToInt(spellDamage.Damage * spellIncreasePercentage / 100)
+                });
 
-            entityCommandBuffer.AddComponent(monsterEntity, new DamageComponent
-            {
-                DamageAmount = spellDamage.Damage + Mathf.RoundToInt(spellDamage.Damage * spellIncreasePercentage / 100)
-            });
+                visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 
-            visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
-
-            entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(spellEntity);
+                if (_entityManager.HasComponent<SpellSkillShotEntityComponent>(spellEntity))
+                {
+                    entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(spellEntity);
+                }
+            }
         }
 
         entitiesColliding.Dispose();

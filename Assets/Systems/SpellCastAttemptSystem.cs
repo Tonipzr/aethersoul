@@ -113,6 +113,13 @@ partial struct SpellCastAttemptSystem : ISystem
         });
         if (spellComponent.SpellType == SpellType.AreaOfEffect)
         {
+            entityCommandBuffer.AddComponent(spellEntity, new LocalTransform
+            {
+                Position = new float3(mousePosition.Position.x, mousePosition.Position.y, 0),
+                Rotation = quaternion.identity,
+                Scale = 1
+            });
+
             entityCommandBuffer.AddComponent(spellEntity, new SpellAoEEntityComponent
             {
                 ToPosition = new float2(mousePosition.Position.x, mousePosition.Position.y),
@@ -128,6 +135,62 @@ partial struct SpellCastAttemptSystem : ISystem
                 EndTime = spellDuration.Duration,
                 isInfinite = false,
             });
+            entityCommandBuffer.AddComponent(spellEntity, new SpellElementComponent
+            {
+                Element = spellElement.Element
+            });
+
+            var collider = new PhysicsCollider
+            {
+                Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                {
+                    Center = new float3(0, 0, 0),
+                    Size = new float3(1, 1, 1),
+                    Orientation = quaternion.identity,
+                    BevelRadius = 0,
+                }, new CollisionFilter
+                {
+                    BelongsTo = 4,
+                    CollidesWith = 2,
+                    GroupIndex = 0
+                })
+            };
+            collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+            entityCommandBuffer.AddComponent(spellEntity, collider);
+
+            entityCommandBuffer.AddComponent(spellEntity, new PhysicsDamping
+            {
+                Linear = 0.01f,
+                Angular = 0.05f
+            });
+            entityCommandBuffer.SetComponent(spellEntity, new PhysicsDamping
+            {
+                Linear = 0.01f,
+                Angular = 0.05f
+            });
+
+            entityCommandBuffer.AddComponent<PhysicsGravityFactor>(spellEntity);
+            entityCommandBuffer.SetComponent(spellEntity, new PhysicsGravityFactor
+            {
+                Value = 0
+            });
+
+            entityCommandBuffer.AddComponent<PhysicsMass>(spellEntity);
+            entityCommandBuffer.SetComponent(spellEntity, new PhysicsMass
+            {
+                InverseInertia = 6,
+                InverseMass = 1,
+                AngularExpansionFactor = 0,
+                InertiaOrientation = quaternion.identity,
+            });
+
+            entityCommandBuffer.AddComponent<PhysicsVelocity>(spellEntity);
+            entityCommandBuffer.SetComponent(spellEntity, new PhysicsVelocity
+            {
+                Linear = new float3(0, 0, 0),
+                Angular = new float3(0, 0, 0)
+            });
+
             spellVisuals.gameObject.transform.position = new Vector3(mousePosition.Position.x, mousePosition.Position.y, 0);
         }
 

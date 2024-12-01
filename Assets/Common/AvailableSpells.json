@@ -8,7 +8,7 @@
             "Damage": 50,
             "Range": "Three",
             "Cost": 10,
-            "Cooldown": 5,
+            "Cooldown": 1,
             "Element": "Fire",
             "Duration": 1
         },
