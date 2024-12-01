@@ -57,6 +57,12 @@ partial struct CollisionSystem : ISystem
         {
             Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
             Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
+
+            if (_entityManager.HasComponent<DeathComponent>(monsterEntity))
+            {
+                return;
+            }
+
             MonsterStatsComponent monsterStatsComponent = _entityManager.GetComponentData<MonsterStatsComponent>(monsterEntity);
 
             entityCommandBuffer.AddComponent(playerEntity, new DamageComponent
@@ -89,13 +95,23 @@ partial struct CollisionSystem : ISystem
             Entity spellEntity = GetSpellEntity(entitiesColliding[0], entitiesColliding[1]);
             Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
             SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
+            SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
             MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(monsterEntity);
 
             VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
 
+            int spellIncreasePercentage = spellElement.Element switch
+            {
+                Element.Fire => DreamCityStatsGameObject.FireBuff,
+                Element.Water => DreamCityStatsGameObject.WaterBuff,
+                Element.Earth => DreamCityStatsGameObject.EarthBuff,
+                Element.Air => DreamCityStatsGameObject.AirBuff,
+                _ => 0
+            };
+
             entityCommandBuffer.AddComponent(monsterEntity, new DamageComponent
             {
-                DamageAmount = spellDamage.Damage
+                DamageAmount = spellDamage.Damage + Mathf.RoundToInt(spellDamage.Damage * spellIncreasePercentage / 100)
             });
 
             visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");

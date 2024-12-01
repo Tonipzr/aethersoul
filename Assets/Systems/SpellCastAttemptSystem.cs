@@ -96,6 +96,7 @@ partial struct SpellCastAttemptSystem : ISystem
 
         SpellComponent spellComponent = _entityManager.GetComponentData<SpellComponent>(spell);
         SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spell);
+        SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spell);
 
         GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
         Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
@@ -157,6 +158,10 @@ partial struct SpellCastAttemptSystem : ISystem
             entityCommandBuffer.AddComponent(spellEntity, new VelocityComponent
             {
                 Velocity = 10
+            });
+            entityCommandBuffer.AddComponent(spellEntity, new SpellElementComponent
+            {
+                Element = spellElement.Element
             });
 
             var collider = new PhysicsCollider
