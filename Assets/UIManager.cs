@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     [Header("Coins")]
     [SerializeField]
     private TextMeshProUGUI coinsText;
-    private static int MaxCoinsNumber = 999999;
+    private static int MaxCoinsNumber = 99999;
 
     [Space(10)]
 
