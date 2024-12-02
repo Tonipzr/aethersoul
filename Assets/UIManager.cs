@@ -30,6 +30,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI levelText;
 
+    [Header("Coins")]
+    [SerializeField]
+    private TextMeshProUGUI coinsText;
+    private static int MaxCoinsNumber = 999999;
+
     [Space(10)]
 
     [Header("Spells")]
@@ -163,6 +168,18 @@ public class UIManager : MonoBehaviour
         else
         {
             cooldownVisual.fillAmount = 1 - elapsedTime / cooldown;
+        }
+    }
+
+    public void UpdateCoins(int coins)
+    {
+        if (coins > MaxCoinsNumber)
+        {
+            coinsText.text = "+" + MaxCoinsNumber.ToString();
+        }
+        else
+        {
+            coinsText.text = coins.ToString();
         }
     }
 

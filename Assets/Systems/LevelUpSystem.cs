@@ -12,7 +12,6 @@ partial struct LevelUpSystem : ISystem
 
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         _entityManager = state.EntityManager;
@@ -28,6 +27,8 @@ partial struct LevelUpSystem : ISystem
             experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level);
 
             entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = true });
+
+            DreamCityStatsGameObject.IncreaseCoins(5 + (level.ValueRO.Level - 1));
         }
 
         entityCommandBuffer.Playback(_entityManager);
