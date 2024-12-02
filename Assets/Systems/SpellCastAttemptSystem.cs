@@ -34,6 +34,8 @@ partial struct SpellCastAttemptSystem : ISystem
                     {
                         if (spellTarget.ValueRO.Target == SpellTarget.MousePosition) CastMousePositionSpell(entity, spellEntity, entityCommandBuffer);
                         if (spellTarget.ValueRO.Target == SpellTarget.Self) CastSelfSpell(entity, spellEntity, entityCommandBuffer);
+
+                        RemoveMana(entity, spellEntity, entityCommandBuffer);
                     }
                 }
             }
@@ -44,6 +46,24 @@ partial struct SpellCastAttemptSystem : ISystem
 
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
+    }
+
+    private void RemoveMana(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
+    {
+        if (
+            !_entityManager.HasComponent<ManaComponent>(caster) ||
+            !_entityManager.HasComponent<SpellCostComponent>(spell)
+        )
+        {
+            return;
+        }
+
+        SpellCostComponent spellCostComponent = _entityManager.GetComponentData<SpellCostComponent>(spell);
+
+        entityCommandBuffer.AddComponent(caster, new ManaRestoreComponent()
+        {
+            RestoreAmount = -spellCostComponent.Cost
+        });
     }
 
     private void CastSelfSpell(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
