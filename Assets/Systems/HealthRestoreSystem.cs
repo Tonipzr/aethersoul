@@ -6,6 +6,7 @@ using Unity.Entities;
 partial struct HealthRestoreSystem : ISystem
 {
     private EntityManager _entityManager;
+    private double elapsedTime;
 
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -32,6 +33,21 @@ partial struct HealthRestoreSystem : ISystem
                 });
 
                 health.ValueRW.CurrentHealth = Math.Min(health.ValueRO.MaxHealth, health.ValueRO.CurrentHealth + heal.ValueRO.HealAmount);
+            }
+        }
+
+        float deltaTime = SystemAPI.Time.DeltaTime;
+        elapsedTime += deltaTime;
+        if (elapsedTime >= 5)
+        {
+            elapsedTime = 0;
+
+            if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
+            {
+                entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
+                {
+                    HealAmount = 5
+                });
             }
         }
 

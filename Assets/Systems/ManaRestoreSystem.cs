@@ -6,6 +6,7 @@ using Unity.Entities;
 partial struct ManaRestoreSystem : ISystem
 {
     private EntityManager _entityManager;
+    private double elapsedTime;
 
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -44,6 +45,21 @@ partial struct ManaRestoreSystem : ISystem
                 });
 
                 mana.ValueRW.CurrentMana = Math.Max(0, mana.ValueRO.CurrentMana + restore.ValueRO.RestoreAmount);
+            }
+        }
+
+        float deltaTime = SystemAPI.Time.DeltaTime;
+        elapsedTime += deltaTime;
+        if (elapsedTime >= 5)
+        {
+            elapsedTime = 0;
+
+            if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
+            {
+                entityCommandBuffer.AddComponent(playerEntity, new ManaRestoreComponent
+                {
+                    RestoreAmount = 5
+                });
             }
         }
 

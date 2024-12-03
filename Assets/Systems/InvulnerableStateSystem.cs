@@ -21,8 +21,6 @@ partial struct InvulnerableStateSystem : ISystem
 
         foreach (var (invulnerable, entity) in SystemAPI.Query<RefRW<InvulnerableStateComponent>>().WithEntityAccess())
         {
-            UnityEngine.Debug.Log("Called");
-
             invulnerable.ValueRW.ElapsedTime += SystemAPI.Time.DeltaTime;
 
             if (invulnerable.ValueRO.Duration <= invulnerable.ValueRO.ElapsedTime)
