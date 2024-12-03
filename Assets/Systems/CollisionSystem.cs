@@ -85,6 +85,18 @@ partial struct CollisionSystem : ISystem
                     Duration = 1,
                     ElapsedTime = 0
                 });
+
+                if (_entityManager.HasComponent<VisualsReferenceComponent>(playerEntity))
+                {
+                    VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(playerEntity);
+                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
+                }
+
+                if (_entityManager.HasComponent<VisualsReferenceComponent>(monsterEntity))
+                {
+                    VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
+                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Attack");
+                }
             }
 
             if (IsCollisionExperienceWithPlayer(entitiesColliding[0], entitiesColliding[1]))
