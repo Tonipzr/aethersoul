@@ -28,6 +28,8 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new WeatherComponent { Weather = WeatherType.Clear });
         AddComponent(playerEntity, new IsInSafeZoneComponent());
         SetComponentEnabled<IsInSafeZoneComponent>(playerEntity, false);
+        AddComponent(playerEntity, new InvulnerableStateComponent { Duration = 1, ElapsedTime = 0 });
+        SetComponentEnabled<InvulnerableStateComponent>(playerEntity, false);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }

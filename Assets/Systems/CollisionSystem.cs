@@ -64,7 +64,10 @@ partial struct CollisionSystem : ISystem
                 Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
                 Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
 
-                if (_entityManager.HasComponent<DeathComponent>(monsterEntity))
+                if (
+                    _entityManager.HasComponent<DeathComponent>(monsterEntity) ||
+                    _entityManager.IsComponentEnabled<InvulnerableStateComponent>(playerEntity)
+                )
                 {
                     return;
                 }
@@ -74,6 +77,13 @@ partial struct CollisionSystem : ISystem
                 entityCommandBuffer.AddComponent(playerEntity, new DamageComponent
                 {
                     DamageAmount = monsterStatsComponent.Damage
+                });
+
+                entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(playerEntity, true);
+                entityCommandBuffer.AddComponent(playerEntity, new InvulnerableStateComponent
+                {
+                    Duration = 1,
+                    ElapsedTime = 0
                 });
             }
 
