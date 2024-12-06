@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -36,6 +37,25 @@ partial struct SpellCastAttemptSystem : ISystem
                         if (spellTarget.ValueRO.Target == SpellTarget.Self) CastSelfSpell(entity, spellEntity, entityCommandBuffer);
 
                         RemoveMana(entity, spellEntity, entityCommandBuffer);
+
+                        if (_entityManager.HasComponent<SpellElementComponent>(spellEntity))
+                        {
+                            SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
+                            Entity audioEntity = entityCommandBuffer.CreateEntity();
+
+                            AudioType audiotype = spellElement.Element switch
+                            {
+                                Element.Fire => AudioType.FireSpell,
+                                Element.Air => AudioType.WindSpell,
+                                _ => AudioType.FireSpell
+                            };
+
+                            entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+                            {
+                                Volume = 1,
+                                Audio = audiotype
+                            });
+                        }
                     }
                 }
             }
