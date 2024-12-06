@@ -30,7 +30,7 @@
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
             "Damage": 70,
-            "Range": "Infinite",
+            "Range": "Five",
             "Cost": 40,
             "Cooldown": 12,
             "Element": "Fire",

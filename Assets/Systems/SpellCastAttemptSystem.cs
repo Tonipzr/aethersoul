@@ -78,7 +78,9 @@ partial struct SpellCastAttemptSystem : ISystem
         SpellComponent spellComponent = _entityManager.GetComponentData<SpellComponent>(spell);
 
         GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
-        Entity spellEntity = _entityManager.CreateEntity();
+        Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+        SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spell);
+        SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spell);
 
         PositionComponent casterPosition = _entityManager.GetComponentData<PositionComponent>(caster);
         SpellRangeComponent spellRange = _entityManager.GetComponentData<SpellRangeComponent>(spell);
@@ -86,10 +88,20 @@ partial struct SpellCastAttemptSystem : ISystem
 
         UnityEngine.Debug.Log("Casting spell at self position");
 
+        entityCommandBuffer.AddComponent(spellEntity, new LocalTransform
+        {
+            Position = new float3(casterPosition.Position.x, casterPosition.Position.y, 0),
+            Rotation = quaternion.identity,
+            Scale = 3
+        });
         entityCommandBuffer.AddComponent(spellEntity, new SpellAoEEntityComponent
         {
             ToPosition = new float2(casterPosition.Position.x, casterPosition.Position.y),
             AreaOfEffect = spellRangeToNumber(spellRange)
+        });
+        entityCommandBuffer.AddComponent(spellEntity, new SpellDamageComponent
+        {
+            Damage = spellDamage.Damage
         });
         entityCommandBuffer.AddComponent(spellEntity, new SpellEntityGameObjectReferenceComponent
         {
@@ -100,6 +112,57 @@ partial struct SpellCastAttemptSystem : ISystem
             ElapsedTime = 0,
             EndTime = spellDuration.Duration,
             isInfinite = false,
+        });
+        entityCommandBuffer.AddComponent(spellEntity, new SpellElementComponent
+        {
+            Element = spellElement.Element
+        });
+
+        var collider = new PhysicsCollider
+        {
+            Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+            {
+                Center = new float3(0, 0, 0),
+                Size = new float3(1, 1, 1),
+                Orientation = quaternion.identity,
+                BevelRadius = 0,
+            }, new CollisionFilter
+            {
+                BelongsTo = 4,
+                CollidesWith = 2,
+                GroupIndex = 0
+            })
+        };
+        collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+        entityCommandBuffer.AddComponent(spellEntity, collider);
+
+        entityCommandBuffer.AddComponent<PhysicsDamping>(spellEntity);
+        entityCommandBuffer.SetComponent(spellEntity, new PhysicsDamping
+        {
+            Linear = 0.01f,
+            Angular = 0.05f
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsGravityFactor>(spellEntity);
+        entityCommandBuffer.SetComponent(spellEntity, new PhysicsGravityFactor
+        {
+            Value = 0
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsMass>(spellEntity);
+        entityCommandBuffer.SetComponent(spellEntity, new PhysicsMass
+        {
+            InverseInertia = 6,
+            InverseMass = 1,
+            AngularExpansionFactor = 0,
+            InertiaOrientation = quaternion.identity,
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsVelocity>(spellEntity);
+        entityCommandBuffer.SetComponent(spellEntity, new PhysicsVelocity
+        {
+            Linear = new float3(0, 0, 0),
+            Angular = new float3(0, 0, 0)
         });
         spellVisuals.gameObject.transform.position = new Vector3(casterPosition.Position.x, casterPosition.Position.y, 0);
     }
