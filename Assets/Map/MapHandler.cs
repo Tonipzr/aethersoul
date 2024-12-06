@@ -365,4 +365,10 @@ public class MapHandler : MonoBehaviour
         int chunkY = Mathf.FloorToInt(position.y / chunkSize);
         return new Vector2Int(chunkX, chunkY);
     }
+
+    public TileBase GetTileAtPosition(float2 position)
+    {
+        Vector3Int tilePos = world.WorldToCell(new Vector3(position.x, position.y, 0));
+        return world.GetTile(tilePos);
+    }
 }

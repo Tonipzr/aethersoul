@@ -22,6 +22,9 @@ public class DreamCityUIHandler : MonoBehaviour
     [SerializeField]
     private Button increaseBuffButton;
 
+    [SerializeField]
+    private GameObject audioUpgradeEffect;
+
     public static DreamCityUIHandler Instance { get; private set; }
 
     #region FireVars
@@ -45,7 +48,7 @@ public class DreamCityUIHandler : MonoBehaviour
     #endregion
 
     #region SharedVars
-
+    public bool BoughtBuff = false;
     #endregion
 
     private void Awake()
@@ -120,6 +123,7 @@ public class DreamCityUIHandler : MonoBehaviour
 
             DreamCityStatsGameObject.DecreaseCoins(nextLevelPrice);
             SetBuffUI(statueType);
+            BoughtBuff = true;
 
             if (DreamCityStatsGameObject.CurrentCoins < nextLevelPrice)
             {
@@ -165,5 +169,10 @@ public class DreamCityUIHandler : MonoBehaviour
         SceneToLoadGameObject.FromSceneToScene("DreamCityScene", "MainMenuScene");
 
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void PlayAudioUpgradeEffect()
+    {
+        audioUpgradeEffect.GetComponent<AudioSource>().Play();
     }
 }

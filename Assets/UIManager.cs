@@ -269,6 +269,15 @@ public class UIManager : MonoBehaviour
             gameState.IsPaused = !gameState.IsPaused;
 
             entityManager.SetComponentData(mapEntity, gameState);
+
+            if (gameState.IsPaused)
+            {
+                AudioManager.Instance.PlayAudio(AudioType.Pause);
+            }
+            else
+            {
+                AudioManager.Instance.PlayAudio(AudioType.UnPause);
+            }
         }
     }
 
@@ -312,6 +321,7 @@ public class UIManager : MonoBehaviour
             if (upgrade.Type == "UnlockSpell")
             {
                 entityManager.AddComponentData(playerEntity, new SpellLearnComponent { SpellID = (int)upgrade.UpgradePerLevel });
+                AudioManager.Instance.PlayAudio(AudioType.Buff);
             }
 
             if (upgrade.Type == "HealthRestore")
@@ -319,6 +329,7 @@ public class UIManager : MonoBehaviour
                 HealthComponent healthComponent = entityManager.GetComponentData<HealthComponent>(playerEntity);
 
                 entityManager.AddComponentData(playerEntity, new HealthRestoreComponent { HealAmount = healthComponent.MaxHealth });
+                AudioManager.Instance.PlayAudio(AudioType.Heal);
             }
 
             if (upgrade.Type == "ManaRestore")
@@ -326,6 +337,7 @@ public class UIManager : MonoBehaviour
                 ManaComponent manaComponent = entityManager.GetComponentData<ManaComponent>(playerEntity);
 
                 entityManager.AddComponentData(playerEntity, new ManaRestoreComponent { RestoreAmount = manaComponent.MaxMana });
+                AudioManager.Instance.PlayAudio(AudioType.Heal);
             }
         }
         else
@@ -346,6 +358,7 @@ public class UIManager : MonoBehaviour
             }
 
             buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel + upgradeLevel });
+            AudioManager.Instance.PlayAudio(AudioType.Buff);
         }
 
         ToggleCardPicker();
