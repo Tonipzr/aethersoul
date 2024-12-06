@@ -98,6 +98,8 @@ partial struct CollisionSystem : ISystem
                 {
                     VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
                     visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Attack");
+
+                    CreateAudioEntity(entityCommandBuffer);
                 }
             }
 
@@ -343,5 +345,15 @@ partial struct CollisionSystem : ISystem
     private Entity GetCheckpointEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<MapCheckpointEntityComponent>(entityA) ? entityA : entityB;
+    }
+
+    private void CreateAudioEntity(EntityCommandBuffer entityCommandBuffer)
+    {
+        Entity audioEntity = entityCommandBuffer.CreateEntity();
+        entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+        {
+            Volume = 1,
+            Audio = AudioType.Claw
+        });
     }
 }

@@ -74,6 +74,13 @@ partial struct DeathSystem : ISystem
                     visualsReferenceComponent.gameObject.GetComponent<Animator>().SetBool("Death", true);
                 }
 
+                Entity audioEntity = entityCommandBuffer.CreateEntity();
+                entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+                {
+                    Volume = 1,
+                    Audio = AudioType.Death
+                });
+
                 if (_entityManager.HasComponent<ExperienceAfterDeathComponent>(entity))
                 {
                     if (!SystemAPI.ManagedAPI.TryGetSingleton(out AnimationVisualsPrefabs animationVisualsPrefabs))

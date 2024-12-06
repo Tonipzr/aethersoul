@@ -64,6 +64,12 @@ public class DreamCityCharacterController : MonoBehaviour
         {
             DreamCityUIHandler.Instance.ToggleInteractImage(false);
             DreamCityUIHandler.Instance.ToggleBuffUI(false, "");
+
+            if (DreamCityUIHandler.Instance.BoughtBuff)
+            {
+                DreamCityUIHandler.Instance.BoughtBuff = false;
+                DreamCityUIHandler.Instance.PlayAudioUpgradeEffect();
+            }
         }
     }
 
