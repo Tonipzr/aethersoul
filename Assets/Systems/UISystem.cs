@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -39,6 +40,11 @@ partial class UISystem : SystemBase
             UIManager.Instance.ToggleSpellBook();
         }
 
+        if (inputComponent.pressingOpenMenu)
+        {
+            UIManager.Instance.ToggleMenu();
+        }
+
         foreach (var (health, _, entity) in SystemAPI.Query<RefRO<HealthUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
         {
             UIManager.Instance.UpdateHP(health.ValueRO.CurrentHealth, health.ValueRO.MaxHealth);
@@ -53,6 +59,8 @@ partial class UISystem : SystemBase
             if (experience.ValueRO.CurrentLevelUpdated)
             {
                 UIManager.Instance.UpdateCoins(DreamCityStatsGameObject.CurrentCoins);
+
+                UIManager.Instance.ToggleCardPicker();
             }
 
             entityCommandBuffer.RemoveComponent<ExperienceUpdatedComponent>(entity);

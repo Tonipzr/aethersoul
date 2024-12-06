@@ -1,20 +1,19 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 
-partial struct LevelUpSystem : ISystem
+partial class LevelUpSystem : SystemBase
 {
     private EntityManager _entityManager;
 
-    [BurstCompile]
-    public void OnCreate(ref SystemState state)
+    protected override void OnCreate()
     {
-
     }
 
-    public void OnUpdate(ref SystemState state)
+    protected override void OnUpdate()
     {
-        _entityManager = state.EntityManager;
+        _entityManager = EntityManager;
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
@@ -28,15 +27,27 @@ partial struct LevelUpSystem : ISystem
 
             entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = true });
 
-            DreamCityStatsGameObject.IncreaseCoins(5 + (level.ValueRO.Level - 1));
+            int coins = 5 + (level.ValueRO.Level - 1);
+            if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
+            {
+                var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
+
+                foreach (var upgrade in activeUpgrades)
+                {
+                    if (upgrade.Type == UpgradeType.GoldBonusOnKill)
+                    {
+                        coins = (int)(coins * (1 + ((float)upgrade.Value / 100)));
+                    }
+                }
+            }
+            DreamCityStatsGameObject.IncreaseCoins(coins);
         }
 
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
     }
 
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
+    protected override void OnDestroy()
     {
 
     }

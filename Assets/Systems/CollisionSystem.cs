@@ -137,10 +137,71 @@ partial struct CollisionSystem : ISystem
                     _ => 0
                 };
 
+                int spellIncreaseByCurrentGameBuffsPercentage = 0;
+                int lifeLeech = 0;
+                int manaLeech = 0;
+                if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
+                {
+                    if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
+                    {
+                        var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
+
+                        foreach (var upgrade in activeUpgrades)
+                        {
+                            if (upgrade.Type == UpgradeType.FireDamage && spellElement.Element == Element.Fire)
+                            {
+                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                            }
+
+                            if (upgrade.Type == UpgradeType.WaterDamage && spellElement.Element == Element.Water)
+                            {
+                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                            }
+
+                            if (upgrade.Type == UpgradeType.EarthDamage && spellElement.Element == Element.Earth)
+                            {
+                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                            }
+
+                            if (upgrade.Type == UpgradeType.AirDamage && spellElement.Element == Element.Air)
+                            {
+                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                            }
+
+                            if (upgrade.Type == UpgradeType.Lifeleech)
+                            {
+                                lifeLeech = (int)upgrade.Value;
+                            }
+
+                            if (upgrade.Type == UpgradeType.Manaleech)
+                            {
+                                manaLeech = (int)upgrade.Value;
+                            }
+                        }
+                    }
+                }
+
+                int damage = Mathf.RoundToInt(spellDamage.Damage * (1 + ((float)spellIncreasePercentage / 100)) * (1 + (spellIncreaseByCurrentGameBuffsPercentage / 100)));
                 entityCommandBuffer.AddComponent(monsterEntity, new DamageComponent
                 {
-                    DamageAmount = spellDamage.Damage + Mathf.RoundToInt(spellDamage.Damage * spellIncreasePercentage / 100)
+                    DamageAmount = damage
                 });
+
+                if (lifeLeech > 0)
+                {
+                    entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
+                    {
+                        HealAmount = Mathf.RoundToInt(damage * (1 + ((float)lifeLeech / 100)))
+                    });
+                }
+
+                if (manaLeech > 0)
+                {
+                    entityCommandBuffer.AddComponent(playerEntity, new ManaRestoreComponent
+                    {
+                        RestoreAmount = Mathf.RoundToInt(damage * (1 + ((float)manaLeech / 100)))
+                    });
+                }
 
                 visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 

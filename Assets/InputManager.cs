@@ -107,6 +107,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""3030100e-cd7e-4377-9d12-13c2bf8c8202"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -307,6 +316,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef479e57-6806-42aa-a055-ccec2e93330d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -324,6 +344,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_PlayInputMap_Spell_Slot_4 = m_PlayInputMap.FindAction("Spell_Slot_4", throwIfNotFound: true);
         m_PlayInputMap_ToggleSpellBook = m_PlayInputMap.FindAction("ToggleSpellBook", throwIfNotFound: true);
         m_PlayInputMap_MousePosition = m_PlayInputMap.FindAction("MousePosition", throwIfNotFound: true);
+        m_PlayInputMap_OpenMenu = m_PlayInputMap.FindAction("OpenMenu", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -399,6 +420,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayInputMap_Spell_Slot_4;
     private readonly InputAction m_PlayInputMap_ToggleSpellBook;
     private readonly InputAction m_PlayInputMap_MousePosition;
+    private readonly InputAction m_PlayInputMap_OpenMenu;
     public struct PlayInputMapActions
     {
         private @InputManager m_Wrapper;
@@ -412,6 +434,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Spell_Slot_4 => m_Wrapper.m_PlayInputMap_Spell_Slot_4;
         public InputAction @ToggleSpellBook => m_Wrapper.m_PlayInputMap_ToggleSpellBook;
         public InputAction @MousePosition => m_Wrapper.m_PlayInputMap_MousePosition;
+        public InputAction @OpenMenu => m_Wrapper.m_PlayInputMap_OpenMenu;
         public InputActionMap Get() { return m_Wrapper.m_PlayInputMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -448,6 +471,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
+            @OpenMenu.started += instance.OnOpenMenu;
+            @OpenMenu.performed += instance.OnOpenMenu;
+            @OpenMenu.canceled += instance.OnOpenMenu;
         }
 
         private void UnregisterCallbacks(IPlayInputMapActions instance)
@@ -479,6 +505,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
+            @OpenMenu.started -= instance.OnOpenMenu;
+            @OpenMenu.performed -= instance.OnOpenMenu;
+            @OpenMenu.canceled -= instance.OnOpenMenu;
         }
 
         public void RemoveCallbacks(IPlayInputMapActions instance)
@@ -507,5 +536,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnSpell_Slot_4(InputAction.CallbackContext context);
         void OnToggleSpellBook(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnOpenMenu(InputAction.CallbackContext context);
     }
 }

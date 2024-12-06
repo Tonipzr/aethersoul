@@ -15,4 +15,6 @@ public struct InputComponent : IComponentData
     public bool pressingSpellSlot2;
     public bool pressingSpellSlot3;
     public bool pressingSpellSlot4;
+
+    public bool pressingOpenMenu;
 }

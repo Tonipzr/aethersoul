@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -44,9 +45,24 @@ partial struct HealthRestoreSystem : ISystem
 
             if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
             {
+                int restoreQuantity = 5;
+
+                if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
+                {
+                    var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
+
+                    foreach (var upgrade in activeUpgrades)
+                    {
+                        if (upgrade.Type == UpgradeType.HealthRegen)
+                        {
+                            restoreQuantity = (int)(restoreQuantity * (1 + (upgrade.Value / 100)));
+                        }
+                    }
+                }
+
                 entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
                 {
-                    HealAmount = 5
+                    HealAmount = restoreQuantity
                 });
             }
         }
