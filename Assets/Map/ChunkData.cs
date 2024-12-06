@@ -9,6 +9,7 @@ public class ChunkData
     public Dictionary<Vector2Int, TileBase> tiles = new Dictionary<Vector2Int, TileBase>();
     public Dictionary<Vector2Int, GameObject> treePositions = new Dictionary<Vector2Int, GameObject>();
     public List<Vector2Int> checkpointPositions = new List<Vector2Int>();
+    public Dictionary<Vector2Int, Entity> checkpointEntities = new Dictionary<Vector2Int, Entity>();
     public Dictionary<Vector2Int, bool> buffPositions = new Dictionary<Vector2Int, bool>();
     public Dictionary<Vector2Int, Entity> buffEntities = new Dictionary<Vector2Int, Entity>();
 

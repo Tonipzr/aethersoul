@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -48,7 +49,7 @@ partial struct CollisionSystem : ISystem
         }.Schedule(simuilationSingleton, state.Dependency);
         jobHandle.Complete();
 
-
+        List<Entity> collidingCheckpoints = new List<Entity>();
         for (int i = 0; i < entitiesColliding.Length; i += 2)
         {
             Entity entityA = entitiesColliding[i];
@@ -59,10 +60,10 @@ partial struct CollisionSystem : ISystem
                 continue;
             }
 
-            if (IsCollisionEnemyWithPlayer(entitiesColliding[0], entitiesColliding[1]))
+            if (IsCollisionEnemyWithPlayer(entityA, entityB))
             {
-                Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
-                Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity playerEntity = GetPlayerEntity(entityA, entityB);
+                Entity monsterEntity = GetMonsterEntity(entityA, entityB);
 
                 if (
                     _entityManager.HasComponent<DeathComponent>(monsterEntity) ||
@@ -83,7 +84,8 @@ partial struct CollisionSystem : ISystem
                 entityCommandBuffer.AddComponent(playerEntity, new InvulnerableStateComponent
                 {
                     Duration = 1,
-                    ElapsedTime = 0
+                    ElapsedTime = 0,
+                    isCheckpoint = false
                 });
 
                 if (_entityManager.HasComponent<VisualsReferenceComponent>(playerEntity))
@@ -99,10 +101,10 @@ partial struct CollisionSystem : ISystem
                 }
             }
 
-            if (IsCollisionExperienceWithPlayer(entitiesColliding[0], entitiesColliding[1]))
+            if (IsCollisionExperienceWithPlayer(entityA, entityB))
             {
-                Entity playerEntity = GetPlayerEntity(entitiesColliding[0], entitiesColliding[1]);
-                Entity experienceEntity = GetExperienceEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity playerEntity = GetPlayerEntity(entityA, entityB);
+                Entity experienceEntity = GetExperienceEntity(entityA, entityB);
 
                 ExperienceShardEntityComponent experienceShardEntityComponent = _entityManager.GetComponentData<ExperienceShardEntityComponent>(experienceEntity);
 
@@ -118,10 +120,10 @@ partial struct CollisionSystem : ISystem
                 });
             }
 
-            if (IsCollisionEnemyWithSpell(entitiesColliding[0], entitiesColliding[1]))
+            if (IsCollisionEnemyWithSpell(entityA, entityB))
             {
-                Entity spellEntity = GetSpellEntity(entitiesColliding[0], entitiesColliding[1]);
-                Entity monsterEntity = GetMonsterEntity(entitiesColliding[0], entitiesColliding[1]);
+                Entity spellEntity = GetSpellEntity(entityA, entityB);
+                Entity monsterEntity = GetMonsterEntity(entityA, entityB);
                 SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
                 SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
                 MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(monsterEntity);
@@ -210,8 +212,78 @@ partial struct CollisionSystem : ISystem
                     entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(spellEntity);
                 }
             }
+
+            if (IsCollisionPlayerWithCheckpoint(entityA, entityB))
+            {
+                Entity playerEntity = GetPlayerEntity(entityA, entityB);
+                Entity checkpointEntity = GetCheckpointEntity(entityA, entityB);
+
+                MapCheckpointEntityComponent mapCheckpointEntityComponent = _entityManager.GetComponentData<MapCheckpointEntityComponent>(checkpointEntity);
+
+                collidingCheckpoints.Add(checkpointEntity);
+
+                if (!mapCheckpointEntityComponent.IsColliding)
+                {
+                    mapCheckpointEntityComponent.IsColliding = true;
+                    entityCommandBuffer.SetComponent(checkpointEntity, mapCheckpointEntityComponent);
+
+                    InvulnerableStateComponent playerInvulnerable = _entityManager.GetComponentData<InvulnerableStateComponent>(playerEntity);
+                    playerInvulnerable.ElapsedTime = 0;
+                    playerInvulnerable.Duration = 9999;
+                    playerInvulnerable.isCheckpoint = true;
+                    entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(playerEntity, true);
+                    entityCommandBuffer.SetComponent(playerEntity, playerInvulnerable);
+                }
+            }
         }
 
+        for (int i = 0; i < collidingCheckpoints.Count; i++)
+        {
+            Entity checkpointEntity = collidingCheckpoints[i];
+
+            foreach (var (checkpoint, entity) in SystemAPI.Query<RefRW<MapCheckpointEntityComponent>>().WithEntityAccess())
+            {
+                if (entity == checkpointEntity)
+                {
+                    continue;
+                }
+
+                if (checkpoint.ValueRW.IsColliding)
+                {
+                    checkpoint.ValueRW.IsColliding = false;
+                }
+            }
+        }
+
+        if (collidingCheckpoints.Count == 0)
+        {
+            if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
+            {
+                if (_entityManager.IsComponentEnabled<InvulnerableStateComponent>(playerEntity))
+                {
+                    InvulnerableStateComponent playerInvulnerable = _entityManager.GetComponentData<InvulnerableStateComponent>(playerEntity);
+
+                    if (playerInvulnerable.isCheckpoint)
+                    {
+                        playerInvulnerable.ElapsedTime = 0;
+                        playerInvulnerable.Duration = 1;
+                        playerInvulnerable.isCheckpoint = false;
+                        entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(playerEntity, true);
+                        entityCommandBuffer.SetComponent(playerEntity, playerInvulnerable);
+                    }
+                }
+            }
+
+            foreach (var checkpoint in SystemAPI.Query<RefRW<MapCheckpointEntityComponent>>())
+            {
+                if (checkpoint.ValueRW.IsColliding)
+                {
+                    checkpoint.ValueRW.IsColliding = false;
+                }
+            }
+        }
+
+        collidingCheckpoints.Clear();
         entitiesColliding.Dispose();
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
@@ -242,6 +314,12 @@ partial struct CollisionSystem : ISystem
                _entityManager.HasComponent<ExperienceShardEntityComponent>(entityB) && _entityManager.HasComponent<PlayerComponent>(entityA);
     }
 
+    private bool IsCollisionPlayerWithCheckpoint(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<PlayerComponent>(entityA) && _entityManager.HasComponent<MapCheckpointEntityComponent>(entityB) ||
+               _entityManager.HasComponent<PlayerComponent>(entityB) && _entityManager.HasComponent<MapCheckpointEntityComponent>(entityA);
+    }
+
     private Entity GetSpellEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<SpellAoEEntityComponent>(entityA) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityA) ? entityA : entityB;
@@ -260,5 +338,10 @@ partial struct CollisionSystem : ISystem
     private Entity GetExperienceEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<ExperienceShardEntityComponent>(entityA) ? entityA : entityB;
+    }
+
+    private Entity GetCheckpointEntity(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<MapCheckpointEntityComponent>(entityA) ? entityA : entityB;
     }
 }
