@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Entities;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -29,6 +32,35 @@ public class UIManager : MonoBehaviour
     private Image expFill;
     [SerializeField]
     private TextMeshProUGUI levelText;
+
+    [Space(10)]
+
+    [Header("Coins")]
+    [SerializeField]
+    private TextMeshProUGUI coinsText;
+    private static int MaxCoinsNumber = 99999;
+
+    [Space(10)]
+
+    [Header("Upgrades")]
+    [SerializeField]
+    private TextAsset UpgradeJSON;
+    [SerializeField]
+    private GameObject levelUpCardPickerContainer;
+    [SerializeField]
+    private GameObject Card1;
+    [SerializeField]
+    private GameObject Card2;
+    [SerializeField]
+    private GameObject Card3;
+    [SerializeField]
+    private Sprite cardUpgradeImage;
+
+    [Space(10)]
+
+    [Header("MainMenu")]
+    [SerializeField]
+    private GameObject mainMenuContainer;
 
     [Space(10)]
 
@@ -71,6 +103,8 @@ public class UIManager : MonoBehaviour
     private int[] learnedSpells;
     private int[] selectedSpells = new int[4];
     private Color learnedColor = new(0.1843137f, 0.7882353f, 1f);
+
+    private List<UpgradeData> allUpgrades;
 
     private int currentLevel = 1;
     #endregion
@@ -166,6 +200,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateCoins(int coins)
+    {
+        if (coins > MaxCoinsNumber)
+        {
+            coinsText.text = "+" + MaxCoinsNumber.ToString();
+        }
+        else
+        {
+            coinsText.text = coins.ToString();
+        }
+    }
+
     public void LearnSpell(int spellID)
     {
         if (learnedSpells[spellID - 1] == 1) return;
@@ -189,6 +235,163 @@ public class UIManager : MonoBehaviour
         spellBook.SetActive(!spellBook.activeSelf);
     }
 
+    public void ToggleMenu()
+    {
+        mainMenuContainer.SetActive(!mainMenuContainer.activeSelf);
+
+        ToggleGamePause();
+    }
+
+    public void ToggleCardPicker()
+    {
+        levelUpCardPickerContainer.SetActive(!levelUpCardPickerContainer.activeSelf);
+
+        ToggleGamePause();
+
+        if (levelUpCardPickerContainer.activeSelf)
+        {
+            List<UpgradeData> randomUpgrades = selectRandomUpgrades();
+
+            BuildCard(Card1, randomUpgrades[0]);
+            BuildCard(Card2, randomUpgrades[1]);
+            BuildCard(Card3, randomUpgrades[2]);
+        }
+    }
+
+    private void ToggleGamePause()
+    {
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        Entity mapEntity = entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
+
+        if (entityManager.HasComponent<MapEntityGameStateComponent>(mapEntity))
+        {
+            MapEntityGameStateComponent gameState = entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+            gameState.IsPaused = !gameState.IsPaused;
+
+            entityManager.SetComponentData(mapEntity, gameState);
+        }
+    }
+
+    private void BuildCard(GameObject card, UpgradeData upgrade)
+    {
+        TextMeshProUGUI cardTextComponents = card.GetComponentInChildren<TextMeshProUGUI>();
+        Image[] cardImage = card.GetComponentsInChildren<Image>();
+        cardTextComponents.text = getUpgradeDescription(upgrade);
+        cardImage[1].sprite = cardUpgradeImage;
+
+        EventTrigger eventTrigger = card.GetComponent<EventTrigger>();
+
+        EventTrigger.Entry pointerClickEntry = new EventTrigger.Entry
+        {
+            eventID = EventTriggerType.PointerClick
+        };
+
+        pointerClickEntry.callback.AddListener((data) =>
+        {
+            OnPointerClickHandler((PointerEventData)data, upgrade);
+        });
+
+        eventTrigger.triggers.Add(pointerClickEntry);
+    }
+
+    private void OnPointerClickHandler(PointerEventData data, UpgradeData upgrade)
+    {
+        RemoveClickListener(Card1);
+        RemoveClickListener(Card2);
+        RemoveClickListener(Card3);
+
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        Entity playerEntity = entityManager.CreateEntityQuery(typeof(PlayerComponent)).GetSingletonEntity();
+
+        if (
+            upgrade.Type == "HealthRestore" ||
+            upgrade.Type == "ManaRestore" ||
+            upgrade.Type == "UnlockSpell"
+        )
+        {
+            if (upgrade.Type == "UnlockSpell")
+            {
+                entityManager.AddComponentData(playerEntity, new SpellLearnComponent { SpellID = (int)upgrade.UpgradePerLevel });
+            }
+
+            if (upgrade.Type == "HealthRestore")
+            {
+                HealthComponent healthComponent = entityManager.GetComponentData<HealthComponent>(playerEntity);
+
+                entityManager.AddComponentData(playerEntity, new HealthRestoreComponent { HealAmount = healthComponent.MaxHealth });
+            }
+
+            if (upgrade.Type == "ManaRestore")
+            {
+                ManaComponent manaComponent = entityManager.GetComponentData<ManaComponent>(playerEntity);
+
+                entityManager.AddComponentData(playerEntity, new ManaRestoreComponent { RestoreAmount = manaComponent.MaxMana });
+            }
+        }
+        else
+        {
+            Enum.TryParse(upgrade.Type, out UpgradeType upgradeType);
+
+            var buffer = entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
+
+            float upgradeLevel = 0;
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i].UpgradeID == upgrade.UpgradeID)
+                {
+                    upgradeLevel = buffer[i].Value;
+                    buffer.RemoveAt(i);
+                    break;
+                }
+            }
+
+            buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel + upgradeLevel });
+        }
+
+        ToggleCardPicker();
+    }
+
+    private void RemoveClickListener(GameObject card)
+    {
+        EventTrigger eventTrigger = card.GetComponent<EventTrigger>();
+
+        eventTrigger.triggers.Clear();
+    }
+
+    private string getUpgradeDescription(UpgradeData upgrade)
+    {
+        if (upgrade.Description.Contains("%=chance%"))
+        {
+            return upgrade.Description.Replace("%=chance%", upgrade.UpgradePerLevel.ToString());
+        }
+        else
+        {
+            return upgrade.Description;
+        }
+    }
+
+    private List<UpgradeData> selectRandomUpgrades()
+    {
+        List<UpgradeData> result = new();
+
+        List<int> usedIndexes = new();
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, allUpgrades.Count);
+
+            while (usedIndexes.IndexOf(randomIndex) != -1)
+            {
+                randomIndex = UnityEngine.Random.Range(0, allUpgrades.Count);
+            }
+
+            result.Add(allUpgrades[randomIndex]);
+
+            usedIndexes.Add(randomIndex);
+        }
+
+        return result;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -200,7 +403,9 @@ public class UIManager : MonoBehaviour
         Instance = this;
 
         SpellDataCollection spells = JsonUtility.FromJson<SpellDataCollection>(spellsJSON.text);
+        UpgradeDataCollection upgrades = JsonUtility.FromJson<UpgradeDataCollection>(UpgradeJSON.text);
         allSpells = new List<SpellData>(spells.Spells);
+        allUpgrades = new List<UpgradeData>(upgrades.Upgrades);
     }
 
     private void Start()

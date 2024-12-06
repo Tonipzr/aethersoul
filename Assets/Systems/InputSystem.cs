@@ -23,6 +23,7 @@ public partial class InputSystem : SystemBase
         bool pressingSpace = controls.FindAction("Dash").triggered;
         bool pressingInteract = controls.FindAction("Interact").triggered;
         bool pressingSpellBookToggle = controls.FindAction("ToggleSpellBook").triggered;
+        bool pressingOpenMenu = controls.FindAction("OpenMenu").triggered;
 
         bool pressingSpellSlot1 = controls.FindAction("Spell_Slot_1").triggered;
         bool pressingSpellSlot2 = controls.FindAction("Spell_Slot_2").triggered;
@@ -39,7 +40,8 @@ public partial class InputSystem : SystemBase
             pressingSpellSlot1 = pressingSpellSlot1,
             pressingSpellSlot2 = pressingSpellSlot2,
             pressingSpellSlot3 = pressingSpellSlot3,
-            pressingSpellSlot4 = pressingSpellSlot4
+            pressingSpellSlot4 = pressingSpellSlot4,
+            pressingOpenMenu = pressingOpenMenu
         });
     }
 

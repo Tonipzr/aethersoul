@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-partial struct HealthSystem : ISystem
+partial struct ManaSystem : ISystem
 {
     private EntityManager _entityManager;
 
@@ -21,23 +21,17 @@ partial struct HealthSystem : ISystem
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>().WithEntityAccess())
+        foreach (var (mana, entity) in SystemAPI.Query<RefRW<ManaComponent>>().WithEntityAccess())
         {
-            if (health.ValueRO.CurrentHealth <= 0)
-            {
-                entityCommandBuffer.AddComponent(entity, new DeathComponent { });
-                continue;
-            }
-
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
             {
                 var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
 
                 foreach (var upgrade in activeUpgrades)
                 {
-                    if (upgrade.Type == UpgradeType.MaxHealth)
+                    if (upgrade.Type == UpgradeType.MaxMana)
                     {
-                        health.ValueRW.MaxHealth = health.ValueRO.BaseMaxHealth + Mathf.RoundToInt(upgrade.Value);
+                        mana.ValueRW.MaxMana = mana.ValueRO.BaseMaxMana + Mathf.RoundToInt(upgrade.Value);
                     }
                 }
             }

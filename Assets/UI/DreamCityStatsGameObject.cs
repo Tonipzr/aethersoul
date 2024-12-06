@@ -11,13 +11,13 @@ public class DreamCityStatsGameObject : MonoBehaviour
 
     public static int CurrentCoins = 0;
 
-    private static DreamCityStatsGameObject instance = null;
+    public static DreamCityStatsGameObject Instance { get; private set; }
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
