@@ -35,25 +35,25 @@ partial struct SpellCastSystem : ISystem
 
         if (inputComponent.pressingSpellSlot1 && selectedSpellsBuffer.Length >= 1)
         {
-            if (CastSpell(selectedSpellsBuffer[0].SpellID, ref state, entityCommandBuffer))
+            if (CastSpell(selectedSpellsBuffer[0].SpellID, playerEntity, ref state, entityCommandBuffer))
                 entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[0].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot2 && selectedSpellsBuffer.Length >= 2)
         {
-            if (CastSpell(selectedSpellsBuffer[1].SpellID, ref state, entityCommandBuffer))
+            if (CastSpell(selectedSpellsBuffer[1].SpellID, playerEntity, ref state, entityCommandBuffer))
                 entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[1].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot3 && selectedSpellsBuffer.Length >= 3)
         {
-            if (CastSpell(selectedSpellsBuffer[2].SpellID, ref state, entityCommandBuffer))
+            if (CastSpell(selectedSpellsBuffer[2].SpellID, playerEntity, ref state, entityCommandBuffer))
                 entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[2].SpellID });
         }
 
         if (inputComponent.pressingSpellSlot4 && selectedSpellsBuffer.Length >= 4)
         {
-            if (CastSpell(selectedSpellsBuffer[3].SpellID, ref state, entityCommandBuffer))
+            if (CastSpell(selectedSpellsBuffer[3].SpellID, playerEntity, ref state, entityCommandBuffer))
                 entityCommandBuffer.AppendToBuffer(playerEntity, new PlayerCastAttemptComponent { SpellID = selectedSpellsBuffer[3].SpellID });
         }
 
@@ -62,7 +62,7 @@ partial struct SpellCastSystem : ISystem
     }
 
     [BurstCompile]
-    private bool CastSpell(int spellID, ref SystemState state, EntityCommandBuffer entityCommandBuffer)
+    private bool CastSpell(int spellID, Entity playerEntity, ref SystemState state, EntityCommandBuffer entityCommandBuffer)
     {
         bool castedSpell = false;
 
@@ -75,7 +75,7 @@ partial struct SpellCastSystem : ISystem
                 continue;
             }
 
-            if (!_entityManager.IsComponentEnabled<SpellOnCooldownComponent>(entity))
+            if (!_entityManager.IsComponentEnabled<SpellOnCooldownComponent>(entity) && HasEnoughMana(entity, playerEntity, ref state))
             {
                 entityCommandBuffer.SetComponentEnabled<SpellOnCooldownComponent>(entity, true);
                 entityCommandBuffer.AddComponent(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = cooldown.ValueRO.Cooldown, isInfinite = false });
@@ -84,6 +84,20 @@ partial struct SpellCastSystem : ISystem
         }
 
         return castedSpell;
+    }
+
+    [BurstCompile]
+    private bool HasEnoughMana(Entity spellEntity, Entity casterEntity, ref SystemState state)
+    {
+        if (!state.EntityManager.HasComponent<ManaComponent>(casterEntity) || !state.EntityManager.HasComponent<SpellCostComponent>(spellEntity))
+        {
+            return false;
+        }
+
+        ManaComponent mana = state.EntityManager.GetComponentData<ManaComponent>(casterEntity);
+        SpellCostComponent spellCost = state.EntityManager.GetComponentData<SpellCostComponent>(spellEntity);
+
+        return mana.CurrentMana >= spellCost.Cost;
     }
 
     [BurstCompile]

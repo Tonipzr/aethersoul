@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
 public class CheckpointStatusController : MonoBehaviour
 {
+    Entity entity;
+
     void SetRunes(bool status)
     {
         Transform runes = transform.GetChild(0);
@@ -11,19 +14,33 @@ public class CheckpointStatusController : MonoBehaviour
         runes.gameObject.SetActive(status);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // Update is called once per frame
+    void Update()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (entity == null)
         {
-            SetRunes(true);
+            return;
+        }
+
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        if (entityManager.HasComponent<MapCheckpointEntityComponent>(entity))
+        {
+            MapCheckpointEntityComponent checkpointEntity = entityManager.GetComponentData<MapCheckpointEntityComponent>(entity);
+
+            if (checkpointEntity.IsColliding)
+            {
+                SetRunes(true);
+            }
+            else
+            {
+                SetRunes(false);
+            }
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    public void SetEntity(Entity entity)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            SetRunes(false);
-        }
+        this.entity = entity;
     }
 }

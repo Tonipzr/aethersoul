@@ -257,6 +257,7 @@ partial struct DeathSystem : ISystem
                 {
                     MaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType),
                     CurrentHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType),
+                    BaseMaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType)
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new LevelComponent

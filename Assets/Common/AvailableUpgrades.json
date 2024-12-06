@@ -1,0 +1,140 @@
+{
+    "Upgrades": [
+        {
+            "UpgradeID": 1,
+            "Name": "Gold Drop",
+            "Description": "Increase the amount of gold you get by %=chance%%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "GoldBonusOnKill"
+        },
+        {
+            "UpgradeID": 2,
+            "Name": "Fire Damage",
+            "Description": "Increase the damage of your fire spells by %=chance%%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "FireDamage"
+        },
+        {
+            "UpgradeID": 3,
+            "Name": "Water Damage",
+            "Description": "Increase the damage of your water spells by %=chance%%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "WaterDamage"
+        },
+        {
+            "UpgradeID": 4,
+            "Name": "Earth Damage",
+            "Description": "Increase the damage of your earth spells by %=chance%%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "EarthDamage"
+        },
+        {
+            "UpgradeID": 5,
+            "Name": "Air Damage",
+            "Description": "Increase the damage of your air spells by %=chance%%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "AirDamage"
+        },
+        {
+            "UpgradeID": 6,
+            "Name": "Health",
+            "Description": "Increase your maximum health by %=chance%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "MaxHealth"
+        },
+        {
+            "UpgradeID": 7,
+            "Name": "Mana",
+            "Description": "Increase your maximum mana by %=chance%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "MaxMana"
+        },
+        {
+            "UpgradeID": 8,
+            "Name": "Health Regen",
+            "Description": "Increase your health regeneration by %=chance%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "HealthRegen"
+        },
+        {
+            "UpgradeID": 9,
+            "Name": "Mana Regen",
+            "Description": "Increase your mana regeneration by %=chance%",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ManaRegen"
+        },
+        {
+            "UpgradeID": 10,
+            "Name": "Health Restore",
+            "Description": "Restores full health",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 100,
+            "Type": "HealthRestore"
+        },
+        {
+            "UpgradeID": 11,
+            "Name": "Mana Restore",
+            "Description": "Restores full mana",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 100,
+            "Type": "ManaRestore"
+        },
+        {
+            "UpgradeID": 12,
+            "Name": "Fireslash",
+            "Description": "Unlocks the Fireslash spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 13,
+            "Name": "Flame Nova",
+            "Description": "Unlocks the Flame Nova spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 2,
+            "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 14,
+            "Name": "Meteor Strike",
+            "Description": "Unlocks the Meteor Strike spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 3,
+            "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 15,
+            "Name": "Inferno Burst",
+            "Description": "Unlocks the Inferno Burst spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 4,
+            "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 16,
+            "Name": "Lifeleech",
+            "Description": "Gain %=chance%% of the damage you deal as health",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "Lifeleech"
+        },
+        {
+            "UpgradeID": 17,
+            "Name": "Manaleech",
+            "Description": "Gain %=chance%% of the damage you deal as mana",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "Manaleech"
+        }
+    ]
+}

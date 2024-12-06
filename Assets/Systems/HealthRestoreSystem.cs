@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,6 +7,7 @@ using Unity.Entities;
 partial struct HealthRestoreSystem : ISystem
 {
     private EntityManager _entityManager;
+    private double elapsedTime;
 
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -32,6 +34,36 @@ partial struct HealthRestoreSystem : ISystem
                 });
 
                 health.ValueRW.CurrentHealth = Math.Min(health.ValueRO.MaxHealth, health.ValueRO.CurrentHealth + heal.ValueRO.HealAmount);
+            }
+        }
+
+        float deltaTime = SystemAPI.Time.DeltaTime;
+        elapsedTime += deltaTime;
+        if (elapsedTime >= 5)
+        {
+            elapsedTime = 0;
+
+            if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
+            {
+                int restoreQuantity = 5;
+
+                if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
+                {
+                    var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
+
+                    foreach (var upgrade in activeUpgrades)
+                    {
+                        if (upgrade.Type == UpgradeType.HealthRegen)
+                        {
+                            restoreQuantity = (int)(restoreQuantity * (1 + (upgrade.Value / 100)));
+                        }
+                    }
+                }
+
+                entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
+                {
+                    HealAmount = restoreQuantity
+                });
             }
         }
 

@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Physics.Authoring;
+using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -52,8 +55,8 @@ public class MapHandler : MonoBehaviour
 
         ChunkData newChunkData = new ChunkData();
 
-        float offsetX = Random.Range(-1000f, 1000f);
-        float offsetY = Random.Range(-1000f, 1000f);
+        float offsetX = UnityEngine.Random.Range(-1000f, 1000f);
+        float offsetY = UnityEngine.Random.Range(-1000f, 1000f);
 
         for (int x = 0; x < chunkSize; x++)
         {
@@ -79,9 +82,9 @@ public class MapHandler : MonoBehaviour
                 {
                     tileToPlace = grassTile;
 
-                    if (Random.Range(0f, 1f) < 0.01f)
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.01f)
                     {
-                        GameObject treePrefab = Random.Range(0f, 1f) < 0.5f ? Tree1 : Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;
+                        GameObject treePrefab = UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree1 : UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;
                         GameObject treeInstance = Instantiate(treePrefab, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                         newChunkData.treePositions.Add(localPos, treePrefab);
                         newChunkData.instantiatedTrees.Add(treeInstance);
@@ -90,17 +93,81 @@ public class MapHandler : MonoBehaviour
 
                 newChunkData.tiles[localPos] = tileToPlace;
 
-                if (Random.Range(0f, 75f) < 0.01f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
                 {
                     GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.checkpointPositions.Add(localPos);
                     newChunkData.instantiatedCheckpoints.Add(checkPointInstance);
 
-                    Entity entity = _entityManager.CreateEntity(typeof(MapCheckpointEntityComponent));
-                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY) });
+                    Entity entity = _entityManager.CreateEntity(
+                        typeof(MapCheckpointEntityComponent),
+                        typeof(PhysicsWorldIndex),
+                        typeof(LocalTransform),
+                        typeof(PhysicsCollider),
+                        typeof(PhysicsDamping),
+                        typeof(PhysicsGravityFactor),
+                        typeof(PhysicsMass),
+                        typeof(PhysicsVelocity)
+                    );
+                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsColliding = false });
+
+                    _entityManager.SetComponentData(entity, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+
+                    var collider = new PhysicsCollider
+                    {
+                        Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                        {
+                            Center = new float3(0, 0, 0),
+                            Size = new float3(1, 1, 1),
+                            Orientation = quaternion.identity,
+                            BevelRadius = 0,
+                        }, new CollisionFilter
+                        {
+                            BelongsTo = 16,
+                            CollidesWith = 1,
+                            GroupIndex = 0
+                        })
+                    };
+                    collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+                    _entityManager.SetComponentData(entity, collider);
+
+                    _entityManager.SetComponentData(entity, new PhysicsDamping
+                    {
+                        Linear = 0.01f,
+                        Angular = 0.05f
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsGravityFactor
+                    {
+                        Value = 0
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsMass
+                    {
+                        InverseInertia = 6,
+                        InverseMass = 1,
+                        AngularExpansionFactor = 0,
+                        InertiaOrientation = quaternion.identity,
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsVelocity
+                    {
+                        Linear = new float3(0, 0, 0),
+                        Angular = new float3(0, 0, 0)
+                    });
+
+                    CheckpointStatusController checkpontStatusController = checkPointInstance.GetComponent<CheckpointStatusController>();
+                    checkpontStatusController.SetEntity(entity);
+
+                    newChunkData.checkpointEntities[localPos] = entity;
                 }
 
-                if (Random.Range(0f, 75f) < 0.01f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
                 {
                     GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.buffPositions.Add(localPos, false);
@@ -151,6 +218,13 @@ public class MapHandler : MonoBehaviour
         {
             GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(new Vector3Int(chunkPos.x * chunkSize + pos.x, chunkPos.y * chunkSize + pos.y, 0)), Quaternion.identity, world.transform);
             chunkData.instantiatedCheckpoints.Add(checkPointInstance);
+
+            CheckpointStatusController checkpointStatusController = checkPointInstance.GetComponent<CheckpointStatusController>();
+
+            if (chunkData.checkpointEntities.TryGetValue(pos, out Entity entity))
+            {
+                checkpointStatusController.SetEntity(entity);
+            }
         }
 
         foreach (var buffPosition in chunkData.buffPositions)
