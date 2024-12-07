@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DreamCityCharacterController : MonoBehaviour
@@ -44,7 +45,8 @@ public class DreamCityCharacterController : MonoBehaviour
         animator.SetBool("Action", pressingInteract);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f);
-        if (hit.collider != null)
+        List<string> validInteractables = new List<string> { "Checkpoint", "FireStatue", "WaterStatue", "EarthStatue", "WindStatue" };
+        if (hit.collider != null && validInteractables.Contains(hit.collider.name))
         {
             DreamCityUIHandler.Instance.ToggleInteractImage(true);
 
