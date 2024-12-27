@@ -1,8 +1,6 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
-using Unity.Physics.Extensions;
 using Unity.Transforms;
 using UnityEngine;
 
