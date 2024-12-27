@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -28,43 +27,48 @@ partial class AudioSystem : SystemBase
             entityCommandBuffer.DestroyEntity(entity);
         }
 
-        Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
-        InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
 
-        if (inputComponent.movement.x > 0 || inputComponent.movement.y > 0)
+        if (SystemAPI.TryGetSingletonEntity<InputComponent>(out Entity inputEntity))
         {
-            if (_timeSinceLastStep < 0.5f)
+            InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
+
+            if (inputComponent.movement.x > 0 || inputComponent.movement.y > 0)
             {
-                _timeSinceLastStep += World.Time.DeltaTime;
-                return;
-            }
-
-            _timeSinceLastStep = 0;
-
-            Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
-            PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(playerEntity);
-
-            MapHandler mapHandler = Object.FindObjectOfType<MapHandler>();
-            if (mapHandler != null)
-            {
-                TileBase tile = mapHandler.GetTileAtPosition(playerPosition.Position);
-                if (tile.name == "StoneTile")
+                if (_timeSinceLastStep < 0.5f)
                 {
-                    Entity audioEntity = entityCommandBuffer.CreateEntity();
-                    entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
-                    {
-                        Volume = 1,
-                        Audio = AudioType.StepRock
-                    });
+                    _timeSinceLastStep += World.Time.DeltaTime;
+                    return;
                 }
-                else
+
+                _timeSinceLastStep = 0;
+
+                if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
                 {
-                    Entity audioEntity = entityCommandBuffer.CreateEntity();
-                    entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+                    PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(playerEntity);
+
+                    MapHandler mapHandler = Object.FindObjectOfType<MapHandler>();
+                    if (mapHandler != null)
                     {
-                        Volume = 1,
-                        Audio = AudioType.StepGrass
-                    });
+                        TileBase tile = mapHandler.GetTileAtPosition(playerPosition.Position);
+                        if (tile.name == "StoneTile")
+                        {
+                            Entity audioEntity = entityCommandBuffer.CreateEntity();
+                            entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+                            {
+                                Volume = 1,
+                                Audio = AudioType.StepRock
+                            });
+                        }
+                        else
+                        {
+                            Entity audioEntity = entityCommandBuffer.CreateEntity();
+                            entityCommandBuffer.AddComponent(audioEntity, new AudioComponent
+                            {
+                                Volume = 1,
+                                Audio = AudioType.StepGrass
+                            });
+                        }
+                    }
                 }
             }
         }

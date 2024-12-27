@@ -41,6 +41,17 @@ public class MainMenuHandler : MonoBehaviour
     public void HandleExitButton()
     {
         Debug.Log("Exiting game");
+
+        SaveData gameSave = new SaveData(
+            DreamCityStatsGameObject.FireBuff,
+            DreamCityStatsGameObject.WaterBuff,
+            DreamCityStatsGameObject.EarthBuff,
+            DreamCityStatsGameObject.AirBuff,
+            DreamCityStatsGameObject.CurrentCoins
+        );
+
+        SaveGame.Save(gameSave);
+
         Application.Quit();
 
 #if UNITY_EDITOR

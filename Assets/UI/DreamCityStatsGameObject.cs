@@ -19,6 +19,17 @@ public class DreamCityStatsGameObject : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            SaveData gameSave = SaveGame.Load();
+
+            if (gameSave != null)
+            {
+                FireBuff = gameSave.FireBuff;
+                WaterBuff = gameSave.WaterBuff;
+                EarthBuff = gameSave.EarthBuff;
+                AirBuff = gameSave.AirBuff;
+                CurrentCoins = gameSave.CurrentCoins;
+            }
         }
         else
         {
