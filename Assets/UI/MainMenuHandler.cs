@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,9 @@ public class MainMenuHandler : MonoBehaviour
     [SerializeField]
     private Slider MonsterSpeedSlider;
 
+    [SerializeField]
+    private TMP_Dropdown LanguageDropdown;
+
 
     private enum CurrentSettingsLocation
     {
@@ -46,6 +50,19 @@ public class MainMenuHandler : MonoBehaviour
         SFXVolumeSlider.value = PlayerPrefsManager.Instance.GetSFXVolume();
 
         MonsterSpeedSlider.value = PlayerPrefsManager.Instance.GetMonsterSpeed();
+
+        if (PlayerPrefsManager.Instance.GetLanguage() == "es")
+        {
+            LanguageDropdown.value = 0;
+        }
+        else if (PlayerPrefsManager.Instance.GetLanguage() == "en")
+        {
+            LanguageDropdown.value = 1;
+        }
+        else if (PlayerPrefsManager.Instance.GetLanguage() == "ca")
+        {
+            LanguageDropdown.value = 2;
+        }
     }
 
     // Update is called once per frame
@@ -96,6 +113,28 @@ public class MainMenuHandler : MonoBehaviour
     {
         if (global) SetCurrentSettingsLocation(CurrentSettingsLocation.None);
         else SetCurrentSettingsLocation(CurrentSettingsLocation.Main);
+    }
+
+    public void HandleLanguageDropdown()
+    {
+        Debug.Log("Language dropdown value: " + LanguageDropdown.options[LanguageDropdown.value].text);
+
+        string lang = "es";
+        if (LanguageDropdown.options[LanguageDropdown.value].text == "Español")
+        {
+            lang = "es";
+        }
+        else if (LanguageDropdown.options[LanguageDropdown.value].text == "English")
+        {
+            lang = "en";
+        }
+        else if (LanguageDropdown.options[LanguageDropdown.value].text == "Català")
+        {
+            lang = "ca";
+        }
+
+        PlayerPrefsManager.Instance.SetLanguage(lang);
+        LanguageManager.Instance.SetLanguage(LanguageDropdown.options[LanguageDropdown.value].text);
     }
 
     public void SaveConfiguration()
@@ -172,7 +211,8 @@ public class MainMenuHandler : MonoBehaviour
                 PlayerPrefsManager.Instance.GetSpellsVolume(),
                 PlayerPrefsManager.Instance.GetMusicVolume(),
                 PlayerPrefsManager.Instance.GetSFXVolume(),
-                PlayerPrefsManager.Instance.GetMonsterSpeed()
+                PlayerPrefsManager.Instance.GetMonsterSpeed(),
+                PlayerPrefsManager.Instance.GetLanguage()
             )
         );
 

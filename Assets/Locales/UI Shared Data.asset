@@ -43,6 +43,42 @@ MonoBehaviour:
     m_Key: PRICE_TEXT
     m_Metadata:
       m_Items: []
+  - m_Id: 284043410345984
+    m_Key: MAIN_MENU_KEYBINDS_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284283035127808
+    m_Key: MAIN_MENU_SOUND_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284423703695360
+    m_Key: MAIN_MENU_DIFICULTY_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284625789456384
+    m_Key: BACK_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285130590720000
+    m_Key: APPLY_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288628938051584
+    m_Key: MONSTER_SPEED_MULTIPLIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288683568861184
+    m_Key: SPELLS_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288705198886912
+    m_Key: MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288721963520000
+    m_Key: SFX_VOLUME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

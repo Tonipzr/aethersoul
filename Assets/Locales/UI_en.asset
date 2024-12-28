@@ -46,6 +46,42 @@ MonoBehaviour:
     m_Localized: Price {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 284043410345984
+    m_Localized: Keybinds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284283035127808
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284423703695360
+    m_Localized: Dificulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284625789456384
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285130590720000
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288628938051584
+    m_Localized: Monsters Speed (%)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288683568861184
+    m_Localized: Spells volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288705198886912
+    m_Localized: Music volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288721963520000
+    m_Localized: SFX volume
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

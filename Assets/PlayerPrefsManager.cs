@@ -10,6 +10,8 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private float MonsterSpeed = 100.0f;
 
+    private string Language = "es";
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,6 +31,7 @@ public class PlayerPrefsManager : MonoBehaviour
             SetMusicVolume(gameSave.Settings.MusicVolume);
             SetSFXVolume(gameSave.Settings.SFXVolume);
             SetMonsterSpeed(gameSave.Settings.MonsterSpeed);
+            SetLanguage(gameSave.Settings.Language);
         }
     }
 
@@ -70,5 +73,15 @@ public class PlayerPrefsManager : MonoBehaviour
     public float GetMonsterSpeed()
     {
         return MonsterSpeed;
+    }
+
+    public void SetLanguage(string language)
+    {
+        Language = language;
+    }
+
+    public string GetLanguage()
+    {
+        return Language;
     }
 }

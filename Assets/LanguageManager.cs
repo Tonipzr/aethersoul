@@ -1,4 +1,3 @@
-using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -38,6 +37,26 @@ public class LanguageManager : MonoBehaviour
 
         Debug.LogWarning($"Key '{key}' on table '{table}' not found.");
         return key;
+    }
+
+    public void SetLanguage(string language)
+    {
+        string lang = "es";
+
+        if (language == "English")
+        {
+            lang = "en";
+        }
+        else if (language == "Español")
+        {
+            lang = "es";
+        }
+        else if (language == "Català")
+        {
+            lang = "ca";
+        }
+
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.GetLocale(lang);
     }
 }
 

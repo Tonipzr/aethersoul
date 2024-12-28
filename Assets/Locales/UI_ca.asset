@@ -46,6 +46,42 @@ MonoBehaviour:
     m_Localized: Preu {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 284043410345984
+    m_Localized: Tecles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284283035127808
+    m_Localized: So
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284423703695360
+    m_Localized: Dificultat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284625789456384
+    m_Localized: Tornar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285130590720000
+    m_Localized: Salvar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288628938051584
+    m_Localized: "\rVelocitat dels monstres (%)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288683568861184
+    m_Localized: "Volum d'encanteris\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288705198886912
+    m_Localized: "Volum de m\xFAsica\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288721963520000
+    m_Localized: "Volum d'efectes\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

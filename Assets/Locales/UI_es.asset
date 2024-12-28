@@ -46,6 +46,42 @@ MonoBehaviour:
     m_Localized: Aumentar
     m_Metadata:
       m_Items: []
+  - m_Id: 284043410345984
+    m_Localized: Teclas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284283035127808
+    m_Localized: Sonido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284423703695360
+    m_Localized: Dificultad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284625789456384
+    m_Localized: Volver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285130590720000
+    m_Localized: Guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288628938051584
+    m_Localized: Velocidad de los monstruos (%)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288683568861184
+    m_Localized: Volumen de hechizos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288705198886912
+    m_Localized: "Volumen de m\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288721963520000
+    m_Localized: Volumen de efectos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -39,17 +39,21 @@ public class SaveSettingsData
 
     public float MonsterSpeed;
 
+    public string Language;
+
     public SaveSettingsData(
         float spellsVolume = 1.0f,
         float musicVolume = 1.0f,
         float sfxVolume = 1.0f,
-        float monsterSpeed = 1.0f
+        float monsterSpeed = 1.0f,
+        string language = "es"
     )
     {
         SpellsVolume = spellsVolume;
         MusicVolume = musicVolume;
         SFXVolume = sfxVolume;
         MonsterSpeed = monsterSpeed;
+        Language = language;
     }
 }
 
