@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ public class DreamCityUIHandler : MonoBehaviour
     private Button increaseBuffButton;
 
     [SerializeField]
-    private GameObject audioUpgradeEffect;
+    private TextMeshProUGUI interactText;
 
     public static DreamCityUIHandler Instance { get; private set; }
 
@@ -44,6 +45,10 @@ public class DreamCityUIHandler : MonoBehaviour
     public void ToggleInteractImage(bool status)
     {
         interactImage.SetActive(status);
+
+        // Debug.Log(UserInputManager.Instance.GetKeyMap("Interact"));
+
+        interactText.text = UserInputManager.Instance.GetKeyMap("Interact");
     }
 
     public void ToggleBuffUI(bool status, string statueType)
@@ -152,6 +157,6 @@ public class DreamCityUIHandler : MonoBehaviour
 
     public void PlayAudioUpgradeEffect()
     {
-        audioUpgradeEffect.GetComponent<AudioSource>().Play();
+        AudioManager.Instance.PlayAudio(AudioType.UpgradeEffect);
     }
 }

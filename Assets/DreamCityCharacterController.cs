@@ -3,15 +3,11 @@ using UnityEngine;
 
 public class DreamCityCharacterController : MonoBehaviour
 {
-    private InputManager controls;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
-        controls = new InputManager();
-        controls.Enable();
-
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -25,10 +21,10 @@ public class DreamCityCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 movementVector = controls.FindAction("Movement").ReadValue<Vector2>();
+        Vector2 movementVector = UserInputManager.Instance.MovementInput;
         float movementValue = Mathf.Abs(movementVector.x) > 0 || Mathf.Abs(movementVector.y) > 0 ?
             Mathf.Abs(movementVector.x) + Mathf.Abs(movementVector.y) : -1;
-        bool pressingInteract = controls.FindAction("Interact").triggered;
+        bool pressingInteract = UserInputManager.Instance.InteractInput;
 
         transform.position += new Vector3(movementVector.x, movementVector.y, 0) * Time.deltaTime * 5;
 
@@ -77,6 +73,5 @@ public class DreamCityCharacterController : MonoBehaviour
 
     void OnDestroy()
     {
-        controls.Disable();
     }
 }

@@ -1,12 +1,51 @@
+using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuHandler : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject SettingsPanel;
+    [SerializeField]
+    private GameObject KeybindsPanel;
+    [SerializeField]
+    private GameObject SoundsPanel;
+    [SerializeField]
+    private GameObject DificultyPanel;
+
+    [SerializeField]
+    private Slider SpellsVolumeSlider;
+    [SerializeField]
+    private Slider MusicVolumeSlider;
+    [SerializeField]
+    private Slider SFXVolumeSlider;
+
+    [SerializeField]
+    private Slider MonsterSpeedSlider;
+
+
+    private enum CurrentSettingsLocation
+    {
+        None,
+        Main,
+        Keybinds,
+        Sound,
+        Difficulty
+    }
+
+    private CurrentSettingsLocation currentSettingsLocation = CurrentSettingsLocation.None;
+
     // Start is called before the first frame update
     void Start()
     {
+        SetCurrentSettingsLocation(CurrentSettingsLocation.None);
 
+        SpellsVolumeSlider.value = PlayerPrefsManager.Instance.GetSpellsVolume();
+        MusicVolumeSlider.value = PlayerPrefsManager.Instance.GetMusicVolume();
+        SFXVolumeSlider.value = PlayerPrefsManager.Instance.GetSFXVolume();
+
+        MonsterSpeedSlider.value = PlayerPrefsManager.Instance.GetMonsterSpeed();
     }
 
     // Update is called once per frame
@@ -35,7 +74,88 @@ public class MainMenuHandler : MonoBehaviour
 
     public void HandleSettingsButton()
     {
-        Debug.Log("Settings button clicked");
+        SetCurrentSettingsLocation(CurrentSettingsLocation.Main);
+    }
+
+    public void HandleKeybindsButton()
+    {
+        SetCurrentSettingsLocation(CurrentSettingsLocation.Keybinds);
+    }
+
+    public void HandleSoundButton()
+    {
+        SetCurrentSettingsLocation(CurrentSettingsLocation.Sound);
+    }
+
+    public void HandleDifficultyButton()
+    {
+        SetCurrentSettingsLocation(CurrentSettingsLocation.Difficulty);
+    }
+
+    public void HandleBackSettingsButton(bool global = false)
+    {
+        if (global) SetCurrentSettingsLocation(CurrentSettingsLocation.None);
+        else SetCurrentSettingsLocation(CurrentSettingsLocation.Main);
+    }
+
+    public void SaveConfiguration()
+    {
+        Debug.Log("Configuration saved");
+
+        if (currentSettingsLocation == CurrentSettingsLocation.Sound)
+        {
+            PlayerPrefsManager.Instance.SetSpellsVolume(SpellsVolumeSlider.value);
+            PlayerPrefsManager.Instance.SetMusicVolume(MusicVolumeSlider.value);
+            PlayerPrefsManager.Instance.SetSFXVolume(SFXVolumeSlider.value);
+
+            AudioManager.Instance.SetVolumeToChannel("SpellsVolume", SpellsVolumeSlider.value);
+            AudioManager.Instance.SetVolumeToChannel("MusicVolume", MusicVolumeSlider.value);
+            AudioManager.Instance.SetVolumeToChannel("SFXVolume", SFXVolumeSlider.value);
+        }
+
+        if (currentSettingsLocation == CurrentSettingsLocation.Difficulty)
+        {
+            PlayerPrefsManager.Instance.SetMonsterSpeed(MonsterSpeedSlider.value);
+        }
+    }
+
+    private void SetCurrentSettingsLocation(CurrentSettingsLocation location)
+    {
+        currentSettingsLocation = location;
+
+        switch (location)
+        {
+            case CurrentSettingsLocation.Main:
+                SettingsPanel.SetActive(true);
+                KeybindsPanel.SetActive(false);
+                SoundsPanel.SetActive(false);
+                DificultyPanel.SetActive(false);
+                break;
+            case CurrentSettingsLocation.Keybinds:
+                SettingsPanel.SetActive(true);
+                KeybindsPanel.SetActive(true);
+                SoundsPanel.SetActive(false);
+                DificultyPanel.SetActive(false);
+                break;
+            case CurrentSettingsLocation.Sound:
+                SettingsPanel.SetActive(true);
+                KeybindsPanel.SetActive(false);
+                SoundsPanel.SetActive(true);
+                DificultyPanel.SetActive(false);
+                break;
+            case CurrentSettingsLocation.Difficulty:
+                SettingsPanel.SetActive(true);
+                KeybindsPanel.SetActive(false);
+                SoundsPanel.SetActive(false);
+                DificultyPanel.SetActive(true);
+                break;
+            default:
+                SettingsPanel.SetActive(false);
+                KeybindsPanel.SetActive(false);
+                SoundsPanel.SetActive(false);
+                DificultyPanel.SetActive(false);
+                break;
+        }
     }
 
     public void HandleExitButton()
@@ -47,7 +167,13 @@ public class MainMenuHandler : MonoBehaviour
             DreamCityStatsGameObject.WaterBuff,
             DreamCityStatsGameObject.EarthBuff,
             DreamCityStatsGameObject.AirBuff,
-            DreamCityStatsGameObject.CurrentCoins
+            DreamCityStatsGameObject.CurrentCoins,
+            new SaveSettingsData(
+                PlayerPrefsManager.Instance.GetSpellsVolume(),
+                PlayerPrefsManager.Instance.GetMusicVolume(),
+                PlayerPrefsManager.Instance.GetSFXVolume(),
+                PlayerPrefsManager.Instance.GetMonsterSpeed()
+            )
         );
 
         SaveGame.Save(gameSave);

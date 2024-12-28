@@ -39,6 +39,8 @@ public class LoadingSceneHandler : MonoBehaviour
             {
                 loadingSlider.value = 1f;
                 operation.allowSceneActivation = true;
+
+                AudioManager.Instance.PlayBGM(SceneToLoadGameObject.GetSceneToLoad());
             }
 
             yield return null;

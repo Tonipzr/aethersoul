@@ -10,12 +10,15 @@ public class SaveData
     public int AirBuff;
     public int CurrentCoins;
 
+    public SaveSettingsData Settings;
+
     public SaveData(
         int fireBuff,
         int waterBuff,
         int earthBuff,
         int airBuff,
-        int currentCoins
+        int currentCoins,
+        SaveSettingsData settings
     )
     {
         FireBuff = fireBuff;
@@ -23,6 +26,30 @@ public class SaveData
         EarthBuff = earthBuff;
         AirBuff = airBuff;
         CurrentCoins = currentCoins;
+        Settings = settings;
+    }
+}
+
+[System.Serializable]
+public class SaveSettingsData
+{
+    public float SpellsVolume;
+    public float MusicVolume;
+    public float SFXVolume;
+
+    public float MonsterSpeed;
+
+    public SaveSettingsData(
+        float spellsVolume = 1.0f,
+        float musicVolume = 1.0f,
+        float sfxVolume = 1.0f,
+        float monsterSpeed = 1.0f
+    )
+    {
+        SpellsVolume = spellsVolume;
+        MusicVolume = musicVolume;
+        SFXVolume = sfxVolume;
+        MonsterSpeed = monsterSpeed;
     }
 }
 

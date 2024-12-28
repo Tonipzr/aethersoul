@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -22,6 +23,18 @@ public class AudioManager : MonoBehaviour
     private GameObject UnPauseSound;
     [SerializeField]
     private GameObject DeathSound;
+    [SerializeField]
+    private GameObject UpgradeEffect;
+
+    [SerializeField]
+    private AudioMixer AudioMixer;
+
+    [SerializeField]
+    private AudioSource BGM_InGame;
+    [SerializeField]
+    private AudioSource BGM_MainMenu;
+    [SerializeField]
+    private AudioSource BGM_DreamCity;
 
     public static AudioManager Instance { get; private set; }
 
@@ -34,6 +47,7 @@ public class AudioManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -45,6 +59,33 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void SetVolumeToChannel(string channel, float volume)
+    {
+        AudioMixer.SetFloat(channel, Mathf.Log10(volume) * 20);
+    }
+
+    public void PlayBGM(string scene)
+    {
+        BGM_InGame.Stop();
+        BGM_MainMenu.Stop();
+        BGM_DreamCity.Stop();
+
+        if (scene == "MainScene")
+        {
+            BGM_InGame.Play();
+        }
+
+        if (scene == "MainMenuScene")
+        {
+            BGM_MainMenu.Play();
+        }
+
+        if (scene == "DreamCityScene")
+        {
+            BGM_DreamCity.Play();
+        }
     }
 
     public void PlayAudio(AudioType audioType)
@@ -81,6 +122,9 @@ public class AudioManager : MonoBehaviour
             case AudioType.Death:
                 GetAudioSource(DeathSound).Play();
                 break;
+            case AudioType.UpgradeEffect:
+                GetAudioSource(UpgradeEffect).Play();
+                break;
         }
     }
 
@@ -101,5 +145,6 @@ public enum AudioType
     WindSpell,
     Pause,
     UnPause,
-    Death
+    Death,
+    UpgradeEffect,
 }

@@ -60,6 +60,8 @@ public class UIManager : MonoBehaviour
     [Header("MainMenu")]
     [SerializeField]
     private GameObject mainMenuContainer;
+    [SerializeField]
+    private GameObject SettingsMenuContainer;
 
     [Space(10)]
 
@@ -237,6 +239,15 @@ public class UIManager : MonoBehaviour
     public void ToggleMenu()
     {
         mainMenuContainer.SetActive(!mainMenuContainer.activeSelf);
+
+        if (mainMenuContainer.activeSelf)
+        {
+            SettingsMenuContainer.SetActive(false);
+        }
+        else
+        {
+            SettingsMenuContainer.SetActive(mainMenuContainer.activeSelf);
+        }
 
         ToggleGamePause();
     }
