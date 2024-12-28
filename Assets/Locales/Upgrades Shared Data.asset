@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Upgrades Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Upgrades
+  m_TableCollectionNameGuidString: da64c89b172b17a4bb57c8a8087b7fad
+  m_Entries:
+  - m_Id: 44007886848
+    m_Key: UPGRADE_1_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 184831643648
+    m_Key: UPGRADE_2_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202523217920
+    m_Key: UPGRADE_3_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 220806189056
+    m_Key: UPGRADE_4_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231950454784
+    m_Key: UPGRADE_5_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249444896768
+    m_Key: UPGRADE_6_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258928218112
+    m_Key: UPGRADE_7_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277957775360
+    m_Key: UPGRADE_8_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288946851840
+    m_Key: UPGRADE_9_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 302720946176
+    m_Key: UPGRADE_10_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 317929492480
+    m_Key: UPGRADE_11_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326813028352
+    m_Key: UPGRADE_12_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 335990165504
+    m_Key: UPGRADE_13_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 343820931072
+    m_Key: UPGRADE_14_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354877116416
+    m_Key: UPGRADE_15_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 364142333952
+    m_Key: UPGRADE_16_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373789233152
+    m_Key: UPGRADE_17_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 559945027584
+    m_Key: UPGRADE_1_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 584192299008
+    m_Key: UPGRADE_2_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 592346025984
+    m_Key: UPGRADE_3_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 602005508096
+    m_Key: UPGRADE_4_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 609618169856
+    m_Key: UPGRADE_5_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 618690449408
+    m_Key: UPGRADE_6_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 628110856192
+    m_Key: UPGRADE_7_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 635685769216
+    m_Key: UPGRADE_8_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 647173967872
+    m_Key: UPGRADE_9_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663485616128
+    m_Key: UPGRADE_10_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 674269171712
+    m_Key: UPGRADE_11_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 682234155008
+    m_Key: UPGRADE_12_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692216598528
+    m_Key: UPGRADE_13_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699720208384
+    m_Key: UPGRADE_14_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 706296877056
+    m_Key: UPGRADE_15_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 722994401280
+    m_Key: UPGRADE_16_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730883887104
+    m_Key: UPGRADE_17_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4534377790315692059
+  references:
+    version: 2
+    RefIds:
+    - rid: 4534377790315692059
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1735342677566

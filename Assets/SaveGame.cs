@@ -10,7 +10,13 @@ public class SaveData
     public int AirBuff;
     public int CurrentCoins;
 
-    public SaveData(int fireBuff, int waterBuff, int earthBuff, int airBuff, int currentCoins)
+    public SaveData(
+        int fireBuff,
+        int waterBuff,
+        int earthBuff,
+        int airBuff,
+        int currentCoins
+    )
     {
         FireBuff = fireBuff;
         WaterBuff = waterBuff;

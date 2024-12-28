@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Upgrades_ca
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca
+  m_SharedData: {fileID: 11400000, guid: da64c89b172b17a4bb57c8a8087b7fad, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4534377800979185664
+  m_TableData:
+  - m_Id: 44007886848
+    m_Localized: Troballa d'or
+    m_Metadata:
+      m_Items: []
+  - m_Id: 184831643648
+    m_Localized: Dany de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202523217920
+    m_Localized: Dany d'aigua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 220806189056
+    m_Localized: Dany de terra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231950454784
+    m_Localized: Dany d'aire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249444896768
+    m_Localized: Salut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258928218112
+    m_Localized: Mana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277957775360
+    m_Localized: "Recuperaci\xF3 de salut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288946851840
+    m_Localized: "Recuperaci\xF3 de mana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 302720946176
+    m_Localized: Restaurar salut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 317929492480
+    m_Localized: Restaurar mana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326813028352
+    m_Localized: Tall de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 335990165504
+    m_Localized: Nova de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 343820931072
+    m_Localized: Tempesta de meteors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354877116416
+    m_Localized: "Explosi\xF3 infernal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 364142333952
+    m_Localized: Sang de vida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373789233152
+    m_Localized: Sang de mana
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 559945027584
+    m_Localized: Augmenta la quantitat d'or que obtinguis en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 584192299008
+    m_Localized: Augmenta el dany dels teus encanteris de foc en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 592346025984
+    m_Localized: Augmenta el dany dels teus encanteris d'aigua en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 602005508096
+    m_Localized: Augmenta el dany dels teus encanteris de terra en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 609618169856
+    m_Localized: Augmenta el dany dels teus encanteris d'aire en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 618690449408
+    m_Localized: "Augmenta la teva salut m\xE0xima en un {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 628110856192
+    m_Localized: "Augmenta el teu mana m\xE0xim en un {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 635685769216
+    m_Localized: "Augmenta la teva regeneraci\xF3 de salut en un {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 706296877056
+    m_Localized: "Desbloqueja l'encanteri Explosi\xF3 infernal"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 722994401280
+    m_Localized: Recupera un {0}% del dany causat com a salut
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185664
+  - m_Id: 647173967872
+    m_Localized: "Augmenta la teva regeneraci\xF3 de mana en un {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663485616128
+    m_Localized: Restaura la salut del teu personatge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 674269171712
+    m_Localized: Restaura el mana del teu personatge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 682234155008
+    m_Localized: Desbloqueja l'encanteri Tall de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692216598528
+    m_Localized: Desbloqueja l'encanteri Nova de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699720208384
+    m_Localized: Desbloqueja l'encanteri Tempesta de meteors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730883887104
+    m_Localized: Recupera un {0}% del dany causat com a mana
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4534377800979185664
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 373789233152
+        - id: 559945027584
+        - id: 584192299008
+        - id: 592346025984
+        - id: 602005508096
+        - id: 609618169856
+        - id: 618690449408
+        - id: 628110856192
+        - id: 635685769216
+        - id: 706296877056
+        - id: 722994401280

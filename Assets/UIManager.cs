@@ -372,14 +372,7 @@ public class UIManager : MonoBehaviour
 
     private string getUpgradeDescription(UpgradeData upgrade)
     {
-        if (upgrade.Description.Contains("%=chance%"))
-        {
-            return upgrade.Description.Replace("%=chance%", upgrade.UpgradePerLevel.ToString());
-        }
-        else
-        {
-            return upgrade.Description;
-        }
+        return LanguageManager.Instance.GetText("UPGRADE_" + upgrade.UpgradeID + "_DESCRIPTION", AvailableLocalizationTables.Upgrades, upgrade.UpgradePerLevel.ToString());
     }
 
     private List<UpgradeData> selectRandomUpgrades()
