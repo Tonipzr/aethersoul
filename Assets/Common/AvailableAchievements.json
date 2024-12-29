@@ -1,0 +1,54 @@
+{
+    "Achievements": [
+        {
+            "AchievementID": 1,
+            "Trigger": "Explore=1,Explore=2,Explore=3",
+            "Reward": "ExploreChance1=5,ExploreChance2=5,ExploreChance3=5"
+        },
+        {
+            "AchievementID": 2,
+            "Trigger": "AnySkillUsed=50",
+            "Reward": "AnyManyCostReduce=5"
+        },
+        {
+            "AchievementID": 3,
+            "Trigger": "Travel=10000",
+            "Reward": "MoveSpeed=10"
+        },
+        {
+            "AchievementID": 4,
+            "Trigger": "Travel=20000",
+            "Reward": "MoveSpeed=20"
+        },
+        {
+            "AchievementID": 5,
+            "Trigger": "KillAny=100",
+            "Reward": "KillAnyDamage=5"
+        },
+        {
+            "AchievementID": 6,
+            "Trigger": "KillAnyNoDamage=500",
+            "Reward": "KillAnyDamage=25"
+        },
+        {
+            "AchievementID": 7,
+            "Trigger": "UnlockAllSpells",
+            "Reward": "None"
+        },
+        {
+            "AchievementID": 8,
+            "Trigger": "Level=20",
+            "Reward": "ReduceExpPerLevel=5"
+        },
+        {
+            "AchievementID": 9,
+            "Trigger": "Clear=3|1",
+            "Reward": "GoldBonusOnKill=5"
+        },
+        {
+            "AchievementID": 10,
+            "Trigger": "Clear=3|3",
+            "Reward": "GoldBonusOnKill=10"
+        }
+    ]
+}

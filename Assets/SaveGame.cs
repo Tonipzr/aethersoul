@@ -12,13 +12,16 @@ public class SaveData
 
     public SaveSettingsData Settings;
 
+    public SaveAchievements Achievements;
+
     public SaveData(
         int fireBuff,
         int waterBuff,
         int earthBuff,
         int airBuff,
         int currentCoins,
-        SaveSettingsData settings
+        SaveSettingsData settings,
+        SaveAchievements achievements
     )
     {
         FireBuff = fireBuff;
@@ -27,6 +30,7 @@ public class SaveData
         AirBuff = airBuff;
         CurrentCoins = currentCoins;
         Settings = settings;
+        Achievements = achievements;
     }
 }
 
@@ -54,6 +58,17 @@ public class SaveSettingsData
         SFXVolume = sfxVolume;
         MonsterSpeed = monsterSpeed;
         Language = language;
+    }
+}
+
+[System.Serializable]
+public class SaveAchievements
+{
+    public int[] UnlockedAchievements;
+
+    public SaveAchievements(int[] achievements = null)
+    {
+        this.UnlockedAchievements = achievements;
     }
 }
 

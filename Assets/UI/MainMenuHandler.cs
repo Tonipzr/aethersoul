@@ -16,6 +16,11 @@ public class MainMenuHandler : MonoBehaviour
     private GameObject DificultyPanel;
 
     [SerializeField]
+    private GameObject AchievementsPanel;
+    [SerializeField]
+    private GameObject AchievementsContainer;
+
+    [SerializeField]
     private Slider SpellsVolumeSlider;
     [SerializeField]
     private Slider MusicVolumeSlider;
@@ -197,6 +202,18 @@ public class MainMenuHandler : MonoBehaviour
         }
     }
 
+    public void HandleAchievementsButton()
+    {
+        Debug.Log("Achievements button clicked");
+
+        AchievementsPanel.SetActive(!AchievementsPanel.activeSelf);
+
+        if (AchievementsPanel.activeSelf)
+        {
+            AchievementsContainer.GetComponent<MainMenuAchievementsHandler>().LoadAchievements();
+        }
+    }
+
     public void HandleExitButton()
     {
         Debug.Log("Exiting game");
@@ -213,6 +230,9 @@ public class MainMenuHandler : MonoBehaviour
                 PlayerPrefsManager.Instance.GetSFXVolume(),
                 PlayerPrefsManager.Instance.GetMonsterSpeed(),
                 PlayerPrefsManager.Instance.GetLanguage()
+            ),
+            new SaveAchievements(
+                AchievementsManager.Instance.GetUnlockedAchievements().ToArray()
             )
         );
 

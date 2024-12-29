@@ -24,6 +24,13 @@ MonoBehaviour:
     - Locale-ca
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62855b888cd22534195fc26962f73bf1
+    m_Address: Achievements_ca
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ca
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8e3ebb3c4ac68fe4baf8724aafa35700
     m_Address: Spells_ca
     m_ReadOnly: 1

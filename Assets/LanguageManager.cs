@@ -65,5 +65,6 @@ public enum AvailableLocalizationTables
     Spells,
     UI,
     Upgrades,
-    DreamCity
+    DreamCity,
+    Achievements,
 }
