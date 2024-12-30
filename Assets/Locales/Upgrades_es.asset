@@ -166,6 +166,71 @@ MonoBehaviour:
     m_Localized: "Recupera un {0}% del da\xF1o realizado como man\xE1"
     m_Metadata:
       m_Items: []
+  - m_Id: 961219839332352
+    m_Localized: Rastreo de puntos de control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961261979504640
+    m_Localized: Rastreo de mejoras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961276521156608
+    m_Localized: "Rastreo de puntos de inter\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961307454148608
+    m_Localized: "Reducci\xF3n de costes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961318296424448
+    m_Localized: Velocidad de movimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961325653233664
+    m_Localized: "Da\xF1o a enemigos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961335606317056
+    m_Localized: "Reducci\xF3n de experiencia"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962706338418688
+    m_Localized: Aumenta la probabilidad de encontrar un punto de control en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962726638850048
+    m_Localized: Aumenta la probabilidad de encontrar una mejora en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962742099054592
+    m_Localized: "Aumenta la probabilidad de encontrar un punto de inter\xE9s en
+      {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962757521510400
+    m_Localized: Reduce el coste de tus habilidades en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962767357153280
+    m_Localized: Aumenta tu velocidad de movimiento en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962779017318400
+    m_Localized: "Aumenta el da\xF1o a todo tipo de enemigos en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962795215720448
+    m_Localized: Reduce la cantidad de experiencia necesaria para subir nivel en
+      {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -185,3 +250,10 @@ MonoBehaviour:
         - id: 635685769216
         - id: 706296877056
         - id: 722994401280
+        - id: 962779017318400
+        - id: 962767357153280
+        - id: 962757521510400
+        - id: 962742099054592
+        - id: 962726638850048
+        - id: 962706338418688
+        - id: 961335606317056

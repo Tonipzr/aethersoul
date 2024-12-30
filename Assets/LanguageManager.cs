@@ -67,4 +67,5 @@ public enum AvailableLocalizationTables
     Upgrades,
     DreamCity,
     Achievements,
+    Objectives,
 }

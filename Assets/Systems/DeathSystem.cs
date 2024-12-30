@@ -66,6 +66,22 @@ partial struct DeathSystem : ISystem
 
                 entityCommandBuffer.RemoveComponent<DeathComponent>(entity);
 
+                var jobAnyKilled = new UpdateMapStatsJob
+                {
+                    Type = MapStatsType.CurrentEnemiesKilled,
+                    Value = 1,
+                    Incremental = true
+                };
+                jobAnyKilled.Schedule();
+
+                var jobNoDamageKilled = new UpdateMapStatsJob
+                {
+                    Type = MapStatsType.CurrentEnemiesKilledNoDamage,
+                    Value = 1,
+                    Incremental = true
+                };
+                jobNoDamageKilled.Schedule();
+
                 if (_entityManager.HasComponent<VisualsReferenceComponent>(entity))
                 {
                     VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(entity);

@@ -135,6 +135,48 @@
             "Icon": "UpgradeIcon",
             "UpgradePerLevel": 1,
             "Type": "Manaleech"
+        },
+        {
+            "UpgradeID": 18,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance1"
+        },
+        {
+            "UpgradeID": 19,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance2"
+        },
+        {
+            "UpgradeID": 20,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance3"
+        },
+        {
+            "UpgradeID": 21,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "AnySpellCostReduce"
+        },
+        {
+            "UpgradeID": 22,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "MoveSpeed"
+        },
+        {
+            "UpgradeID": 23,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "KillAnyDamage"
+        },
+        {
+            "UpgradeID": 24,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ReduceExpPerLevel"
         }
     ]
 }

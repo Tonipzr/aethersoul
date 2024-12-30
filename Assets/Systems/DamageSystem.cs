@@ -30,6 +30,17 @@ partial struct DamageSystem : ISystem
             });
 
             health.ValueRW.CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage.ValueRO.DamageAmount);
+
+            if (_entityManager.HasComponent<PlayerComponent>(entity))
+            {
+                var job = new UpdateMapStatsJob
+                {
+                    Type = MapStatsType.CurrentEnemiesKilledNoDamage,
+                    Value = 0,
+                    Incremental = false
+                };
+                job.Schedule();
+            }
         }
 
         entityCommandBuffer.Playback(_entityManager);

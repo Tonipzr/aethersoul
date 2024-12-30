@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -5,6 +6,7 @@ partial class UISystem : SystemBase
 {
     private EntityManager _entityManager;
     private bool _isInitialized;
+    private bool objectivesAssigned;
 
     protected override void OnCreate()
     {
@@ -93,6 +95,33 @@ partial class UISystem : SystemBase
         foreach (var (spell, _, timer) in SystemAPI.Query<RefRO<SpellComponent>, RefRO<SpellOnCooldownComponent>, RefRO<TimeCounterComponent>>())
         {
             UIManager.Instance.UpdateSpellCooldown(spell.ValueRO.SpellID, timer.ValueRO.ElapsedTime, timer.ValueRO.EndTime);
+        }
+
+        if (!objectivesAssigned)
+        {
+            List<int> objectiveIDs = new List<int>();
+            foreach (var (objective, _) in SystemAPI.Query<RefRO<ObjectiveComponent>, RefRO<ObjectiveEnabledComponent>>())
+            {
+                objectiveIDs.Add(objective.ValueRO.ObjectiveID);
+            }
+
+            if (objectiveIDs.Count == 3)
+            {
+                UIManager.Instance.AddObjectives(objectiveIDs.ToArray());
+                objectivesAssigned = true;
+            }
+        }
+        else
+        {
+            foreach (var (objectiveComponent, objectiveEnabled, objectiveEntity) in SystemAPI.Query<RefRO<ObjectiveComponent>, RefRO<ObjectiveEnabledComponent>>().WithEntityAccess())
+            {
+                if (objectiveEnabled.ValueRO.Completed && objectiveEnabled.ValueRO.Processed)
+                {
+                    UIManager.Instance.CompleteObjective(objectiveComponent.ValueRO.ObjectiveID);
+
+                    entityCommandBuffer.SetComponentEnabled<ObjectiveEnabledComponent>(objectiveEntity, false);
+                }
+            }
         }
 
         entityCommandBuffer.Playback(_entityManager);

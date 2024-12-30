@@ -23,6 +23,14 @@ partial class LevelUpSystem : SystemBase
             level.ValueRW.Level++;
             experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level);
 
+            var jobLevel = new UpdateMapStatsJob
+            {
+                Type = MapStatsType.CurrentLevelsUp,
+                Value = 1,
+                Incremental = true
+            };
+            jobLevel.Schedule();
+
             entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = true });
 
             int coins = 5 + (level.ValueRO.Level - 1);
@@ -39,6 +47,14 @@ partial class LevelUpSystem : SystemBase
                 }
             }
             DreamCityStatsGameObject.IncreaseCoins(coins);
+
+            var jobGold = new UpdateMapStatsJob
+            {
+                Type = MapStatsType.CurrentGoldCollected,
+                Value = coins,
+                Incremental = true
+            };
+            jobGold.Schedule();
         }
 
         entityCommandBuffer.Playback(_entityManager);

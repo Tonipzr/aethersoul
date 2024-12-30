@@ -236,6 +236,20 @@ partial struct CollisionSystem : ISystem
                     entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(playerEntity, true);
                     entityCommandBuffer.SetComponent(playerEntity, playerInvulnerable);
                 }
+
+                if (!mapCheckpointEntityComponent.IsVisited)
+                {
+                    mapCheckpointEntityComponent.IsVisited = true;
+                    entityCommandBuffer.SetComponent(checkpointEntity, mapCheckpointEntityComponent);
+
+                    var jobCheckpoint = new UpdateMapStatsJob
+                    {
+                        Type = MapStatsType.CurrentCheckpointsReached,
+                        Value = 1,
+                        Incremental = true
+                    };
+                    jobCheckpoint.Schedule();
+                }
             }
         }
 

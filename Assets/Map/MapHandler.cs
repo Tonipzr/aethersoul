@@ -108,7 +108,7 @@ public class MapHandler : MonoBehaviour
                         typeof(PhysicsMass),
                         typeof(PhysicsVelocity)
                     );
-                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsColliding = false });
+                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsColliding = false, IsVisited = false });
 
                     _entityManager.SetComponentData(entity, new LocalTransform
                     {

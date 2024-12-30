@@ -151,6 +151,62 @@ MonoBehaviour:
     m_Key: UPGRADE_17_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 961219839332352
+    m_Key: UPGRADE_18_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961261979504640
+    m_Key: UPGRADE_19_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961276521156608
+    m_Key: UPGRADE_20_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961307454148608
+    m_Key: UPGRADE_21_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961318296424448
+    m_Key: UPGRADE_22_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961325653233664
+    m_Key: UPGRADE_23_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961335606317056
+    m_Key: UPGRADE_24_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962706338418688
+    m_Key: UPGRADE_18_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962726638850048
+    m_Key: UPGRADE_19_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962742099054592
+    m_Key: UPGRADE_20_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962757521510400
+    m_Key: UPGRADE_21_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962767357153280
+    m_Key: UPGRADE_22_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962779017318400
+    m_Key: UPGRADE_23_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962795215720448
+    m_Key: UPGRADE_24_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

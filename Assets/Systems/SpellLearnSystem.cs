@@ -22,6 +22,14 @@ partial struct SpellLearnSystem : ISystem
             entityCommandBuffer.RemoveComponent<SpellLearnComponent>(entity);
             entityCommandBuffer.AppendToBuffer(entity, new PlayerAvailableSpellsComponent { SpellID = spellLearn.ValueRO.SpellID });
 
+            var job = new UpdateMapStatsJob
+            {
+                Type = MapStatsType.CurrentSpellsUnlocked,
+                Value = 1,
+                Incremental = true
+            };
+            job.Schedule();
+
             if (selectedSpellsBuffer.Length >= 4)
             {
                 continue;

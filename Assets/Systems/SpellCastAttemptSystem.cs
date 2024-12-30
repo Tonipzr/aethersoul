@@ -37,6 +37,14 @@ partial struct SpellCastAttemptSystem : ISystem
 
                         RemoveMana(entity, spellEntity, entityCommandBuffer);
 
+                        var job = new UpdateMapStatsJob
+                        {
+                            Type = MapStatsType.CurrentSpellsUsed,
+                            Value = 1,
+                            Incremental = true
+                        };
+                        job.Schedule();
+
                         if (_entityManager.HasComponent<SpellElementComponent>(spellEntity))
                         {
                             SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);

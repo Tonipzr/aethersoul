@@ -166,6 +166,69 @@ MonoBehaviour:
     m_Localized: Recovers a {0}% of the damage dealt as mana
     m_Metadata:
       m_Items: []
+  - m_Id: 961219839332352
+    m_Localized: Tracking of control points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961261979504640
+    m_Localized: Tracking improvements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961276521156608
+    m_Localized: Tracking points of interest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961307454148608
+    m_Localized: Cost reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961318296424448
+    m_Localized: Movement speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961325653233664
+    m_Localized: Damage to enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961335606317056
+    m_Localized: Experience reduction
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962779017318400
+    m_Localized: Increases damage to all enemy types by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962767357153280
+    m_Localized: Increases your movement speed by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962757521510400
+    m_Localized: Reduces the cost of your skills by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962742099054592
+    m_Localized: Increases the probability of finding a point of interest by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962726638850048
+    m_Localized: Increases the probability of finding an improvement by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962706338418688
+    m_Localized: Increases the probability of finding a control point by {0}%.
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185665
+  - m_Id: 962795215720448
+    m_Localized: Reduces the amount of experience required to level up by {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -185,3 +248,10 @@ MonoBehaviour:
         - id: 635685769216
         - id: 706296877056
         - id: 722994401280
+        - id: 962779017318400
+        - id: 962767357153280
+        - id: 962757521510400
+        - id: 962742099054592
+        - id: 962726638850048
+        - id: 962706338418688
+        - id: 961335606317056

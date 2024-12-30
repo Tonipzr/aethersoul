@@ -1,0 +1,24 @@
+{
+    "Objectives": [
+        {
+            "ObjectiveID": 1,
+            "Trigger": "KillAny=50"
+        },
+        {
+            "ObjectiveID": 2,
+            "Trigger": "Gold=150"
+        },
+        {
+            "ObjectiveID": 3,
+            "Trigger": "Clear=3|1"
+        },
+        {
+            "ObjectiveID": 4,
+            "Trigger": "AnySkillUsed=25"
+        },
+        {
+            "ObjectiveID": 5,
+            "Trigger": "GoldUsed=100"
+        }
+    ]
+}

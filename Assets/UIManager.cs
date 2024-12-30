@@ -4,6 +4,8 @@ using TMPro;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -95,6 +97,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject spellBookLearnDebugButtonContainer;
 
+    [Header("Objectives")]
+    [SerializeField]
+    private GameObject objectivesContainer;
+    [SerializeField]
+    private GameObject objective1;
+    [SerializeField]
+    private GameObject objective2;
+    [SerializeField]
+    private GameObject objective3;
+
+    private Dictionary<int, GameObject> objectivesRefs = new();
 
     #region private fields
 
@@ -406,6 +419,41 @@ public class UIManager : MonoBehaviour
         }
 
         return result;
+    }
+
+    public void AddObjectives(int[] objectiveID)
+    {
+        if (objectiveID.Length != 3) return;
+
+        for (int i = 0; i < objectiveID.Length; i++)
+        {
+            GameObject objective = null;
+
+            switch (i)
+            {
+                case 0:
+                    objective = objective1;
+                    break;
+                case 1:
+                    objective = objective2;
+                    break;
+                case 2:
+                    objective = objective3;
+                    break;
+            }
+
+            objective.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString { TableReference = AvailableLocalizationTables.Objectives.ToString(), TableEntryReference = "OBJECTIVE_" + objectiveID[i] + "_DESCRIPTION" };
+            objectivesRefs.Add(objectiveID[i], objective);
+        }
+    }
+
+    public void CompleteObjective(int objectiveID)
+    {
+        if (objectivesRefs.ContainsKey(objectiveID))
+        {
+            GameObject objective = objectivesRefs[objectiveID];
+            objective.GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        }
     }
 
     private void Awake()

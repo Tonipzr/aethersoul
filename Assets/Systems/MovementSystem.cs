@@ -64,10 +64,13 @@ partial struct MovementSystem : ISystem
         Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
         InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
 
+        float3 previousPosition = float3.zero;
+        float3 newPosition = float3.zero;
         if (inputComponent.pressingSpace)
         {
             // Update the player's position
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
+            previousPosition = playerTransform.Position;
             playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime * 100, 0);
 
             _entityManager.SetComponentData(playerEntity, playerTransform);
@@ -75,6 +78,7 @@ partial struct MovementSystem : ISystem
             // Update the player's position component
             PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
             positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+            newPosition = playerTransform.Position;
 
             _entityManager.SetComponentData(playerEntity, positionComponent);
         }
@@ -82,6 +86,7 @@ partial struct MovementSystem : ISystem
         {
             // Update the player's position
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
+            previousPosition = playerTransform.Position;
             playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime, 0);
 
             _entityManager.SetComponentData(playerEntity, playerTransform);
@@ -89,8 +94,19 @@ partial struct MovementSystem : ISystem
             // Update the player's position component
             PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
             positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+            newPosition = playerTransform.Position;
 
             _entityManager.SetComponentData(playerEntity, positionComponent);
         }
+
+        float distanceMoved = math.distance(previousPosition, newPosition);
+
+        var job = new UpdateMapStatsJob
+        {
+            Type = MapStatsType.CurrentTraveledDistance,
+            ValueFloat = distanceMoved,
+            Incremental = true
+        };
+        job.Schedule();
     }
 }

@@ -13,6 +13,33 @@ partial struct MapSystem : ISystem
 
         Entity entity = _entityManager.CreateEntity();
         _entityManager.AddComponent<MapEntityComponent>(entity);
+        _entityManager.AddComponentData(entity, new MapEntityComponent
+        {
+            CurrentSpellsUsed = 0,
+            CurrentGoldCollected = 0,
+            CurrentGoldUsed = 0,
+            CurrentEnemiesKilled = 0,
+            CurrentEnemiesKilledNoDamage = 0,
+            CurrentTraveledDistance = 0,
+            CurrentPOIsVisited = 0,
+            CurrentPOIsCleared = 0,
+            CurrentBuffsCollected = 0,
+            CurrentCheckpointsReached = 0,
+            CurrentLevelsUp = 0,
+            CurrentSpellsUnlocked = 0,
+            TotalSpellsUsed = 0,
+            TotalGoldCollected = 0,
+            TotalGoldUsed = 0,
+            TotalEnemiesKilled = 0,
+            TotalEnemiesKilledNoDamage = 0,
+            TotalTraveledDistance = 0,
+            TotalPOIsVisited = 0,
+            TotalPOIsCleared = 0,
+            TotalBuffsCollected = 0,
+            TotalCheckpointsReached = 0,
+            TotalLevelsUp = 0,
+            TotalSpellsUnlocked = 0
+        });
         _entityManager.AddComponent<MapEntityPlayerAtChunkComponent>(entity);
         _entityManager.AddComponentData(entity, new MapEntityPlayerAtChunkComponent { PlayerAtChunk = new Vector2Int(0, 0) });
         _entityManager.AddComponent<TimeCounterComponent>(entity);

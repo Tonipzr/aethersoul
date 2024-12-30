@@ -8,7 +8,7 @@
         {
             "AchievementID": 2,
             "Trigger": "AnySkillUsed=50",
-            "Reward": "AnyManyCostReduce=5"
+            "Reward": "AnySpellCostReduce=5"
         },
         {
             "AchievementID": 3,
