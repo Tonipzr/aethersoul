@@ -25,6 +25,10 @@ public class AudioManager : MonoBehaviour
     private GameObject DeathSound;
     [SerializeField]
     private GameObject UpgradeEffect;
+    [SerializeField]
+    private GameObject HoverSound;
+    [SerializeField]
+    private GameObject ConfirmSound;
 
     [SerializeField]
     private AudioMixer AudioMixer;
@@ -125,6 +129,12 @@ public class AudioManager : MonoBehaviour
             case AudioType.UpgradeEffect:
                 GetAudioSource(UpgradeEffect).Play();
                 break;
+            case AudioType.Hover:
+                GetAudioSource(HoverSound).Play();
+                break;
+            case AudioType.Confirm:
+                GetAudioSource(ConfirmSound).Play();
+                break;
         }
     }
 
@@ -147,4 +157,6 @@ public enum AudioType
     UnPause,
     Death,
     UpgradeEffect,
+    Hover,
+    Confirm
 }

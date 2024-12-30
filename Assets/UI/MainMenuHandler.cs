@@ -214,6 +214,16 @@ public class MainMenuHandler : MonoBehaviour
         }
     }
 
+    public void HandleButtonHover()
+    {
+        AudioManager.Instance.PlayAudio(AudioType.Hover);
+    }
+
+    public void HandleButtonConfirm()
+    {
+        AudioManager.Instance.PlayAudio(AudioType.Confirm);
+    }
+
     public void HandleExitButton()
     {
         Debug.Log("Exiting game");

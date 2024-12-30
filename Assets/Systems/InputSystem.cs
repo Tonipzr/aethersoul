@@ -13,6 +13,11 @@ public partial class InputSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        if (!UserInputManager.Instance)
+        {
+            return;
+        }
+
         SystemAPI.SetSingleton(new InputComponent
         {
             movement = UserInputManager.Instance.MovementInput,
