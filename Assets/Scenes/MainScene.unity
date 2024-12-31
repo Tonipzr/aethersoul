@@ -8558,6 +8558,7 @@ MonoBehaviour:
   chestOpen: {fileID: 956808690574026276, guid: efee3cb0608899244b15b8a794320e10, type: 3}
   checkPoint: {fileID: 2195675793065869075, guid: d3acb6b38b5f5764f822c70e8ff5feec, type: 3}
   buff: {fileID: 8488653373629402155, guid: 98fe27819a3447949a783dbeee2e6259, type: 3}
+  POI: {fileID: 3056128585388365689, guid: 38daf082e019a0c48878d836672626ea, type: 3}
   mainCamera: {fileID: 519420031}
   viewDistance: 20
 --- !u!1 &827186501

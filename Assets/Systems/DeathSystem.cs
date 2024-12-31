@@ -64,6 +64,14 @@ partial struct DeathSystem : ISystem
                     EndTime = 5
                 });
 
+                entityCommandBuffer.SetComponent(entity, new PhysicsVelocity
+                {
+                    Linear = float3.zero,
+                    Angular = float3.zero
+                });
+
+                entityCommandBuffer.RemoveComponent<PhysicsCollider>(entity);
+
                 entityCommandBuffer.RemoveComponent<DeathComponent>(entity);
 
                 var jobAnyKilled = new UpdateMapStatsJob
@@ -197,23 +205,58 @@ partial struct DeathSystem : ISystem
                     Scale = 2
                 });
 
-                var collider = new PhysicsCollider
+                var collider = Unity.Physics.BoxCollider.Create(new BoxGeometry
                 {
-                    Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                    Center = new float3(0, 0, 0),
+                    Size = new float3(0.4f, 0.3f, 1),
+                    Orientation = quaternion.identity,
+                    BevelRadius = 0,
+                }, new CollisionFilter
+                {
+                    BelongsTo = 2,
+                    CollidesWith = 5,
+                    GroupIndex = 0
+                });
+                var colliderPhysic = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                {
+                    Center = new float3(0, 0, 0),
+                    Size = new float3(0.4f, 0.3f, 1),
+                    Orientation = quaternion.identity,
+                    BevelRadius = 0,
+                }, new CollisionFilter
+                {
+                    BelongsTo = 2,
+                    CollidesWith = 66,
+                    GroupIndex = 0
+                });
+
+                collider.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+                colliderPhysic.Value.SetCollisionResponse(CollisionResponsePolicy.Collide);
+
+                _entityManager.SetComponentData(monsterEntity, new PhysicsCollider
+                {
+                    Value = CompoundCollider.Create(new NativeArray<CompoundCollider.ColliderBlobInstance>(2, Allocator.Temp)
                     {
-                        Center = new float3(0, 0, 0),
-                        Size = new float3(0.4f, 0.3f, 1),
-                        Orientation = quaternion.identity,
-                        BevelRadius = 0,
-                    }, new CollisionFilter
-                    {
-                        BelongsTo = 2,
-                        CollidesWith = 5,
-                        GroupIndex = 0
-                    }),
-                };
-                collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
-                _entityManager.SetComponentData(monsterEntity, collider);
+                        [0] = new CompoundCollider.ColliderBlobInstance
+                        {
+                            CompoundFromChild = new RigidTransform
+                            {
+                                pos = new float3(0, 0, 0),
+                                rot = quaternion.identity
+                            },
+                            Collider = collider
+                        },
+                        [1] = new CompoundCollider.ColliderBlobInstance
+                        {
+                            CompoundFromChild = new RigidTransform
+                            {
+                                pos = new float3(0, 0, 0),
+                                rot = quaternion.identity
+                            },
+                            Collider = colliderPhysic
+                        }
+                    })
+                });
 
                 _entityManager.SetComponentData(monsterEntity, new PhysicsDamping
                 {
@@ -228,10 +271,10 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new PhysicsMass
                 {
-                    InverseInertia = 6,
+                    InverseInertia = new float3(0, 0, 0),
                     InverseMass = 1,
                     AngularExpansionFactor = 0,
-                    InertiaOrientation = quaternion.identity,
+                    InertiaOrientation = quaternion.identity
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new PhysicsVelocity

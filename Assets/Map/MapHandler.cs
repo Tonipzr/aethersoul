@@ -23,6 +23,7 @@ public class MapHandler : MonoBehaviour
     [SerializeField] GameObject chestOpen;
     [SerializeField] GameObject checkPoint;
     [SerializeField] GameObject buff;
+    [SerializeField] GameObject POI;
 
 
     [SerializeField] Camera mainCamera;
@@ -87,6 +88,24 @@ public class MapHandler : MonoBehaviour
                         GameObject treeInstance = Instantiate(treePrefab, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                         newChunkData.treePositions.Add(localPos, treePrefab);
                         newChunkData.instantiatedTrees.Add(treeInstance);
+
+                        Entity entity = _entityManager.CreateEntity(
+                            typeof(LocalTransform),
+                            typeof(CollisionComponent),
+                            typeof(PhysicsWorldIndex)
+                        );
+
+                        _entityManager.SetComponentData(entity, new LocalTransform
+                        {
+                            Position = new float3(tileX, tileY, 0),
+                            Rotation = quaternion.identity,
+                            Scale = 1
+                        });
+
+                        _entityManager.SetComponentData(entity, new CollisionComponent
+                        {
+                            Type = CollisionType.Tree,
+                        });
                     }
                 }
 
@@ -179,6 +198,11 @@ public class MapHandler : MonoBehaviour
                     buffStatusController.SetEntity(entity);
 
                     newChunkData.buffEntities[localPos] = entity;
+                }
+
+                if (UnityEngine.Random.Range(0f, 75f) < 0.3f)
+                {
+                    GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                 }
 
                 world.SetTile(tilePos, tileToPlace);
