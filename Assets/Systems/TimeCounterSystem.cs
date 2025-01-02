@@ -1,6 +1,8 @@
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 
 partial struct TimeCounterSystem : ISystem
 {
@@ -60,6 +62,11 @@ partial struct TimeCounterSystem : ISystem
                 {
                     entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
                     entityCommandBuffer.AddComponent<DeathComponent>(entity);
+                }
+
+                if (SystemAPI.HasComponent<LoreDelayEntityComponent>(entity))
+                {
+                    entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
                 }
             }
         }

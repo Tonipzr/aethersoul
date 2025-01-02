@@ -140,8 +140,8 @@ public class MapHandler : MonoBehaviour
                     {
                         Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
                         {
-                            Center = new float3(0, 0, 0),
-                            Size = new float3(1, 1, 1),
+                            Center = new float3(0.5f, 0.5f, 0),
+                            Size = new float3(2, 2, 1),
                             Orientation = quaternion.identity,
                             BevelRadius = 0,
                         }, new CollisionFilter
@@ -200,9 +200,144 @@ public class MapHandler : MonoBehaviour
                     newChunkData.buffEntities[localPos] = entity;
                 }
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.3f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.1f)
                 {
                     GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                    newChunkData.nightmareFragmentPositions.Add(localPos, false);
+                    newChunkData.instantiatedNightmareFragments.Add(POIInstance);
+
+                    Entity entity = _entityManager.CreateEntity(
+                        typeof(NightmareFragmentComponent),
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+
+                    _entityManager.SetComponentData(entity, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+
+                    _entityManager.SetComponentData(entity, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Chest,
+                    });
+
+                    int tileXTopLeft = tileX - 6;
+                    int tileYTopLeft = tileY + 6;
+
+                    int tileXTopRight = tileX + 6;
+                    int tileYTopRight = tileY + 6;
+
+                    int tileXBottomLeft = tileX - 6;
+                    int tileYBottomLeft = tileY - 6;
+
+                    int tileXBottomRight = tileX + 6;
+                    int tileYBottomRight = tileY - 6;
+
+                    Entity entityTL = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+                    _entityManager.SetComponentData(entityTL, new LocalTransform
+                    {
+                        Position = new float3(tileXTopLeft, tileYTopLeft, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(entityTL, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Pillar,
+                    });
+
+                    Entity entityTR = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+                    _entityManager.SetComponentData(entityTR, new LocalTransform
+                    {
+                        Position = new float3(tileXTopRight, tileYTopRight, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(entityTR, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Pillar,
+                    });
+
+                    Entity entityBL = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+                    _entityManager.SetComponentData(entityBL, new LocalTransform
+                    {
+                        Position = new float3(tileXBottomLeft, tileYBottomLeft, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(entityBL, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Pillar,
+                    });
+
+                    Entity entityBR = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+                    _entityManager.SetComponentData(entityBR, new LocalTransform
+                    {
+                        Position = new float3(tileXBottomRight, tileYBottomRight, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(entityBR, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Pillar,
+                    });
+
+                    Entity entityPOIArea = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(NightmareFragmentAreaComponent),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+                    _entityManager.SetComponentData(entityPOIArea, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(entityPOIArea, new CollisionComponent
+                    {
+                        Type = CollisionType.POI_Area,
+                    });
+                    _entityManager.SetComponentData(entityPOIArea, new NightmareFragmentAreaComponent
+                    {
+                        Parent = entity,
+                    });
+
+                    _entityManager.SetComponentData(entity, new NightmareFragmentComponent
+                    {
+                        Type = (NightmareFragmentType)UnityEngine.Random.Range(0, 2),
+                        IsActive = false,
+                        IsCompleted = false,
+                        IsVisited = false,
+                        StartedAtTime = 0,
+                        PillarEntities = new NativeArray<Entity>(new Entity[] { entityTL, entityTR, entityBL, entityBR }, Allocator.Persistent),
+                        AreaEntity = entityPOIArea,
+                        RemainingEnemies = 999999
+                    });
+
+                    NightmareFragmentController nightmareController = POIInstance.GetComponent<NightmareFragmentController>();
+                    nightmareController.SetEntity(entity);
+
+                    newChunkData.nightmareFragmentEntities[localPos] = entity;
                 }
 
                 world.SetTile(tilePos, tileToPlace);
@@ -265,6 +400,20 @@ public class MapHandler : MonoBehaviour
             else
             {
                 buffStatusController.SetIsUsed(true);
+            }
+        }
+
+        foreach (var nightmareFragmentPosition in chunkData.nightmareFragmentPositions)
+        {
+            Vector2Int pos = nightmareFragmentPosition.Key;
+            GameObject nightmareFragmentInstance = Instantiate(POI, map.CellToWorld(new Vector3Int(chunkPos.x * chunkSize + pos.x, chunkPos.y * chunkSize + pos.y, 0)), Quaternion.identity, world.transform);
+            chunkData.instantiatedNightmareFragments.Add(nightmareFragmentInstance);
+
+            NightmareFragmentController nightmareFragmentController = nightmareFragmentInstance.GetComponent<NightmareFragmentController>();
+
+            if (chunkData.nightmareFragmentEntities.TryGetValue(pos, out Entity entity))
+            {
+                nightmareFragmentController.SetEntity(entity);
             }
         }
     }
@@ -379,6 +528,12 @@ public class MapHandler : MonoBehaviour
                 Destroy(buff);
             }
             chunkData.instantiatedBuffs.Clear();
+
+            foreach (GameObject nightmareFragment in chunkData.instantiatedNightmareFragments)
+            {
+                Destroy(nightmareFragment);
+            }
+            chunkData.instantiatedNightmareFragments.Clear();
         }
     }
 

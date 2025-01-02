@@ -17,6 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: bc6bbb522221bd346a3c34bfd10e432d
   m_SerializeEntries:
+  - m_GUID: 048c64e388511584aac73babcc70dd1c
+    m_Address: Lore_ca
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ca
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a61644db2fd7c246824f6531f94e291
     m_Address: Objectives_ca
     m_ReadOnly: 1

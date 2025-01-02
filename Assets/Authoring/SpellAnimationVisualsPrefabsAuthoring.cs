@@ -13,6 +13,8 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
     private GameObject infernoburstPrefab;
     [SerializeField]
     private GameObject gustPrefab;
+    [SerializeField]
+    private GameObject airEscarlinaAA;
 
     private class SpellAnimationVisualsPrefabsAuthoringBaker : Baker<SpellAnimationVisualsPrefabsAuthoring>
     {
@@ -26,7 +28,8 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
                 Flamenova = authoring.flameNovaPrefab,
                 Meteorstorm = authoring.meteorstormPrefab,
                 Infernoburst = authoring.infernoburstPrefab,
-                Gust = authoring.gustPrefab
+                Gust = authoring.gustPrefab,
+                AirEscarlinaAA = authoring.airEscarlinaAA
             });
         }
     }

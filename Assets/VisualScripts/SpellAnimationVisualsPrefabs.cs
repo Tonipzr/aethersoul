@@ -8,6 +8,7 @@ public class SpellAnimationVisualsPrefabs : IComponentData
     public GameObject Meteorstorm;
     public GameObject Infernoburst;
     public GameObject Gust;
+    public GameObject AirEscarlinaAA;
 
     public GameObject GetSpellPrefab(int spellID)
     {
@@ -23,6 +24,8 @@ public class SpellAnimationVisualsPrefabs : IComponentData
                 return Infernoburst;
             case 5:
                 return Gust;
+            case 6:
+                return AirEscarlinaAA;
             default:
                 return null;
         }

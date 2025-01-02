@@ -124,6 +124,35 @@ partial class UISystem : SystemBase
             }
         }
 
+        if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+        {
+            DynamicBuffer<LoreEntityComponent> lore = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+            for (int i = 0; i < lore.Length; i++)
+            {
+                if (lore[i].Type == LoreType.MapPosition)
+                {
+                    UIManager.Instance.ShowMiddleText(lore[i].Data2);
+                }
+            }
+
+            lore.Clear();
+        }
+
+        bool isInteracting = false;
+        foreach (var (uiInteract, entity) in SystemAPI.Query<RefRO<UIInteractComponent>>().WithEntityAccess())
+        {
+            UIManager.Instance.ToggleInteractImage(true);
+            isInteracting = true;
+
+            entityCommandBuffer.DestroyEntity(entity);
+        }
+
+        if (!isInteracting)
+        {
+            UIManager.Instance.ToggleInteractImage(false);
+        }
+
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
     }

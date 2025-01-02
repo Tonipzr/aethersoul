@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Entities;
@@ -69,21 +70,32 @@ public class UIManager : MonoBehaviour
 
     [Header("Spells")]
     [SerializeField]
-    private TextMeshProUGUI spell1Id;
+    private Image spell1Background;
     [SerializeField]
     private Image spell1CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell2Id;
+    private Image spell2Background;
     [SerializeField]
     private Image spell2CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell3Id;
+    private Image spell3Background;
     [SerializeField]
     private Image spell3CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell4Id;
+    private Image spell4Background;
     [SerializeField]
     private Image spell4CooldownVisual;
+
+    [SerializeField]
+    private Sprite fireSlashIcon;
+    [SerializeField]
+    private Sprite flameNovaIcon;
+    [SerializeField]
+    private Sprite gustIcon;
+    [SerializeField]
+    private Sprite infernoBurstIcon;
+    [SerializeField]
+    private Sprite meteorStormIcon;
 
     [Header("Spell Book")]
     [SerializeField]
@@ -97,6 +109,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject spellBookLearnDebugButtonContainer;
 
+    [Space(10)]
+
     [Header("Objectives")]
     [SerializeField]
     private GameObject objectivesContainer;
@@ -108,6 +122,32 @@ public class UIManager : MonoBehaviour
     private GameObject objective3;
 
     private Dictionary<int, GameObject> objectivesRefs = new();
+
+    [Space(10)]
+
+    [Header("Story")]
+    [SerializeField]
+    private GameObject MiddleTextWarn;
+    [SerializeField]
+    private GameObject MiddleTextWarnTitle;
+    [SerializeField]
+    private GameObject MiddleTextWarnText;
+
+    [SerializeField]
+    private GameObject LoreDisplay;
+    [SerializeField]
+    private GameObject LoreBossImage;
+    [SerializeField]
+    private GameObject LorePlayerImage;
+    [SerializeField]
+    private GameObject LoreText;
+
+    [Space(10)]
+    [Header("Global")]
+    [SerializeField]
+    private GameObject InteractContainer;
+    [SerializeField]
+    private TextMeshProUGUI InteractText;
 
     #region private fields
 
@@ -154,21 +194,40 @@ public class UIManager : MonoBehaviour
         switch (slot)
         {
             case 1:
-                spell1Id.text = spellId;
+                spell1Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[0] = int.Parse(spellId);
                 break;
             case 2:
-                spell2Id.text = spellId;
+                spell2Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[1] = int.Parse(spellId);
                 break;
             case 3:
-                spell3Id.text = spellId;
+                spell3Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[2] = int.Parse(spellId);
                 break;
             case 4:
-                spell4Id.text = spellId;
+                spell4Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[3] = int.Parse(spellId);
                 break;
+        }
+    }
+
+    private Sprite GetSpellIcon(int spellID)
+    {
+        switch (spellID)
+        {
+            case 1:
+                return fireSlashIcon;
+            case 2:
+                return flameNovaIcon;
+            case 3:
+                return meteorStormIcon;
+            case 4:
+                return infernoBurstIcon;
+            case 5:
+                return gustIcon;
+            default:
+                return null;
         }
     }
 
@@ -455,6 +514,40 @@ public class UIManager : MonoBehaviour
             objective.GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
         }
     }
+
+    public void ShowMiddleText(int type)
+    {
+        if (type == 0)
+        {
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Lore, "POI_ENDLESS_SIEGE_TITLE");
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Lore, "POI_ENDLESS_SIEGE_DESCRIPTION");
+        }
+
+        if (type == 1)
+        {
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Lore, "POI_FURY_TITLE");
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Lore, "POI_FURY_DESCRIPTION");
+        }
+
+        StartCoroutine(ActivateShowMiddleText());
+    }
+
+    private IEnumerator ActivateShowMiddleText()
+    {
+        MiddleTextWarn.SetActive(true);
+
+        yield return new WaitForSeconds(5);
+
+        MiddleTextWarn.SetActive(false);
+    }
+
+    public void ToggleInteractImage(bool status)
+    {
+        InteractContainer.SetActive(status);
+
+        InteractText.text = UserInputManager.Instance.GetKeyMap("Interact");
+    }
+
 
     private void Awake()
     {

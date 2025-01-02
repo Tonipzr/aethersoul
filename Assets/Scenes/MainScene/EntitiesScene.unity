@@ -216,6 +216,7 @@ MonoBehaviour:
   meteorstormPrefab: {fileID: 4241185428154036538, guid: 0637e7c9951e51845bb6c8e69b5dcef4, type: 3}
   infernoburstPrefab: {fileID: 7461329264248713094, guid: 770734f7540f719488f4880a5259266b, type: 3}
   gustPrefab: {fileID: 4756378374948392508, guid: e3da14670f63dc64ab7dbc6167e9fa75, type: 3}
+  airEscarlinaAA: {fileID: 4960388327067514690, guid: 05365484bbfb4ec408fd2a484e4e6d38, type: 3}
 --- !u!1 &798666405
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,6 +58,17 @@
             "Cost": 5,
             "Cooldown": 0.5,
             "Element": "Air"
+        },
+        {
+            "SpellID": 6,
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
+            "Damage": 10,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 1,
+            "Element": "Air",
+            "Duration": 0.4
         }
     ]
 }

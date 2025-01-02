@@ -18,6 +18,7 @@ partial class AudioSystem : SystemBase
         {
             if (audio.ValueRO.IsProcessed)
             {
+                entityCommandBuffer.DestroyEntity(entity);
                 continue;
             }
 

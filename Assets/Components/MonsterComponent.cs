@@ -3,6 +3,7 @@ using Unity.Entities;
 public struct MonsterComponent : IComponentData
 {
     public MonsterType MonsterType;
+    public MonsterDifficulty MonsterDifficulty;
 }
 
 public enum MonsterType
@@ -12,4 +13,12 @@ public enum MonsterType
     Golem,
     Rat,
     Slime,
+}
+
+public enum MonsterDifficulty
+{
+    None,
+    NightmareBoss,
+    MiniBoss,
+    Boss
 }

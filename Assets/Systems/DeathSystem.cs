@@ -31,7 +31,8 @@ partial struct DeathSystem : ISystem
                   typeof(LevelComponent),
                   typeof(ExperienceAfterDeathComponent),
                   typeof(MonsterStatsComponent),
-                  typeof(MonsterComponent)
+                  typeof(MonsterComponent),
+                  typeof(MonsterNightmareFragmentComponent)
                 );
 
         experienceShardArchetype = state.EntityManager.CreateArchetype(
@@ -170,9 +171,18 @@ partial struct DeathSystem : ISystem
                         Position = new float2(positionComponent.Position.x, positionComponent.Position.y)
                     });
 
+                    GameObject shardVisuals = experienceAfterDeathComponent.ExperienceAfterDeath switch
+                    {
+                        < 30 => Object.Instantiate(animationVisualsPrefabs.GreenShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                        < 60 => Object.Instantiate(animationVisualsPrefabs.BlueShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                        < 90 => Object.Instantiate(animationVisualsPrefabs.PinkShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                        < 120 => Object.Instantiate(animationVisualsPrefabs.PurpleShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                        _ => Object.Instantiate(animationVisualsPrefabs.RedShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                    };
+
                     _entityManager.SetComponentData(shardEntity, new VisualsReferenceComponent
                     {
-                        gameObject = Object.Instantiate(animationVisualsPrefabs.GreenShardExperience, new Vector3(positionComponent.Position.x, positionComponent.Position.y, 0), Quaternion.identity),
+                        gameObject = shardVisuals,
                     });
 
                     _entityManager.SetComponentData(shardEntity, new ExperienceShardEntityComponent
@@ -343,8 +353,15 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new MonsterComponent
                 {
-                    MonsterType = monsterType
+                    MonsterType = monsterType,
+                    MonsterDifficulty = spawnComponent.Difficulty,
                 });
+
+                _entityManager.SetComponentData(monsterEntity, new MonsterNightmareFragmentComponent
+                {
+                    Parent = spawnComponent.Parent
+                });
+                _entityManager.SetComponentEnabled<MonsterNightmareFragmentComponent>(monsterEntity, spawnComponent.Type == SpawnType.NightmareFragment);
             }
         }
 

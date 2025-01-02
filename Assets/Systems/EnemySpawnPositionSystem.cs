@@ -37,6 +37,10 @@ partial struct EnemySpawnPositionSystem : ISystem
         if (!SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity)) return;
         if (!SystemAPI.TryGetSingletonEntity<MapEntityComponent>(out Entity mapEntity)) return;
 
+        MapEntityGameStateComponent gameState = state.EntityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+
+        if (gameState.IsNightmareActive) return;
+
         PositionComponent playerPosition = state.EntityManager.GetComponentData<PositionComponent>(playerEntity);
         LevelComponent playerLevel = state.EntityManager.GetComponentData<LevelComponent>(playerEntity);
         TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
@@ -62,7 +66,10 @@ partial struct EnemySpawnPositionSystem : ISystem
             });
             state.EntityManager.SetComponentData(spawnPointEntity, new SpawnPointComponent
             {
-                SpawnLevel = getMonsterLevel(gameTime.ElapsedTime, playerLevel.Level)
+                SpawnLevel = getMonsterLevel(gameTime.ElapsedTime, playerLevel.Level),
+                Type = SpawnType.None,
+                Parent = Entity.Null,
+                Difficulty = MonsterDifficulty.None
             });
             state.EntityManager.SetComponentData(spawnPointEntity, new LocalTransform
             {

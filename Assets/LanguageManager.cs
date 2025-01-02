@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 
 public class LanguageManager : MonoBehaviour
@@ -39,6 +41,11 @@ public class LanguageManager : MonoBehaviour
         return key;
     }
 
+    public void UpdateLocalizeStringEvent(GameObject objective, AvailableLocalizationTables table, string key)
+    {
+        objective.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString { TableReference = table.ToString(), TableEntryReference = key };
+    }
+
     public void SetLanguage(string language)
     {
         string lang = "es";
@@ -68,4 +75,5 @@ public enum AvailableLocalizationTables
     DreamCity,
     Achievements,
     Objectives,
+    Lore,
 }

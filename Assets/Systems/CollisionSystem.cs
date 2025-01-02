@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
@@ -5,6 +6,36 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
 using UnityEngine;
+
+public struct EntityPair : IEquatable<EntityPair>
+{
+    public Entity EntityA;
+    public Entity EntityB;
+
+    public EntityPair(Entity a, Entity b)
+    {
+        if (a.Index < b.Index)
+        {
+            EntityA = a;
+            EntityB = b;
+        }
+        else
+        {
+            EntityA = b;
+            EntityB = a;
+        }
+    }
+
+    public bool Equals(EntityPair other)
+    {
+        return EntityA == other.EntityA && EntityB == other.EntityB;
+    }
+
+    public override int GetHashCode()
+    {
+        return EntityA.GetHashCode() ^ EntityB.GetHashCode();
+    }
+}
 
 partial struct CollisionSystem : ISystem
 {
@@ -15,17 +46,14 @@ partial struct CollisionSystem : ISystem
     {
         public Entity EntityA;
         public Entity EntityB;
-        public NativeList<Entity> entitiesColliding;
+        public NativeList<EntityPair>.ParallelWriter Collisions;
 
         [BurstCompile]
         public void Execute(TriggerEvent collisionEvent)
         {
             // UnityEngine.Debug.Log("Collision detected " + collisionEvent.EntityA.Index + " " + collisionEvent.EntityB.Index);
-            Entity entityA = collisionEvent.EntityA;
-            Entity entityB = collisionEvent.EntityB;
-
-            entitiesColliding.Add(entityA);
-            entitiesColliding.Add(entityB);
+            var pair = new EntityPair(collisionEvent.EntityA, collisionEvent.EntityB);
+            Collisions.AddNoResize(pair);
         }
     }
 
@@ -42,18 +70,24 @@ partial struct CollisionSystem : ISystem
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
         var simuilationSingleton = SystemAPI.GetSingleton<SimulationSingleton>();
-        NativeList<Entity> entitiesColliding = new NativeList<Entity>(Allocator.TempJob);
+        NativeList<EntityPair> collisions = new NativeList<EntityPair>(1024, Allocator.TempJob);
         JobHandle jobHandle = new CountNumTriggerEvents
         {
-            entitiesColliding = entitiesColliding
+            Collisions = collisions.AsParallelWriter()
         }.Schedule(simuilationSingleton, state.Dependency);
         jobHandle.Complete();
 
-        List<Entity> collidingCheckpoints = new List<Entity>();
-        for (int i = 0; i < entitiesColliding.Length; i += 2)
+        HashSet<EntityPair> uniqueCollisions = new HashSet<EntityPair>();
+        for (int i = 0; i < collisions.Length; i++)
         {
-            Entity entityA = entitiesColliding[i];
-            Entity entityB = entitiesColliding[i + 1];
+            uniqueCollisions.Add(collisions[i]);
+        }
+
+        List<Entity> collidingCheckpoints = new List<Entity>();
+        foreach (var pair in uniqueCollisions)
+        {
+            Entity entityA = pair.EntityA;
+            Entity entityB = pair.EntityB;
 
             if (entityA == Entity.Null || entityB == Entity.Null)
             {
@@ -70,7 +104,7 @@ partial struct CollisionSystem : ISystem
                     _entityManager.IsComponentEnabled<InvulnerableStateComponent>(playerEntity)
                 )
                 {
-                    return;
+                    continue;
                 }
 
                 MonsterStatsComponent monsterStatsComponent = _entityManager.GetComponentData<MonsterStatsComponent>(monsterEntity);
@@ -110,6 +144,11 @@ partial struct CollisionSystem : ISystem
 
                 ExperienceShardEntityComponent experienceShardEntityComponent = _entityManager.GetComponentData<ExperienceShardEntityComponent>(experienceEntity);
 
+                if (experienceShardEntityComponent.IsProcessed)
+                {
+                    continue;
+                }
+
                 entityCommandBuffer.AddComponent(playerEntity, new ExperienceGainComponent
                 {
                     ExperienceGain = experienceShardEntityComponent.ExperienceQuantity
@@ -120,6 +159,9 @@ partial struct CollisionSystem : ISystem
                     ElapsedTime = 0,
                     EndTime = 0
                 });
+
+                experienceShardEntityComponent.IsProcessed = true;
+                entityCommandBuffer.SetComponent(experienceEntity, experienceShardEntityComponent);
             }
 
             if (IsCollisionEnemyWithSpell(entityA, entityB))
@@ -251,6 +293,91 @@ partial struct CollisionSystem : ISystem
                     jobCheckpoint.Schedule();
                 }
             }
+
+            if (IsCollisionPlayerWithPOIArea(entityA, entityB))
+            {
+                Entity poiEntity = GetPOIAreaEntity(entityA, entityB);
+
+                if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                {
+                    DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+                    NightmareFragmentAreaComponent nightmareFragmentAreaComponent = _entityManager.GetComponentData<NightmareFragmentAreaComponent>(poiEntity);
+
+                    NightmareFragmentComponent nightmareFragmentComponent = _entityManager.GetComponentData<NightmareFragmentComponent>(nightmareFragmentAreaComponent.Parent);
+
+                    if (!nightmareFragmentComponent.IsVisited)
+                    {
+                        nightmareFragmentComponent.IsVisited = true;
+                        entityCommandBuffer.SetComponent(nightmareFragmentAreaComponent.Parent, nightmareFragmentComponent);
+
+                        var jobPOIsVisited = new UpdateMapStatsJob
+                        {
+                            Type = MapStatsType.CurrentPOIsVisited,
+                            Value = 1,
+                            Incremental = true
+                        };
+                        jobPOIsVisited.Schedule();
+                    }
+
+                    bool foundDelay = false;
+                    foreach (var delayEntity in SystemAPI.Query<RefRO<LoreDelayEntityComponent>>())
+                    {
+                        if (delayEntity.ValueRO.DelayEntityID == poiEntity.Index)
+                        {
+                            foundDelay = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundDelay)
+                    {
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.MapPosition,
+                            Data = 3,
+                            Data2 = (int)nightmareFragmentComponent.Type
+                        });
+
+                        Entity delayEntity = entityCommandBuffer.CreateEntity();
+                        entityCommandBuffer.AddComponent(delayEntity, new LoreDelayEntityComponent
+                        {
+                            DelayEntityID = poiEntity.Index
+                        });
+                        entityCommandBuffer.AddComponent(delayEntity, new TimeCounterComponent
+                        {
+                            ElapsedTime = 0,
+                            EndTime = 60
+                        });
+                    }
+                }
+            }
+
+            if (IsCollisionPlayerWithPOIChest(entityA, entityB))
+            {
+                Entity poiChestEntity = GetPOIChestEntity(entityA, entityB);
+
+                NightmareFragmentComponent nightmareFragmentComponent = _entityManager.GetComponentData<NightmareFragmentComponent>(poiChestEntity);
+
+                if (nightmareFragmentComponent.IsCompleted || nightmareFragmentComponent.IsActive)
+                {
+                    continue;
+                }
+
+                if (SystemAPI.TryGetSingletonEntity<InputComponent>(out Entity inputEntity))
+                {
+                    InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
+
+                    if (inputComponent.pressingInteract)
+                    {
+                        nightmareFragmentComponent.IsActive = true;
+                        nightmareFragmentComponent.StartedAtTime = Time.time;
+                        entityCommandBuffer.SetComponent(poiChestEntity, nightmareFragmentComponent);
+                    }
+                }
+
+                Entity interactEntity = entityCommandBuffer.CreateEntity();
+                entityCommandBuffer.AddComponent(interactEntity, new UIInteractComponent());
+            }
         }
 
         for (int i = 0; i < collidingCheckpoints.Count; i++)
@@ -300,7 +427,7 @@ partial struct CollisionSystem : ISystem
         }
 
         collidingCheckpoints.Clear();
-        entitiesColliding.Dispose();
+        collisions.Dispose();
         entityCommandBuffer.Playback(_entityManager);
         entityCommandBuffer.Dispose();
     }
@@ -318,49 +445,84 @@ partial struct CollisionSystem : ISystem
                _entityManager.HasComponent<MonsterComponent>(entityB) && _entityManager.HasComponent<PlayerComponent>(entityA);
     }
 
+    [BurstCompile]
     private bool IsCollisionEnemyWithSpell(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<MonsterComponent>(entityA) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityB) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityB)) ||
                _entityManager.HasComponent<MonsterComponent>(entityB) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityA) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityA));
     }
 
+    [BurstCompile]
     private bool IsCollisionExperienceWithPlayer(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<ExperienceShardEntityComponent>(entityA) && _entityManager.HasComponent<PlayerComponent>(entityB) ||
                _entityManager.HasComponent<ExperienceShardEntityComponent>(entityB) && _entityManager.HasComponent<PlayerComponent>(entityA);
     }
 
+    [BurstCompile]
     private bool IsCollisionPlayerWithCheckpoint(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<PlayerComponent>(entityA) && _entityManager.HasComponent<MapCheckpointEntityComponent>(entityB) ||
                _entityManager.HasComponent<PlayerComponent>(entityB) && _entityManager.HasComponent<MapCheckpointEntityComponent>(entityA);
     }
 
+    [BurstCompile]
+    private bool IsCollisionPlayerWithPOIArea(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<PlayerComponent>(entityA) && _entityManager.HasComponent<NightmareFragmentAreaComponent>(entityB) ||
+               _entityManager.HasComponent<PlayerComponent>(entityB) && _entityManager.HasComponent<NightmareFragmentAreaComponent>(entityA);
+    }
+
+    [BurstCompile]
+    private bool IsCollisionPlayerWithPOIChest(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<PlayerComponent>(entityA) && _entityManager.HasComponent<NightmareFragmentComponent>(entityB) ||
+               _entityManager.HasComponent<PlayerComponent>(entityB) && _entityManager.HasComponent<NightmareFragmentComponent>(entityA);
+    }
+
+    [BurstCompile]
     private Entity GetSpellEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<SpellAoEEntityComponent>(entityA) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityA) ? entityA : entityB;
     }
 
+    [BurstCompile]
     private Entity GetMonsterEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<MonsterComponent>(entityA) ? entityA : entityB;
     }
 
+    [BurstCompile]
     private Entity GetPlayerEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<PlayerComponent>(entityA) ? entityA : entityB;
     }
 
+    [BurstCompile]
     private Entity GetExperienceEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<ExperienceShardEntityComponent>(entityA) ? entityA : entityB;
     }
 
+    [BurstCompile]
     private Entity GetCheckpointEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<MapCheckpointEntityComponent>(entityA) ? entityA : entityB;
     }
 
+    [BurstCompile]
+    private Entity GetPOIAreaEntity(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<NightmareFragmentAreaComponent>(entityA) ? entityA : entityB;
+    }
+
+    [BurstCompile]
+    private Entity GetPOIChestEntity(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<NightmareFragmentComponent>(entityA) ? entityA : entityB;
+    }
+
+    [BurstCompile]
     private void CreateAudioEntity(EntityCommandBuffer entityCommandBuffer)
     {
         Entity audioEntity = entityCommandBuffer.CreateEntity();

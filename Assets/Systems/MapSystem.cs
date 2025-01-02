@@ -45,7 +45,7 @@ partial struct MapSystem : ISystem
         _entityManager.AddComponent<TimeCounterComponent>(entity);
         _entityManager.AddComponentData(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 0, isInfinite = true });
         _entityManager.AddComponent<MapEntityGameStateComponent>(entity);
-        _entityManager.AddComponentData(entity, new MapEntityGameStateComponent { IsPaused = false, PlayerCharacter = PlayerCharacter.Escarlina });
+        _entityManager.AddComponentData(entity, new MapEntityGameStateComponent { IsPaused = false, PlayerCharacter = PlayerCharacter.Escarlina, IsNightmareActive = false });
     }
 
     [BurstCompile]
