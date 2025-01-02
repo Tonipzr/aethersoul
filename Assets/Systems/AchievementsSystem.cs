@@ -102,6 +102,6 @@ partial struct AchievementsSystem : ISystem
 
     public void OnDestroy(ref SystemState state)
     {
-
+        UnlockedAchievementsInSave.Dispose();
     }
 }
