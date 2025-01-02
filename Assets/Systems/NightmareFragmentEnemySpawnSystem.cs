@@ -134,7 +134,7 @@ partial struct NightmareFragmentEnemySpawnSystem : ISystem
 
                     LocalTransform nightmareFragmentTransform = state.EntityManager.GetComponentData<LocalTransform>(entity);
 
-                    int bossCount = (int)(gameTime.ElapsedTime / 60) + 20;
+                    int bossCount = (int)(gameTime.ElapsedTime / 60) + 1;
 
                     NativeArray<float2> spawnPoints = new NativeArray<float2>(bossCount, Allocator.TempJob);
                     GenerateNightmareSpawnPointsJob job = new GenerateNightmareSpawnPointsJob

@@ -60,7 +60,14 @@ public partial struct ObjectivesCheckJob : IJobEntity
                     }
                     break;
                 case TriggerType.Clear:
-                    // TODO: Implement
+                    if (trigger.Value == 3)
+                    {
+                        if (CurrentPOIsCleared >= trigger.Value2)
+                        {
+                            trigger.Satisfied = true;
+                            numSatisfied++;
+                        }
+                    }
                     break;
                 case TriggerType.AnySkillUsed:
                     if (CurrentSpellsUsed >= trigger.Value)
@@ -77,7 +84,32 @@ public partial struct ObjectivesCheckJob : IJobEntity
                     }
                     break;
                 case TriggerType.Explore:
-                    // TODO: Implement
+                    if (trigger.Value == 1)
+                    {
+                        if (CurrentCheckpointsReached >= 1)
+                        {
+                            trigger.Satisfied = true;
+                            numSatisfied++;
+                        }
+                    }
+
+                    if (trigger.Value == 2)
+                    {
+                        if (CurrentBuffsCollected >= 1)
+                        {
+                            trigger.Satisfied = true;
+                            numSatisfied++;
+                        }
+                    }
+
+                    if (trigger.Value == 3)
+                    {
+                        if (CurrentPOIsVisited >= 1)
+                        {
+                            trigger.Satisfied = true;
+                            numSatisfied++;
+                        }
+                    }
                     break;
                 case TriggerType.Travel:
                     if (CurrentTraveledDistance >= trigger.Value)
