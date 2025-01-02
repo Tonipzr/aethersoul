@@ -200,7 +200,7 @@ public class MapHandler : MonoBehaviour
                     newChunkData.buffEntities[localPos] = entity;
                 }
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.1f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
                 {
                     GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.nightmareFragmentPositions.Add(localPos, false);
