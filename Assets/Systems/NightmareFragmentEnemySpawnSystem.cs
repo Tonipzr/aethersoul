@@ -1,4 +1,3 @@
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -80,6 +79,14 @@ partial struct NightmareFragmentEnemySpawnSystem : ISystem
                     JobHandle jobHandle = job.Schedule();
                     jobHandle.Complete();
 
+                    MonsterType monsterType = endlessSiegeFound.Round switch
+                    {
+                        1 => MonsterType.Bat,
+                        2 => MonsterType.Crab,
+                        3 => MonsterType.Rat,
+                        4 => MonsterType.Slime,
+                        _ => MonsterType.Golem
+                    };
                     for (int i = 0; i < spawnPoints.Length; i++)
                     {
                         Entity spawnPointEntity = state.EntityManager.CreateEntity(spawnPointArchetype);
@@ -92,6 +99,7 @@ partial struct NightmareFragmentEnemySpawnSystem : ISystem
                             SpawnLevel = (endlessSiegeFound.Round - 1) * 5 + 5,
                             Type = SpawnType.NightmareFragment,
                             Parent = entity,
+                            MonsterType = monsterType,
                             Difficulty = MonsterDifficulty.None
                         });
                         state.EntityManager.SetComponentData(spawnPointEntity, new LocalTransform
