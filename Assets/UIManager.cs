@@ -532,6 +532,14 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ActivateShowMiddleText());
     }
 
+    public void ShowAchievement(int achievementID)
+    {
+        LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_NAME");
+        LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_DESCRIPTION");
+
+        StartCoroutine(ActivateShowMiddleText());
+    }
+
     private IEnumerator ActivateShowMiddleText()
     {
         MiddleTextWarn.SetActive(true);

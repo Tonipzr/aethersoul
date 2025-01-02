@@ -297,7 +297,6 @@ MonoBehaviour:
   Golem: {fileID: 4831380961527899263, guid: da84ff4748b91f44cbad9d3cb1a0f46d, type: 3}
   Rat: {fileID: 7299388234505502631, guid: 8f0b73317e94a794c8173eea2d7dbf1e, type: 3}
   Slime: {fileID: 7999771898387509369, guid: 1279efd792eb15e44a6a8a0bb33676f4, type: 3}
-  BatBoss: {fileID: 9086642389757089895, guid: 13c91f59b6fb5784fa220eca2871fa25, type: 3}
   GreenShardExperience: {fileID: 8049473216277605023, guid: ae03862e600882d409882b225481dd76, type: 3}
   BlueShardExperience: {fileID: 1480159157758771215, guid: e10891c977dfacc46a4948dad568c0e8, type: 3}
   PinkShardExperience: {fileID: 2062272472122058500, guid: cfe735c6a8249814499db716090078b0, type: 3}
@@ -310,6 +309,51 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563941216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1842693401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1842693403}
+  - component: {fileID: 1842693402}
+  m_Layer: 0
+  m_Name: Achievements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1842693402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842693401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e630dcc9def68419dd9aac31dd148d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Achievements: {fileID: 4900000, guid: 9864fb3482fb67b479896e0d31d60a71, type: 3}
+--- !u!4 &1842693403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842693401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -737,3 +781,4 @@ SceneRoots:
   - {fileID: 329043060}
   - {fileID: 373934094}
   - {fileID: 798666406}
+  - {fileID: 1842693403}

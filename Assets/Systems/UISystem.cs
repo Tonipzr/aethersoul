@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -151,6 +152,23 @@ partial class UISystem : SystemBase
         if (!isInteracting)
         {
             UIManager.Instance.ToggleInteractImage(false);
+        }
+
+        foreach (var (achievementTriggerComponent, achievementEntity) in SystemAPI.Query<RefRW<AchievementTriggerComponent>>().WithEntityAccess())
+        {
+            if (!achievementTriggerComponent.ValueRO.ShouldActivate) continue;
+            if (achievementTriggerComponent.ValueRO.TriggerProcessed) continue;
+
+            UnityEngine.Debug.Log("Test 1");
+
+            if (!SystemAPI.HasComponent<AchievementComponent>(achievementEntity)) continue;
+
+            UnityEngine.Debug.Log("Test 2");
+
+            AchievementComponent achievementComponent = _entityManager.GetComponentData<AchievementComponent>(achievementEntity);
+
+            achievementTriggerComponent.ValueRW.TriggerProcessed = true;
+            UIManager.Instance.ShowAchievement(achievementComponent.AchievementID);
         }
 
         entityCommandBuffer.Playback(_entityManager);

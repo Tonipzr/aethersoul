@@ -3,7 +3,7 @@
         {
             "AchievementID": 1,
             "Trigger": "Explore=1,Explore=2,Explore=3",
-            "Reward": "ExploreChance1=5,ExploreChance2=5,ExploreChance3=5"
+            "Reward": "ExploreChance3=5"
         },
         {
             "AchievementID": 2,
@@ -32,7 +32,7 @@
         },
         {
             "AchievementID": 7,
-            "Trigger": "UnlockAllSpells",
+            "Trigger": "UnlockAllSpells=5",
             "Reward": "None"
         },
         {
