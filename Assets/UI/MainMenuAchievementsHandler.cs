@@ -13,6 +13,8 @@ public class MainMenuAchievementsHandler : MonoBehaviour
     [SerializeField]
     private GameObject AchievementPrefab;
 
+    private List<int> AlreadyLoadedAchievements = new List<int>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,15 +44,11 @@ public class MainMenuAchievementsHandler : MonoBehaviour
             Debug.Log("No hay logros guardados");
         }
 
-        int startPosY = 215;
-        int stepY = 140;
         foreach (AchievementData achievement in achievements.Achievements)
         {
-            GameObject achievementObject = Instantiate(AchievementPrefab, AchievementsContainer.transform);
+            if (AlreadyLoadedAchievements.Contains(achievement.AchievementID)) continue;
 
-            RectTransform rectTransform = achievementObject.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2(0, startPosY);
-            startPosY -= stepY;
+            GameObject achievementObject = Instantiate(AchievementPrefab, AchievementsContainer.transform);
 
             Transform title = achievementObject.transform.Find("Title");
             Transform description = achievementObject.transform.Find("Description");
@@ -63,6 +61,8 @@ public class MainMenuAchievementsHandler : MonoBehaviour
                 Transform check = achievementObject.transform.Find("Check");
                 check.gameObject.SetActive(true);
             }
+
+            AlreadyLoadedAchievements.Add(achievement.AchievementID);
         }
     }
 }

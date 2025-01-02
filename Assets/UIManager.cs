@@ -537,6 +537,7 @@ public class UIManager : MonoBehaviour
         LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_NAME");
         LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_DESCRIPTION");
 
+        AchievementsManager.Instance.UnlockAchievement(achievementID);
         StartCoroutine(ActivateShowMiddleText());
     }
 

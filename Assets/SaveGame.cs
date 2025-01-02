@@ -14,6 +14,8 @@ public class SaveData
 
     public SaveAchievements Achievements;
 
+    public SaveStats Stats;
+
     public SaveData(
         int fireBuff,
         int waterBuff,
@@ -21,7 +23,8 @@ public class SaveData
         int airBuff,
         int currentCoins,
         SaveSettingsData settings,
-        SaveAchievements achievements
+        SaveAchievements achievements,
+        SaveStats stats
     )
     {
         FireBuff = fireBuff;
@@ -31,6 +34,7 @@ public class SaveData
         CurrentCoins = currentCoins;
         Settings = settings;
         Achievements = achievements;
+        Stats = stats;
     }
 }
 
@@ -69,6 +73,52 @@ public class SaveAchievements
     public SaveAchievements(int[] achievements = null)
     {
         this.UnlockedAchievements = achievements;
+    }
+}
+
+[System.Serializable]
+public class SaveStats
+{
+    public int TotalSpellsUsed;
+    public int TotalGoldCollected;
+    public int TotalGoldUsed;
+    public int TotalEnemiesKilled;
+    public int TotalEnemiesKilledNoDamage;
+    public float TotalTraveledDistance;
+    public int TotalPOIsVisited;
+    public int TotalPOIsCleared;
+    public int TotalBuffsCollected;
+    public int TotalCheckpointsReached;
+    public int TotalLevelsUp;
+    public int TotalSpellsUnlocked;
+
+    public SaveStats(
+        int totalSpellsUsed = 0,
+        int totalGoldCollected = 0,
+        int totalGoldUsed = 0,
+        int totalEnemiesKilled = 0,
+        int totalEnemiesKilledNoDamage = 0,
+        float totalTraveledDistance = 0,
+        int totalPOIsVisited = 0,
+        int totalPOIsCleared = 0,
+        int totalBuffsCollected = 0,
+        int totalCheckpointsReached = 0,
+        int totalLevelsUp = 0,
+        int totalSpellsUnlocked = 0
+    )
+    {
+        TotalSpellsUsed = totalSpellsUsed;
+        TotalGoldCollected = totalGoldCollected;
+        TotalGoldUsed = totalGoldUsed;
+        TotalEnemiesKilled = totalEnemiesKilled;
+        TotalEnemiesKilledNoDamage = totalEnemiesKilledNoDamage;
+        TotalTraveledDistance = totalTraveledDistance;
+        TotalPOIsVisited = totalPOIsVisited;
+        TotalPOIsCleared = totalPOIsCleared;
+        TotalBuffsCollected = totalBuffsCollected;
+        TotalCheckpointsReached = totalCheckpointsReached;
+        TotalLevelsUp = totalLevelsUp;
+        TotalSpellsUnlocked = totalSpellsUnlocked;
     }
 }
 

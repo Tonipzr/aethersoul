@@ -1,25 +1,41 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using UnityEngine.AI;
 
 partial struct AchievementsSystem : ISystem
 {
     private EntityManager _entityManager;
 
+    private NativeList<int> UnlockedAchievementsInSave;
+
     public void OnCreate(ref SystemState state)
     {
+        SaveData gameSave = SaveGame.Load();
+
+        if (gameSave != null && gameSave.Achievements != null && gameSave.Achievements.UnlockedAchievements != null)
+        {
+            UnlockedAchievementsInSave = new NativeList<int>(gameSave.Achievements.UnlockedAchievements.Length, Allocator.Persistent);
+
+            foreach (int achievement in gameSave.Achievements.UnlockedAchievements)
+            {
+                UnlockedAchievementsInSave.Add(achievement);
+            }
+        }
     }
 
     public void OnUpdate(ref SystemState state)
     {
         _entityManager = state.EntityManager;
 
-
         foreach (var (achievementComponent, entity) in SystemAPI.Query<RefRW<AchievementComponent>>().WithEntityAccess())
         {
             if (achievementComponent.ValueRO.IsProcessed) continue;
+
+            if (UnlockedAchievementsInSave.Contains(achievementComponent.ValueRO.AchievementID))
+            {
+                achievementComponent.ValueRW.IsCompleted = true;
+            }
 
             if (!achievementComponent.ValueRO.IsCompleted) continue;
 

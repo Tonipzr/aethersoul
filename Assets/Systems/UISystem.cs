@@ -159,11 +159,7 @@ partial class UISystem : SystemBase
             if (!achievementTriggerComponent.ValueRO.ShouldActivate) continue;
             if (achievementTriggerComponent.ValueRO.TriggerProcessed) continue;
 
-            UnityEngine.Debug.Log("Test 1");
-
             if (!SystemAPI.HasComponent<AchievementComponent>(achievementEntity)) continue;
-
-            UnityEngine.Debug.Log("Test 2");
 
             AchievementComponent achievementComponent = _entityManager.GetComponentData<AchievementComponent>(achievementEntity);
 

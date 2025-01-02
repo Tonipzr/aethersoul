@@ -17,6 +17,16 @@ public class AchievementsManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        SaveData gameSave = SaveGame.Load();
+
+        if (gameSave != null && gameSave.Achievements != null && gameSave.Achievements.UnlockedAchievements != null)
+        {
+            foreach (int achievement in gameSave.Achievements.UnlockedAchievements)
+            {
+                unlocked.Add(achievement);
+            }
+        }
     }
 
     public void UnlockAchievement(int id)

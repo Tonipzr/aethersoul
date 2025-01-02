@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Entities;
 using Unity.Entities.UniversalDelegates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -228,6 +229,30 @@ public class MainMenuHandler : MonoBehaviour
     {
         Debug.Log("Exiting game");
 
+        if (World.DefaultGameObjectInjectionWorld != null)
+        {
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+            var mapEntity = entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
+            if (mapEntity != Entity.Null)
+            {
+                var mapEntityComponent = entityManager.GetComponentData<MapEntityComponent>(mapEntity);
+
+                GameStatsManager.Instance.SetStat(GameStatType.TotalSpellsUsed, mapEntityComponent.TotalSpellsUsed);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalGoldCollected, mapEntityComponent.TotalGoldCollected);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalGoldUsed, mapEntityComponent.TotalGoldUsed);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalEnemiesKilled, mapEntityComponent.TotalEnemiesKilled);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalEnemiesKilledNoDamage, mapEntityComponent.TotalEnemiesKilledNoDamage);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalTraveledDistance, mapEntityComponent.TotalTraveledDistance);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalPOIsVisited, mapEntityComponent.TotalPOIsVisited);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalPOIsCleared, mapEntityComponent.TotalPOIsCleared);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalBuffsCollected, mapEntityComponent.TotalBuffsCollected);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalCheckpointsReached, mapEntityComponent.TotalCheckpointsReached);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalLevelsUp, mapEntityComponent.TotalLevelsUp);
+                GameStatsManager.Instance.SetStat(GameStatType.TotalSpellsUnlocked, mapEntityComponent.TotalSpellsUnlocked);
+            }
+        }
+
         SaveData gameSave = new SaveData(
             DreamCityStatsGameObject.FireBuff,
             DreamCityStatsGameObject.WaterBuff,
@@ -243,6 +268,20 @@ public class MainMenuHandler : MonoBehaviour
             ),
             new SaveAchievements(
                 AchievementsManager.Instance.GetUnlockedAchievements().ToArray()
+            ),
+            new SaveStats(
+                GameStatsManager.Instance.TotalSpellsUsed,
+                GameStatsManager.Instance.TotalGoldCollected,
+                GameStatsManager.Instance.TotalGoldUsed,
+                GameStatsManager.Instance.TotalEnemiesKilled,
+                GameStatsManager.Instance.TotalEnemiesKilledNoDamage,
+                GameStatsManager.Instance.TotalTraveledDistance,
+                GameStatsManager.Instance.TotalPOIsVisited,
+                GameStatsManager.Instance.TotalPOIsCleared,
+                GameStatsManager.Instance.TotalBuffsCollected,
+                GameStatsManager.Instance.TotalCheckpointsReached,
+                GameStatsManager.Instance.TotalLevelsUp,
+                GameStatsManager.Instance.TotalSpellsUnlocked
             )
         );
 
