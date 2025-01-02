@@ -18,7 +18,6 @@ public enum MonsterType
 public enum MonsterDifficulty
 {
     None,
-    NightmareBoss,
     MiniBoss,
     Boss
 }

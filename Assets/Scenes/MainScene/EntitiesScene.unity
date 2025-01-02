@@ -297,6 +297,7 @@ MonoBehaviour:
   Golem: {fileID: 4831380961527899263, guid: da84ff4748b91f44cbad9d3cb1a0f46d, type: 3}
   Rat: {fileID: 7299388234505502631, guid: 8f0b73317e94a794c8173eea2d7dbf1e, type: 3}
   Slime: {fileID: 7999771898387509369, guid: 1279efd792eb15e44a6a8a0bb33676f4, type: 3}
+  BatBoss: {fileID: 9086642389757089895, guid: 13c91f59b6fb5784fa220eca2871fa25, type: 3}
   GreenShardExperience: {fileID: 8049473216277605023, guid: ae03862e600882d409882b225481dd76, type: 3}
   BlueShardExperience: {fileID: 1480159157758771215, guid: e10891c977dfacc46a4948dad568c0e8, type: 3}
   PinkShardExperience: {fileID: 2062272472122058500, guid: cfe735c6a8249814499db716090078b0, type: 3}

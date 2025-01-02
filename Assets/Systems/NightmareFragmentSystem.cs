@@ -66,6 +66,28 @@ partial struct NightmareFragmentSystem : ISystem
                         Parent = entity
                     });
                 }
+
+                if (nightmareFragment.ValueRO.Type == NightmareFragmentType.Fury)
+                {
+                    bool alreadyExists = false;
+                    foreach (var furyComponent in SystemAPI.Query<RefRO<NightmareFragmentFuryComponent>>())
+                    {
+                        if (furyComponent.ValueRO.Parent == entity)
+                        {
+                            alreadyExists = true;
+                            break;
+                        }
+                    }
+
+                    if (alreadyExists) continue;
+
+                    Entity furyEntity = entityCommandBuffer.CreateEntity();
+                    entityCommandBuffer.AddComponent(furyEntity, new NightmareFragmentFuryComponent
+                    {
+                        BossSpawned = false,
+                        Parent = entity
+                    });
+                }
             }
             else
             {

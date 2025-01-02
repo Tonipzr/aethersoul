@@ -206,13 +206,19 @@ partial struct DeathSystem : ISystem
 
                 Entity monsterEntity = _entityManager.CreateEntity(monsterArchetype);
                 SpawnPointComponent spawnComponent = _entityManager.GetComponentData<SpawnPointComponent>(entity);
-                MonsterType monsterType = getMonsterTypeByLevel(spawnComponent.SpawnLevel);
 
+                int scale = spawnComponent.Difficulty switch
+                {
+                    MonsterDifficulty.None => 2,
+                    MonsterDifficulty.MiniBoss => 4,
+                    MonsterDifficulty.Boss => 6,
+                    _ => 2,
+                };
                 _entityManager.SetComponentData(monsterEntity, new LocalTransform
                 {
                     Position = new float3(spawnPosition.Position.x, spawnPosition.Position.y, 0),
                     Rotation = quaternion.identity,
-                    Scale = 2
+                    Scale = scale
                 });
 
                 var collider = Unity.Physics.BoxCollider.Create(new BoxGeometry
@@ -298,7 +304,7 @@ partial struct DeathSystem : ISystem
                     Position = new float2(spawnPosition.Position.x, spawnPosition.Position.y)
                 });
 
-                GameObject monsterVisuals = monsterType switch
+                GameObject monsterVisuals = spawnComponent.MonsterType switch
                 {
                     MonsterType.Bat => Object.Instantiate(animationVisualsPrefabs.Bat, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
                     MonsterType.Crab => Object.Instantiate(animationVisualsPrefabs.Crab, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
@@ -330,9 +336,9 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new HealthComponent
                 {
-                    MaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType),
-                    CurrentHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType),
-                    BaseMaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, monsterType)
+                    MaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, spawnComponent.MonsterType),
+                    CurrentHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, spawnComponent.MonsterType),
+                    BaseMaxHealth = MonsterHealthPerLevel.CalculateHealth(spawnComponent.SpawnLevel, spawnComponent.MonsterType)
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new LevelComponent
@@ -342,7 +348,7 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new ExperienceAfterDeathComponent
                 {
-                    ExperienceAfterDeath = MonsterExperiencePerLevel.CalculateExperience(spawnComponent.SpawnLevel, monsterType)
+                    ExperienceAfterDeath = MonsterExperiencePerLevel.CalculateExperience(spawnComponent.SpawnLevel, spawnComponent.MonsterType)
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new MonsterStatsComponent
@@ -353,7 +359,7 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new MonsterComponent
                 {
-                    MonsterType = monsterType,
+                    MonsterType = spawnComponent.MonsterType,
                     MonsterDifficulty = spawnComponent.Difficulty,
                 });
 
@@ -372,16 +378,5 @@ partial struct DeathSystem : ISystem
     [BurstCompile]
     public void OnDestroy(ref SystemState state)
     {
-
-    }
-
-    [BurstCompile]
-    private MonsterType getMonsterTypeByLevel(int level)
-    {
-        if (level <= 5) return MonsterType.Bat;
-        if (level <= 10) return MonsterType.Crab;
-        if (level <= 15) return MonsterType.Rat;
-        if (level <= 20) return MonsterType.Slime;
-        return MonsterType.Golem;
     }
 }

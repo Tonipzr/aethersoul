@@ -45,11 +45,23 @@ partial struct EnemySpawnPositionSystem : ISystem
         LevelComponent playerLevel = state.EntityManager.GetComponentData<LevelComponent>(playerEntity);
         TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
 
-        NativeArray<float2> spawnPoints = new NativeArray<float2>(7, Allocator.TempJob);
+        int monsterLevel = GetMonsterLevel(gameTime.ElapsedTime, playerLevel.Level);
+        int roundLevel = GetRoundLevel(gameTime.ElapsedTime, playerLevel.Level);
+
+        int batCount = 7 * (int)math.pow(2, roundLevel - 1);
+        int crabCount = 7 * (int)math.pow(2, roundLevel - 2);
+        int ratCount = 7 * (int)math.pow(2, roundLevel - 3);
+        int slimeCount = 7 * (int)math.pow(2, roundLevel - 4);
+        int golemCount = 7 * (int)math.pow(2, roundLevel - 5);
+
+        int totalMonsterCount = batCount + crabCount + ratCount + slimeCount + golemCount;
+
+        NativeArray<float2> spawnPoints = new NativeArray<float2>(totalMonsterCount, Allocator.TempJob);
         GenerateSpawnPointsJob job = new GenerateSpawnPointsJob
         {
             playerPosition = playerPosition.Position,
-            spawnPointsCount = 7,
+            spawnPointsCount = totalMonsterCount,
+            roundLevel = roundLevel,
             random = randomGenerator,
             spawnPoints = spawnPoints
         };
@@ -64,13 +76,38 @@ partial struct EnemySpawnPositionSystem : ISystem
             {
                 Position = new float2(spawnPoints[i].x, spawnPoints[i].y)
             });
+
+            MonsterType monsterType;
+            if (i < batCount)
+            {
+                monsterType = MonsterType.Bat;
+            }
+            else if (i < batCount + crabCount)
+            {
+                monsterType = MonsterType.Crab;
+            }
+            else if (i < batCount + crabCount + ratCount)
+            {
+                monsterType = MonsterType.Rat;
+            }
+            else if (i < batCount + crabCount + ratCount + slimeCount)
+            {
+                monsterType = MonsterType.Slime;
+            }
+            else
+            {
+                monsterType = MonsterType.Golem;
+            }
+
             state.EntityManager.SetComponentData(spawnPointEntity, new SpawnPointComponent
             {
-                SpawnLevel = getMonsterLevel(gameTime.ElapsedTime, playerLevel.Level),
+                SpawnLevel = monsterLevel,
                 Type = SpawnType.None,
                 Parent = Entity.Null,
-                Difficulty = MonsterDifficulty.None
+                Difficulty = MonsterDifficulty.None,
+                MonsterType = monsterType
             });
+
             state.EntityManager.SetComponentData(spawnPointEntity, new LocalTransform
             {
                 Position = new float3(spawnPoints[i].x, spawnPoints[i].y, 0)
@@ -96,15 +133,25 @@ partial struct EnemySpawnPositionSystem : ISystem
     }
 
     [BurstCompile]
-    private int getMonsterLevel(float elapsedTime, int playerLevel)
+    private int GetRoundLevel(float elapsedTime, int playerLevel)
+    {
+        int enemyLevel = GetMonsterLevel(elapsedTime, playerLevel);
+
+        if (enemyLevel <= 5) return 1;
+        if (enemyLevel <= 10) return 2;
+        if (enemyLevel <= 15) return 3;
+        if (enemyLevel <= 20) return 4;
+        return 5;
+    }
+
+    [BurstCompile]
+    private int GetMonsterLevel(float elapsedTime, int playerLevel)
     {
         int baseLevel = 1;
-        float timeFactor = 0.1f;
-        float playerLevelFactor = 0.5f;
+        float timeFactor = 0.2f;
+        float playerLevelFactor = 0.2f;
 
-        int enemyLevel = (int)(baseLevel + (elapsedTime * timeFactor) + (playerLevel * playerLevelFactor));
-
-        return Math.Max(enemyLevel, 1);
+        return Math.Max((int)(baseLevel + (elapsedTime * timeFactor) + (playerLevel * playerLevelFactor)), 1);
     }
 }
 
@@ -113,13 +160,14 @@ public partial struct GenerateSpawnPointsJob : IJob
 {
     public float2 playerPosition;
     public int spawnPointsCount;
+    public int roundLevel;
     public Unity.Mathematics.Random random;
     public NativeArray<float2> spawnPoints;
 
     public void Execute()
     {
         int minDistance = 3;
-        int maxDistance = 6;
+        int maxDistance = 6 + ((roundLevel - 1) * 2);
 
         float2 spawnPoint;
         for (int i = 0; i < spawnPointsCount; i++)

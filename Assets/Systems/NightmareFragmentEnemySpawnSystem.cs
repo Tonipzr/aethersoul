@@ -111,6 +111,75 @@ partial struct NightmareFragmentEnemySpawnSystem : ISystem
                     endlessSiegeFound.Round++;
                     state.EntityManager.SetComponentData(foundEntity, endlessSiegeFound);
                 }
+
+                if (nightmareFragment.ValueRO.Type == NightmareFragmentType.Fury)
+                {
+                    Entity foundEntity = Entity.Null;
+                    foreach (var (fury, furyEntity) in SystemAPI.Query<RefRW<NightmareFragmentFuryComponent>>().WithEntityAccess())
+                    {
+                        if (fury.ValueRO.Parent == entity)
+                        {
+                            foundEntity = furyEntity;
+                            break;
+                        }
+                    }
+
+                    if (foundEntity == Entity.Null) return;
+
+                    NightmareFragmentFuryComponent furyFound = state.EntityManager.GetComponentData<NightmareFragmentFuryComponent>(foundEntity);
+
+                    if (furyFound.BossSpawned) return;
+
+                    TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
+
+                    LocalTransform nightmareFragmentTransform = state.EntityManager.GetComponentData<LocalTransform>(entity);
+
+                    int bossCount = (int)(gameTime.ElapsedTime / 60) + 20;
+
+                    NativeArray<float2> spawnPoints = new NativeArray<float2>(bossCount, Allocator.TempJob);
+                    GenerateNightmareSpawnPointsJob job = new GenerateNightmareSpawnPointsJob
+                    {
+                        playerPosition = playerPosition.Position,
+                        center = nightmareFragmentTransform.Position.xy,
+                        spawnPointsCount = bossCount,
+                        random = randomGenerator,
+                        spawnPoints = spawnPoints
+                    };
+
+                    JobHandle jobHandle = job.Schedule();
+                    jobHandle.Complete();
+
+                    for (int i = 0; i < spawnPoints.Length; i++)
+                    {
+                        Entity spawnPointEntity = state.EntityManager.CreateEntity(spawnPointArchetype);
+                        state.EntityManager.SetComponentData(spawnPointEntity, new PositionComponent
+                        {
+                            Position = new float2(spawnPoints[i].x, spawnPoints[i].y)
+                        });
+                        state.EntityManager.SetComponentData(spawnPointEntity, new SpawnPointComponent
+                        {
+                            SpawnLevel = (i + 1) * 5,
+                            Type = SpawnType.NightmareFragment,
+                            Parent = entity,
+                            Difficulty = MonsterDifficulty.MiniBoss
+                        });
+                        state.EntityManager.SetComponentData(spawnPointEntity, new LocalTransform
+                        {
+                            Position = new float3(spawnPoints[i].x, spawnPoints[i].y, 0)
+                        });
+                        state.EntityManager.SetComponentData(spawnPointEntity, new TimeCounterComponent
+                        {
+                            ElapsedTime = 0,
+                            EndTime = 4,
+                            isInfinite = false,
+                        });
+                    }
+
+                    spawnPoints.Dispose();
+
+                    furyFound.BossSpawned = true;
+                    state.EntityManager.SetComponentData(foundEntity, furyFound);
+                }
             }
         }
 
