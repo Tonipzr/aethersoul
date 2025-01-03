@@ -11,6 +11,7 @@ partial struct DeathSystem : ISystem
     private EntityManager _entityManager;
     private EntityArchetype monsterArchetype;
     private EntityArchetype experienceShardArchetype;
+    private EntityArchetype experienceShardAoEArchetype;
 
     public void OnCreate(ref SystemState state)
     {
@@ -44,8 +45,23 @@ partial struct DeathSystem : ISystem
             typeof(PhysicsVelocity),
             typeof(PhysicsWorldIndex),
             typeof(PositionComponent),
+            typeof(VelocityComponent),
             typeof(VisualsReferenceComponent),
             typeof(ExperienceShardEntityComponent)
+        );
+
+        experienceShardAoEArchetype = state.EntityManager.CreateArchetype(
+            typeof(LocalTransform),
+            typeof(PhysicsCollider),
+            typeof(PhysicsDamping),
+            typeof(PhysicsGravityFactor),
+            typeof(PhysicsMass),
+            typeof(PhysicsVelocity),
+            typeof(PhysicsWorldIndex),
+            typeof(PositionComponent),
+            typeof(VelocityComponent),
+            typeof(FollowComponent),
+            typeof(ExperienceShardPickUpAreaComponent)
         );
     }
 
@@ -116,8 +132,15 @@ partial struct DeathSystem : ISystem
                     PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(entity);
 
                     Entity shardEntity = _entityManager.CreateEntity(experienceShardArchetype);
+                    Entity shardAoEEntity = _entityManager.CreateEntity(experienceShardAoEArchetype);
 
                     _entityManager.SetComponentData(shardEntity, new LocalTransform
+                    {
+                        Position = new float3(positionComponent.Position.x, positionComponent.Position.y, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new LocalTransform
                     {
                         Position = new float3(positionComponent.Position.x, positionComponent.Position.y, 0),
                         Rotation = quaternion.identity,
@@ -141,7 +164,29 @@ partial struct DeathSystem : ISystem
                     collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
                     _entityManager.SetComponentData(shardEntity, collider);
 
+                    var colliderAoE = new PhysicsCollider
+                    {
+                        Value = Unity.Physics.SphereCollider.Create(new SphereGeometry
+                        {
+                            Center = new float3(0, 0, 0),
+                            Radius = 1.5f,
+                        }, new CollisionFilter
+                        {
+                            BelongsTo = 8,
+                            CollidesWith = 1,
+                            GroupIndex = 0
+                        }),
+                    };
+
+                    colliderAoE.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+                    _entityManager.SetComponentData(shardAoEEntity, colliderAoE);
+
                     _entityManager.SetComponentData(shardEntity, new PhysicsDamping
+                    {
+                        Linear = 0.01f,
+                        Angular = 0.05f
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new PhysicsDamping
                     {
                         Linear = 0.01f,
                         Angular = 0.05f
@@ -151,8 +196,19 @@ partial struct DeathSystem : ISystem
                     {
                         Value = 0
                     });
+                    _entityManager.SetComponentData(shardAoEEntity, new PhysicsGravityFactor
+                    {
+                        Value = 0
+                    });
 
                     _entityManager.SetComponentData(shardEntity, new PhysicsMass
+                    {
+                        InverseInertia = 6,
+                        InverseMass = 1,
+                        AngularExpansionFactor = 0,
+                        InertiaOrientation = quaternion.identity,
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new PhysicsMass
                     {
                         InverseInertia = 6,
                         InverseMass = 1,
@@ -165,10 +221,27 @@ partial struct DeathSystem : ISystem
                         Linear = new float3(0, 0, 0),
                         Angular = new float3(0, 0, 0)
                     });
+                    _entityManager.SetComponentData(shardAoEEntity, new PhysicsVelocity
+                    {
+                        Linear = new float3(0, 0, 0),
+                        Angular = new float3(0, 0, 0)
+                    });
 
                     _entityManager.SetComponentData(shardEntity, new PositionComponent
                     {
                         Position = new float2(positionComponent.Position.x, positionComponent.Position.y)
+                    });
+                    _entityManager.SetComponentData(shardEntity, new VelocityComponent
+                    {
+                        Velocity = 7
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new PositionComponent
+                    {
+                        Position = new float2(positionComponent.Position.x, positionComponent.Position.y)
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new VelocityComponent
+                    {
+                        Velocity = 7
                     });
 
                     GameObject shardVisuals = experienceAfterDeathComponent.ExperienceAfterDeath switch
@@ -189,6 +262,17 @@ partial struct DeathSystem : ISystem
                     {
                         ExperienceQuantity = experienceAfterDeathComponent.ExperienceAfterDeath,
                         AoEPickUpRange = 0.5f
+                    });
+                    _entityManager.SetComponentData(shardAoEEntity, new ExperienceShardPickUpAreaComponent
+                    {
+                        Parent = shardEntity,
+                    });
+
+                    _entityManager.SetComponentData(shardAoEEntity, new FollowComponent
+                    {
+                        Target = shardEntity,
+                        MinDistance = 0,
+                        MaxDistance = 0
                     });
                 }
             }

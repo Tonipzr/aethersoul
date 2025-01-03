@@ -4,7 +4,9 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Transforms;
 using UnityEngine;
 
 public struct EntityPair : IEquatable<EntityPair>
@@ -135,6 +137,33 @@ partial struct CollisionSystem : ISystem
 
                     CreateAudioEntity(entityCommandBuffer);
                 }
+            }
+
+            if (IsCollisionExperienceAoEWithPlayer(entityA, entityB))
+            {
+                Entity playerEntity = GetPlayerEntity(entityA, entityB);
+                Entity experienceEntity = GetExperienceAoEEntity(entityA, entityB);
+
+                ExperienceShardPickUpAreaComponent experienceShardEntityComponent = _entityManager.GetComponentData<ExperienceShardPickUpAreaComponent>(experienceEntity);
+
+                if (!_entityManager.Exists(experienceShardEntityComponent.Parent))
+                {
+                    entityCommandBuffer.AddComponent(experienceEntity, new DestroyAfterDelayComponent
+                    {
+                        ElapsedTime = 0,
+                        EndTime = 0
+                    });
+
+                    continue;
+                }
+
+                entityCommandBuffer.AddComponent(experienceShardEntityComponent.Parent, new FollowComponent
+                {
+                    Target = playerEntity,
+                    MinDistance = 0,
+                    MaxDistance = 0
+                });
+
             }
 
             if (IsCollisionExperienceWithPlayer(entityA, entityB))
@@ -467,6 +496,13 @@ partial struct CollisionSystem : ISystem
     }
 
     [BurstCompile]
+    private bool IsCollisionExperienceAoEWithPlayer(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<ExperienceShardPickUpAreaComponent>(entityA) && _entityManager.HasComponent<PlayerComponent>(entityB) ||
+               _entityManager.HasComponent<ExperienceShardPickUpAreaComponent>(entityB) && _entityManager.HasComponent<PlayerComponent>(entityA);
+    }
+
+    [BurstCompile]
     private bool IsCollisionPlayerWithCheckpoint(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<PlayerComponent>(entityA) && _entityManager.HasComponent<MapCheckpointEntityComponent>(entityB) ||
@@ -509,6 +545,12 @@ partial struct CollisionSystem : ISystem
     private Entity GetExperienceEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<ExperienceShardEntityComponent>(entityA) ? entityA : entityB;
+    }
+
+    [BurstCompile]
+    private Entity GetExperienceAoEEntity(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<ExperienceShardPickUpAreaComponent>(entityA) ? entityA : entityB;
     }
 
     [BurstCompile]

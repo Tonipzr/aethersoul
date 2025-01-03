@@ -56,6 +56,18 @@ partial struct HandleBuffInteractSystem : ISystem
                             ExperienceGain = experienceComponent.ExperienceToNextLevel - experienceComponent.Experience
                         });
                     }
+
+                    foreach (var (experienceShard, experienceShardEntity) in SystemAPI.Query<RefRW<ExperienceShardEntityComponent>>().WithEntityAccess())
+                    {
+                        if (experienceShard.ValueRO.IsProcessed) continue;
+
+                        entityCommandBuffer.AddComponent(experienceShardEntity, new FollowComponent
+                        {
+                            Target = playerEntity,
+                            MinDistance = 0,
+                            MaxDistance = 0
+                        });
+                    }
                 }
             }
         }

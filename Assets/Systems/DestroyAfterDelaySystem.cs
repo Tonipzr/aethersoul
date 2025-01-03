@@ -28,10 +28,10 @@ partial struct DestroyAfterDelaySystem : ISystem
 
                 if (_entityManager.HasComponent<VisualsReferenceComponent>(entity))
                 {
-                    entityCommandBuffer.DestroyEntity(entity);
-
                     Object.Destroy(_entityManager.GetComponentData<VisualsReferenceComponent>(entity).gameObject);
                 }
+
+                entityCommandBuffer.DestroyEntity(entity);
             }
         }
 
