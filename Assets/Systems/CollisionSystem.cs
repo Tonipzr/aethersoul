@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -160,8 +161,7 @@ partial struct CollisionSystem : ISystem
                 entityCommandBuffer.AddComponent(experienceShardEntityComponent.Parent, new FollowComponent
                 {
                     Target = playerEntity,
-                    MinDistance = 0,
-                    MaxDistance = 0
+                    MinDistance = 0
                 });
 
             }
@@ -193,92 +193,121 @@ partial struct CollisionSystem : ISystem
                 entityCommandBuffer.SetComponent(experienceEntity, experienceShardEntityComponent);
             }
 
-            if (IsCollisionEnemyWithSpell(entityA, entityB))
+            if (IsCollisionEntityWithSpell(entityA, entityB))
             {
                 Entity spellEntity = GetSpellEntity(entityA, entityB);
-                Entity monsterEntity = GetMonsterEntity(entityA, entityB);
+
+                Entity targetEntity = TargetIsMonsterEntity(entityA, entityB) ? GetMonsterEntity(entityA, entityB) : GetPlayerEntity(entityA, entityB);
                 SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
                 SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
-                MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(monsterEntity);
 
-                VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(monsterEntity);
-
-                int spellIncreasePercentage = spellElement.Element switch
+                int damage = spellDamage.Damage;
+                if (TargetIsMonsterEntity(entityA, entityB))
                 {
-                    Element.Fire => DreamCityStatsGameObject.FireBuff,
-                    Element.Water => DreamCityStatsGameObject.WaterBuff,
-                    Element.Earth => DreamCityStatsGameObject.EarthBuff,
-                    Element.Air => DreamCityStatsGameObject.AirBuff,
-                    _ => 0
-                };
+                    MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(targetEntity);
 
-                int spellIncreaseByCurrentGameBuffsPercentage = 0;
-                int lifeLeech = 0;
-                int manaLeech = 0;
-                if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
-                {
-                    if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
+                    VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(targetEntity);
+
+                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
+
+                    if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
                     {
-                        var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
-
-                        foreach (var upgrade in activeUpgrades)
+                        int spellIncreasePercentage = spellElement.Element switch
                         {
-                            if (upgrade.Type == UpgradeType.FireDamage && spellElement.Element == Element.Fire)
-                            {
-                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
-                            }
+                            Element.Fire => DreamCityStatsGameObject.FireBuff,
+                            Element.Water => DreamCityStatsGameObject.WaterBuff,
+                            Element.Earth => DreamCityStatsGameObject.EarthBuff,
+                            Element.Air => DreamCityStatsGameObject.AirBuff,
+                            _ => 0
+                        };
 
-                            if (upgrade.Type == UpgradeType.WaterDamage && spellElement.Element == Element.Water)
-                            {
-                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
-                            }
+                        int spellIncreaseByCurrentGameBuffsPercentage = 0;
+                        int lifeLeech = 0;
+                        int manaLeech = 0;
 
-                            if (upgrade.Type == UpgradeType.EarthDamage && spellElement.Element == Element.Earth)
-                            {
-                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
-                            }
+                        if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
+                        {
+                            var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
 
-                            if (upgrade.Type == UpgradeType.AirDamage && spellElement.Element == Element.Air)
+                            foreach (var upgrade in activeUpgrades)
                             {
-                                spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
-                            }
+                                if (upgrade.Type == UpgradeType.FireDamage && spellElement.Element == Element.Fire)
+                                {
+                                    spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                                }
 
-                            if (upgrade.Type == UpgradeType.Lifeleech)
-                            {
-                                lifeLeech = (int)upgrade.Value;
-                            }
+                                if (upgrade.Type == UpgradeType.WaterDamage && spellElement.Element == Element.Water)
+                                {
+                                    spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                                }
 
-                            if (upgrade.Type == UpgradeType.Manaleech)
-                            {
-                                manaLeech = (int)upgrade.Value;
+                                if (upgrade.Type == UpgradeType.EarthDamage && spellElement.Element == Element.Earth)
+                                {
+                                    spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                                }
+
+                                if (upgrade.Type == UpgradeType.AirDamage && spellElement.Element == Element.Air)
+                                {
+                                    spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                                }
+
+                                if (upgrade.Type == UpgradeType.Lifeleech)
+                                {
+                                    lifeLeech = (int)upgrade.Value;
+                                }
+
+                                if (upgrade.Type == UpgradeType.Manaleech)
+                                {
+                                    manaLeech = (int)upgrade.Value;
+                                }
                             }
+                        }
+
+                        damage = Mathf.RoundToInt(spellDamage.Damage * (1 + ((float)spellIncreasePercentage / 100)) * (1 + (spellIncreaseByCurrentGameBuffsPercentage / 100)));
+
+                        if (lifeLeech > 0)
+                        {
+                            entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
+                            {
+                                HealAmount = Mathf.RoundToInt(damage * (1 + ((float)lifeLeech / 100)))
+                            });
+                        }
+
+                        if (manaLeech > 0)
+                        {
+                            entityCommandBuffer.AddComponent(playerEntity, new ManaRestoreComponent
+                            {
+                                RestoreAmount = Mathf.RoundToInt(damage * (1 + ((float)manaLeech / 100)))
+                            });
                         }
                     }
                 }
+                else
+                {
+                    if (_entityManager.IsComponentEnabled<InvulnerableStateComponent>(targetEntity))
+                    {
+                        continue;
+                    }
 
-                int damage = Mathf.RoundToInt(spellDamage.Damage * (1 + ((float)spellIncreasePercentage / 100)) * (1 + (spellIncreaseByCurrentGameBuffsPercentage / 100)));
-                entityCommandBuffer.AddComponent(monsterEntity, new DamageComponent
+                    entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(targetEntity, true);
+                    entityCommandBuffer.AddComponent(targetEntity, new InvulnerableStateComponent
+                    {
+                        Duration = 1,
+                        ElapsedTime = 0,
+                        isCheckpoint = false
+                    });
+
+                    if (_entityManager.HasComponent<VisualsReferenceComponent>(targetEntity))
+                    {
+                        VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(targetEntity);
+                        visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
+                    }
+                }
+
+                entityCommandBuffer.AddComponent(targetEntity, new DamageComponent
                 {
                     DamageAmount = damage
                 });
-
-                if (lifeLeech > 0)
-                {
-                    entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
-                    {
-                        HealAmount = Mathf.RoundToInt(damage * (1 + ((float)lifeLeech / 100)))
-                    });
-                }
-
-                if (manaLeech > 0)
-                {
-                    entityCommandBuffer.AddComponent(playerEntity, new ManaRestoreComponent
-                    {
-                        RestoreAmount = Mathf.RoundToInt(damage * (1 + ((float)manaLeech / 100)))
-                    });
-                }
-
-                visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 
                 if (_entityManager.HasComponent<SpellSkillShotEntityComponent>(spellEntity))
                 {
@@ -482,10 +511,10 @@ partial struct CollisionSystem : ISystem
     }
 
     [BurstCompile]
-    private bool IsCollisionEnemyWithSpell(Entity entityA, Entity entityB)
+    private bool IsCollisionEntityWithSpell(Entity entityA, Entity entityB)
     {
-        return _entityManager.HasComponent<MonsterComponent>(entityA) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityB) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityB)) ||
-               _entityManager.HasComponent<MonsterComponent>(entityB) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityA) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityA));
+        return (_entityManager.HasComponent<MonsterComponent>(entityA) || _entityManager.HasComponent<PlayerComponent>(entityA)) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityB) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityB)) ||
+               (_entityManager.HasComponent<MonsterComponent>(entityB) || _entityManager.HasComponent<PlayerComponent>(entityB)) && (_entityManager.HasComponent<SpellAoEEntityComponent>(entityA) || _entityManager.HasComponent<SpellSkillShotEntityComponent>(entityA));
     }
 
     [BurstCompile]
@@ -533,6 +562,12 @@ partial struct CollisionSystem : ISystem
     private Entity GetMonsterEntity(Entity entityA, Entity entityB)
     {
         return _entityManager.HasComponent<MonsterComponent>(entityA) ? entityA : entityB;
+    }
+
+    [BurstCompile]
+    private bool TargetIsMonsterEntity(Entity entityA, Entity entityB)
+    {
+        return _entityManager.HasComponent<MonsterComponent>(entityA) || _entityManager.HasComponent<MonsterComponent>(entityB);
     }
 
     [BurstCompile]

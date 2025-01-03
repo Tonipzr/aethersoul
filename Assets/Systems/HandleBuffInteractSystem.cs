@@ -64,8 +64,7 @@ partial struct HandleBuffInteractSystem : ISystem
                         entityCommandBuffer.AddComponent(experienceShardEntity, new FollowComponent
                         {
                             Target = playerEntity,
-                            MinDistance = 0,
-                            MaxDistance = 0
+                            MinDistance = 0
                         });
                     }
                 }

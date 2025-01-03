@@ -9,6 +9,7 @@ public class AnimationVisualsPrefabs : IComponentData
     public GameObject Golem;
     public GameObject Rat;
     public GameObject Slime;
+    public GameObject Boss;
     public GameObject GreenShardExperience;
     public GameObject BlueShardExperience;
     public GameObject PinkShardExperience;

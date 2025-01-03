@@ -1,5 +1,7 @@
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -40,6 +42,9 @@ partial struct EnemyAnimationSystem : ISystem
                     case MonsterType.Slime:
                         monsterVisuals = Object.Instantiate(animationVisualsPrefabs.Slime);
                         break;
+                    case MonsterType.Boss:
+                        monsterVisuals = Object.Instantiate(animationVisualsPrefabs.Boss);
+                        break;
                     default:
                         monsterVisuals = Object.Instantiate(animationVisualsPrefabs.Bat);
                         break;
@@ -65,7 +70,22 @@ partial struct EnemyAnimationSystem : ISystem
                 visualsReferenceComponent.gameObject.transform.rotation = transform.Rotation;
                 visualsReferenceComponent.gameObject.transform.localScale = new Vector3(transform.Scale, transform.Scale, transform.Scale);
 
-                visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", 1);
+                if (_entityManager.HasComponent<PhysicsVelocity>(entity))
+                {
+                    PhysicsVelocity physicsVelocity = _entityManager.GetComponentData<PhysicsVelocity>(entity);
+                    if (math.length(physicsVelocity.Linear) > 0)
+                    {
+                        visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", 1);
+                    }
+                    else
+                    {
+                        visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", 0);
+                    }
+                }
+                else
+                {
+                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetFloat("Movement", 0);
+                }
             }
         }
 

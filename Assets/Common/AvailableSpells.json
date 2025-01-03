@@ -53,7 +53,7 @@
             "Name": "Gust",
             "SpellType": "SkillShot",
             "Target": "MousePosition",
-            "Damage": 20,
+            "Damage": 30,
             "Range": "Five",
             "Cost": 5,
             "Cooldown": 0.5,
@@ -69,6 +69,28 @@
             "Cooldown": 1,
             "Element": "Air",
             "Duration": 0.4
+        },
+        {
+            "SpellID": 7,
+            "SpellType": "AreaOfEffect",
+            "Target": "SelfBoss",
+            "Damage": 50,
+            "Range": "Five",
+            "Cost": 10,
+            "Cooldown": 5,
+            "Element": "Fire",
+            "Duration": 3
+        },
+        {
+            "SpellID": 8,
+            "SpellType": "AreaOfEffect",
+            "Target": "RandomAroundTarget",
+            "Damage": 20,
+            "Range": "Three",
+            "Cost": 10,
+            "Cooldown": 3,
+            "Element": "Fire",
+            "Duration": 1
         }
     ]
 }

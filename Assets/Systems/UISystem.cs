@@ -84,7 +84,7 @@ partial class UISystem : SystemBase
             }
         }
 
-        foreach (var (_, selectedSpellsBuffer) in SystemAPI.Query<RefRO<PlayerComponent>, DynamicBuffer<PlayerSelectedSpellsComponent>>())
+        foreach (var (_, selectedSpellsBuffer) in SystemAPI.Query<RefRO<PlayerComponent>, DynamicBuffer<SelectedSpellsComponent>>())
         {
             for (int i = 0; i < selectedSpellsBuffer.Length; i++)
             {

@@ -9,6 +9,7 @@ public static class MonsterExperiencePerLevel
         { MonsterType.Golem, 6 },
         { MonsterType.Rat, 8 },
         { MonsterType.Slime, 10 },
+        { MonsterType.Boss, 100 },
     };
 
     public static int CalculateExperience(int level, MonsterType monsterType)

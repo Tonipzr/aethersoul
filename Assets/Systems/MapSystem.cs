@@ -1,4 +1,5 @@
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -46,16 +47,16 @@ partial struct MapSystem : ISystem
         });
         _entityManager.AddComponent<MapEntityPlayerAtChunkComponent>(entity);
         _entityManager.AddComponentData(entity, new MapEntityPlayerAtChunkComponent { PlayerAtChunk = new Vector2Int(0, 0) });
-        _entityManager.AddComponent<TimeCounterComponent>(entity);
-        _entityManager.AddComponentData(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 0, isInfinite = true });
         _entityManager.AddComponent<MapEntityGameStateComponent>(entity);
-        _entityManager.AddComponentData(entity, new MapEntityGameStateComponent { IsPaused = false, PlayerCharacter = PlayerCharacter.Escarlina, IsNightmareActive = false });
+        _entityManager.AddComponentData(entity, new MapEntityGameStateComponent { GameStarted = false, IsPaused = false, PlayerCharacter = PlayerCharacter.Escarlina, GamePhase = GamePhase.None, IsNightmareActive = false });
     }
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var gameState in SystemAPI.Query<RefRO<MapEntityGameStateComponent>>())
+        EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
+
+        foreach (var (gameState, entity) in SystemAPI.Query<RefRO<MapEntityGameStateComponent>>().WithEntityAccess())
         {
             if (gameState.ValueRO.IsPaused)
             {
@@ -65,7 +66,18 @@ partial struct MapSystem : ISystem
             {
                 Time.timeScale = 1;
             }
+
+            if (gameState.ValueRO.GameStarted)
+            {
+                if (!state.EntityManager.HasComponent<TimeCounterComponent>(entity))
+                {
+                    entityCommandBuffer.AddComponent(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 0, isInfinite = true });
+                }
+            }
         }
+
+        entityCommandBuffer.Playback(state.EntityManager);
+        entityCommandBuffer.Dispose();
     }
 
     [BurstCompile]

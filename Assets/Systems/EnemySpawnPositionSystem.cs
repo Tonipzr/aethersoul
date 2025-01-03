@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine.Analytics;
 
 partial struct EnemySpawnPositionSystem : ISystem
 {
@@ -44,6 +45,61 @@ partial struct EnemySpawnPositionSystem : ISystem
         PositionComponent playerPosition = state.EntityManager.GetComponentData<PositionComponent>(playerEntity);
         LevelComponent playerLevel = state.EntityManager.GetComponentData<LevelComponent>(playerEntity);
         TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
+
+        if (gameState.GamePhase == GamePhase.PhaseBoss)
+        {
+            if (!SystemAPI.TryGetSingletonEntity<BossComponent>(out Entity _))
+            {
+                NativeArray<float2> bossSpawnPoint = new NativeArray<float2>(1, Allocator.TempJob);
+                GenerateSpawnPointsJob bossJob = new GenerateSpawnPointsJob
+                {
+                    playerPosition = playerPosition.Position,
+                    spawnPointsCount = 1,
+                    roundLevel = 5,
+                    random = randomGenerator,
+                    spawnPoints = bossSpawnPoint
+                };
+
+                JobHandle jobHandleBoss = bossJob.Schedule();
+                jobHandleBoss.Complete();
+
+                for (int i = 0; i < bossSpawnPoint.Length; i++)
+                {
+                    Entity spawnPointEntity = state.EntityManager.CreateEntity(spawnPointArchetype);
+                    state.EntityManager.SetComponentData(spawnPointEntity, new PositionComponent
+                    {
+                        Position = new float2(bossSpawnPoint[i].x, bossSpawnPoint[i].y)
+                    });
+
+                    state.EntityManager.SetComponentData(spawnPointEntity, new SpawnPointComponent
+                    {
+                        SpawnLevel = 100,
+                        Type = SpawnType.None,
+                        Parent = Entity.Null,
+                        Difficulty = MonsterDifficulty.Boss,
+                        MonsterType = MonsterType.Boss
+                    });
+
+                    state.EntityManager.SetComponentData(spawnPointEntity, new LocalTransform
+                    {
+                        Position = new float3(bossSpawnPoint[i].x, bossSpawnPoint[i].y, 0)
+                    });
+                    state.EntityManager.SetComponentData(spawnPointEntity, new TimeCounterComponent
+                    {
+                        ElapsedTime = 0,
+                        EndTime = 4,
+                        isInfinite = false,
+                    });
+                }
+
+                bossSpawnPoint.Dispose();
+            }
+
+            elapsedTime = 0;
+            randomGenerator.NextUInt();
+
+            return;
+        }
 
         int monsterLevel = GetMonsterLevel(gameTime.ElapsedTime, playerLevel.Level);
         int roundLevel = GetRoundLevel(gameTime.ElapsedTime, playerLevel.Level);

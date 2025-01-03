@@ -177,6 +177,14 @@
             "Icon": "UpgradeIcon",
             "UpgradePerLevel": 1,
             "Type": "ReduceExpPerLevel"
+        },
+        {
+            "UpgradeID": 25,
+            "Name": "Gust",
+            "Description": "Unlocks the Gust spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 5,
+            "Type": "UnlockSpell"
         }
     ]
 }

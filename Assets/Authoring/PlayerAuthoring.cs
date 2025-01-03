@@ -21,12 +21,11 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ManaComponent { MaxMana = 100, CurrentMana = 100, BaseMaxMana = 100 });
         AddComponent(playerEntity, new LevelComponent { Level = 1 });
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(0) });
-        AddBuffer<PlayerSelectedSpellsComponent>(playerEntity);
+        AddBuffer<SelectedSpellsComponent>(playerEntity);
         AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
         AddComponent(playerEntity, new SpellLearnComponent { SpellID = 5 });
         AddBuffer<ActiveUpgradesComponent>(playerEntity);
-        AddBuffer<PlayerCastAttemptComponent>(playerEntity);
-        AddComponent(playerEntity, new WeatherComponent { Weather = WeatherType.Clear });
+        AddBuffer<CastAttemptComponent>(playerEntity);
         AddComponent(playerEntity, new IsInSafeZoneComponent());
         SetComponentEnabled<IsInSafeZoneComponent>(playerEntity, false);
         AddComponent(playerEntity, new InvulnerableStateComponent { Duration = 1, ElapsedTime = 0 });

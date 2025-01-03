@@ -15,6 +15,8 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
     private GameObject gustPrefab;
     [SerializeField]
     private GameObject airEscarlinaAA;
+    [SerializeField]
+    private GameObject shadowExplosion;
 
     private class SpellAnimationVisualsPrefabsAuthoringBaker : Baker<SpellAnimationVisualsPrefabsAuthoring>
     {
@@ -29,7 +31,9 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
                 Meteorstorm = authoring.meteorstormPrefab,
                 Infernoburst = authoring.infernoburstPrefab,
                 Gust = authoring.gustPrefab,
-                AirEscarlinaAA = authoring.airEscarlinaAA
+                AirEscarlinaAA = authoring.airEscarlinaAA,
+                ShadowExplosion = authoring.shadowExplosion,
+                ShadowExplosion2 = authoring.shadowExplosion
             });
         }
     }

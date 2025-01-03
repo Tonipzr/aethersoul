@@ -230,6 +230,14 @@ MonoBehaviour:
       a {0}\r"
     m_Metadata:
       m_Items: []
+  - m_Id: 2469497052270592
+    m_Localized: "Desbloqueja l'encanteri R\xE0fega"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2469429884686336
+    m_Localized: "R\xE0fega"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

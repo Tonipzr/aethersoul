@@ -21,47 +21,8 @@ partial struct MovementSystem : ISystem
                 case MovementType.PlayerInput:
                     MovePlayer(velocity.ValueRW.Velocity, ref state);
                     break;
-                case MovementType.AIControlled:
-                    if (!_entityManager.HasComponent<DeathComponent>(entity) && !_entityManager.HasComponent<DestroyAfterDelayComponent>(entity))
-                    {
-                        MoveAI(velocity.ValueRW.Velocity, entity, ref state);
-                    }
-                    break;
             }
         }
-    }
-
-    [BurstCompile]
-    private void MoveAI(float velocity, Entity monsterEntity, ref SystemState state)
-    {
-        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
-        PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(playerEntity);
-
-        PhysicsVelocity monsterVelocity = _entityManager.GetComponentData<PhysicsVelocity>(monsterEntity);
-        LocalTransform monsterTransform = _entityManager.GetComponentData<LocalTransform>(monsterEntity);
-
-        float3 direction = new float3(playerPosition.Position.x, playerPosition.Position.y, 0) - monsterTransform.Position;
-        direction = math.normalize(direction);
-
-        float3 velocityCalc = direction * velocity;
-        monsterVelocity.Linear = velocityCalc;
-
-        _entityManager.SetComponentData(monsterEntity, monsterVelocity);
-
-        PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(monsterEntity);
-        positionComponent.Position = new float2(monsterTransform.Position.x, monsterTransform.Position.y);
-        _entityManager.SetComponentData(monsterEntity, positionComponent);
-
-        DirectionComponent directionComponent = _entityManager.GetComponentData<DirectionComponent>(monsterEntity);
-        if (monsterTransform.Position.x < playerPosition.Position.x)
-        {
-            directionComponent.Direction = Direction.Right;
-        }
-        else
-        {
-            directionComponent.Direction = Direction.Left;
-        }
-        _entityManager.SetComponentData(monsterEntity, directionComponent);
     }
 
     [BurstCompile]

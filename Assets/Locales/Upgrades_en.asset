@@ -229,6 +229,14 @@ MonoBehaviour:
     m_Localized: Reduces the amount of experience required to level up by {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 2469497052270592
+    m_Localized: Unlocks the Gust spell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2469429884686336
+    m_Localized: Gust
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

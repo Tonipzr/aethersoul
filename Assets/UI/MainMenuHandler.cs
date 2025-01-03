@@ -83,6 +83,18 @@ public class MainMenuHandler : MonoBehaviour
 
         SceneToLoadGameObject.FromSceneToScene("MainMenuScene", "MainScene");
 
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        Entity mapEntity = entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
+
+        if (entityManager.HasComponent<MapEntityGameStateComponent>(mapEntity))
+        {
+            MapEntityGameStateComponent gameState = entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+            gameState.GameStarted = true;
+            gameState.GamePhase = GamePhase.Phase1;
+
+            entityManager.SetComponentData(mapEntity, gameState);
+        }
+
         SceneManager.LoadScene("LoadingScene");
     }
 

@@ -207,6 +207,14 @@ MonoBehaviour:
     m_Key: UPGRADE_24_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 2469429884686336
+    m_Key: UPGRADE_25_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2469497052270592
+    m_Key: UPGRADE_25_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

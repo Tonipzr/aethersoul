@@ -17,18 +17,29 @@ partial struct FollowSystem : ISystem
         {
             if (!_entityManager.HasComponent<PositionComponent>(follow.ValueRO.Target)) continue;
 
-            PositionComponent targetPosition = _entityManager.GetComponentData<PositionComponent>(follow.ValueRO.Target);
-
-            if (math.distance(transform.ValueRO.Position, new float3(targetPosition.Position.x, targetPosition.Position.y, 0)) <= follow.ValueRO.MinDistance)
+            if (
+                _entityManager.HasComponent<DeathComponent>(follow.ValueRO.Target) ||
+                _entityManager.HasComponent<DestroyAfterDelayComponent>(follow.ValueRO.Target) ||
+                _entityManager.HasComponent<DeathComponent>(entity)
+                )
             {
                 continue;
             }
 
+            PositionComponent targetPosition = _entityManager.GetComponentData<PositionComponent>(follow.ValueRO.Target);
             PhysicsVelocity physicsVelocity = _entityManager.GetComponentData<PhysicsVelocity>(entity);
+
             float3 direction = new float3(targetPosition.Position.x, targetPosition.Position.y, 0) - transform.ValueRO.Position;
             direction = math.normalize(direction);
 
-            physicsVelocity.Linear = direction * velocity.ValueRO.Velocity;
+            if (math.distance(transform.ValueRO.Position, new float3(targetPosition.Position.x, targetPosition.Position.y, 0)) <= follow.ValueRO.MinDistance)
+            {
+                physicsVelocity.Linear = float3.zero;
+            }
+            else
+            {
+                physicsVelocity.Linear = direction * velocity.ValueRO.Velocity;
+            }
 
             _entityManager.SetComponentData(entity, physicsVelocity);
             position.ValueRW.Position = new float2(transform.ValueRO.Position.x, transform.ValueRO.Position.y);
@@ -39,6 +50,21 @@ partial struct FollowSystem : ISystem
 
                 visualsReferenceComponent.gameObject.transform.position = transform.ValueRO.Position;
                 visualsReferenceComponent.gameObject.transform.rotation = transform.ValueRO.Rotation;
+            }
+
+
+            if (_entityManager.HasComponent<DirectionComponent>(entity))
+            {
+                DirectionComponent directionComponent = _entityManager.GetComponentData<DirectionComponent>(entity);
+                if (transform.ValueRO.Position.x < targetPosition.Position.x)
+                {
+                    directionComponent.Direction = Direction.Right;
+                }
+                else
+                {
+                    directionComponent.Direction = Direction.Left;
+                }
+                _entityManager.SetComponentData(entity, directionComponent);
             }
         }
     }

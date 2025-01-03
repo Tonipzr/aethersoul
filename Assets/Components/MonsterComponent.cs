@@ -13,6 +13,7 @@ public enum MonsterType
     Golem,
     Rat,
     Slime,
+    Boss,
 }
 
 public enum MonsterDifficulty

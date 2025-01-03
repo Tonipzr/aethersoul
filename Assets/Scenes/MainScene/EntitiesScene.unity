@@ -215,8 +215,9 @@ MonoBehaviour:
   flameNovaPrefab: {fileID: 3704293236158683398, guid: 1dd6445cfe2350d418085a83a48da30e, type: 3}
   meteorstormPrefab: {fileID: 4241185428154036538, guid: 0637e7c9951e51845bb6c8e69b5dcef4, type: 3}
   infernoburstPrefab: {fileID: 7461329264248713094, guid: 770734f7540f719488f4880a5259266b, type: 3}
-  gustPrefab: {fileID: 4756378374948392508, guid: e3da14670f63dc64ab7dbc6167e9fa75, type: 3}
+  gustPrefab: {fileID: 416865255893139594, guid: 4447b1435d8f6f740a06a79271bfa0a6, type: 3}
   airEscarlinaAA: {fileID: 4960388327067514690, guid: 05365484bbfb4ec408fd2a484e4e6d38, type: 3}
+  shadowExplosion: {fileID: 2003923267568827144, guid: 911706dc98f8492439e4b63cf94acbad, type: 3}
 --- !u!1 &798666405
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +298,7 @@ MonoBehaviour:
   Golem: {fileID: 4831380961527899263, guid: da84ff4748b91f44cbad9d3cb1a0f46d, type: 3}
   Rat: {fileID: 7299388234505502631, guid: 8f0b73317e94a794c8173eea2d7dbf1e, type: 3}
   Slime: {fileID: 7999771898387509369, guid: 1279efd792eb15e44a6a8a0bb33676f4, type: 3}
+  Boss: {fileID: 1517098208889668117, guid: ad6b640fe81c6b847b9e039f2e519eeb, type: 3}
   GreenShardExperience: {fileID: 8049473216277605023, guid: ae03862e600882d409882b225481dd76, type: 3}
   BlueShardExperience: {fileID: 1480159157758771215, guid: e10891c977dfacc46a4948dad568c0e8, type: 3}
   PinkShardExperience: {fileID: 2062272472122058500, guid: cfe735c6a8249814499db716090078b0, type: 3}
@@ -516,7 +518,7 @@ MonoBehaviour:
         Category04: 1
         Category05: 1
         Category06: 0
-        Category07: 0
+        Category07: 1
         Category08: 0
         Category09: 0
         Category10: 0

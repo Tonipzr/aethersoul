@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 
 partial struct WeatherSystem : ISystem
 {
@@ -15,11 +16,8 @@ partial struct WeatherSystem : ISystem
         _entityManager.AddComponent<WeatherEntityComponent>(entity);
         _entityManager.AddComponent<WeatherComponent>(entity);
         _entityManager.SetComponentData(entity, new WeatherComponent { Weather = WeatherType.Clear });
-        _entityManager.AddComponent<TimeCounterComponent>(entity);
-        _entityManager.SetComponentData(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 120, isInfinite = false });
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         _entityManager = state.EntityManager;
@@ -34,9 +32,49 @@ partial struct WeatherSystem : ISystem
 
         WeatherComponent weatherComponent = _entityManager.GetComponentData<WeatherComponent>(singletonEntity);
 
-        foreach (var (_, _, entity) in SystemAPI.Query<RefRW<WeatherComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
+        Entity mapEntity = SystemAPI.GetSingletonEntity<MapEntityComponent>();
+        MapEntityGameStateComponent mapEntityGameStateComponent = _entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+
+        if (
+            (mapEntityGameStateComponent.GamePhase == GamePhase.PhaseBoss || mapEntityGameStateComponent.GamePhase == GamePhase.Phase2) &&
+            weatherComponent.Weather != WeatherType.Rain
+        )
         {
-            entityCommandBuffer.AddComponent(entity, new WeatherUpdated { NewWeather = weatherComponent.Weather });
+            weatherComponent.Weather = WeatherType.Rain;
+            entityCommandBuffer.SetComponent(singletonEntity, weatherComponent);
+
+            if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+            {
+                DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                loreEntityComponent.Add(new LoreEntityComponent
+                {
+                    Type = LoreType.Story,
+                    Data = 1,
+                    Data2 = 9
+                });
+            }
+        }
+
+        if (!SystemAPI.HasSingleton<PlayerComponent>())
+        {
+            return;
+        }
+
+        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
+        VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(playerEntity);
+        Transform weatherTransform = visualsReferenceComponent.gameObject.transform.Find("Weather");
+
+        if (weatherComponent.Weather == WeatherType.Rain)
+        {
+            Transform rain = weatherTransform.Find("Rain");
+            rain.gameObject.SetActive(true);
+        }
+
+        if (weatherComponent.Weather == WeatherType.Clear)
+        {
+            Transform rain = weatherTransform.Find("Rain");
+            rain.gameObject.SetActive(false);
         }
 
         entityCommandBuffer.Playback(_entityManager);

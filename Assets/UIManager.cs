@@ -539,9 +539,6 @@ public class UIManager : MonoBehaviour
     {
         LoreManager loreManager = LoreDisplay.GetComponent<LoreManager>();
 
-        Debug.Log("ShowLore: " + whoSpeaks + " " + lore);
-        Debug.Log("LoreManager: " + loreManager);
-
         loreManager.ShowLore(whoSpeaks, lore);
     }
 

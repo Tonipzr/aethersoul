@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
@@ -33,6 +34,7 @@ partial struct DeathSystem : ISystem
                   typeof(ExperienceAfterDeathComponent),
                   typeof(MonsterStatsComponent),
                   typeof(MonsterComponent),
+                  typeof(FollowComponent),
                   typeof(MonsterNightmareFragmentComponent)
                 );
 
@@ -271,8 +273,7 @@ partial struct DeathSystem : ISystem
                     _entityManager.SetComponentData(shardAoEEntity, new FollowComponent
                     {
                         Target = shardEntity,
-                        MinDistance = 0,
-                        MaxDistance = 0
+                        MinDistance = 0
                     });
                 }
             }
@@ -282,6 +283,11 @@ partial struct DeathSystem : ISystem
                 entityCommandBuffer.DestroyEntity(entity);
 
                 if (!SystemAPI.ManagedAPI.TryGetSingleton(out AnimationVisualsPrefabs animationVisualsPrefabs))
+                {
+                    continue;
+                }
+
+                if (!SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
                 {
                     continue;
                 }
@@ -395,6 +401,7 @@ partial struct DeathSystem : ISystem
                     MonsterType.Golem => Object.Instantiate(animationVisualsPrefabs.Golem, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
                     MonsterType.Rat => Object.Instantiate(animationVisualsPrefabs.Rat, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
                     MonsterType.Slime => Object.Instantiate(animationVisualsPrefabs.Slime, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
+                    MonsterType.Boss => Object.Instantiate(animationVisualsPrefabs.Boss, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
                     _ => Object.Instantiate(animationVisualsPrefabs.Bat, new Vector3(spawnPosition.Position.x, spawnPosition.Position.y, 0), Quaternion.identity),
                 };
 
@@ -415,7 +422,13 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new MovementTypeComponent
                 {
-                    MovementType = MovementType.AIControlled
+                    MovementType = spawnComponent.MonsterType != MonsterType.Boss ? MovementType.None : MovementType.AIControlled
+                });
+
+                _entityManager.SetComponentData(monsterEntity, new FollowComponent
+                {
+                    Target = playerEntity,
+                    MinDistance = spawnComponent.MonsterType != MonsterType.Boss ? 0 : 5
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new HealthComponent
@@ -452,6 +465,22 @@ partial struct DeathSystem : ISystem
                     Parent = spawnComponent.Parent
                 });
                 _entityManager.SetComponentEnabled<MonsterNightmareFragmentComponent>(monsterEntity, spawnComponent.Type == SpawnType.NightmareFragment);
+
+                if (spawnComponent.MonsterType == MonsterType.Boss)
+                {
+                    entityCommandBuffer.AddComponent<BossComponent>(monsterEntity);
+
+                    entityCommandBuffer.AddComponent<ManaComponent>(monsterEntity);
+                    entityCommandBuffer.SetComponent(monsterEntity, new ManaComponent
+                    {
+                        MaxMana = 500,
+                        CurrentMana = 500,
+                        BaseMaxMana = 500
+                    });
+
+                    entityCommandBuffer.AddBuffer<CastAttemptComponent>(monsterEntity);
+                    entityCommandBuffer.AddBuffer<SelectedSpellsComponent>(monsterEntity);
+                }
             }
         }
 

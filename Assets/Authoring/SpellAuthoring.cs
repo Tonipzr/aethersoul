@@ -35,7 +35,7 @@ class SpellAuthoringBaker : Baker<SpellAuthoring>
             Enum.TryParse(spell.Target, out SpellTarget spellTarget);
             Enum.TryParse(spell.Element, out Element element);
 
-            AddComponent(spellEntity, new SpellComponent { SpellID = spell.SpellID, SpellType = spellType });
+            AddComponent(spellEntity, new SpellComponent { SpellID = spell.SpellID, SpellType = spellType, UpgradeLevel = 0 });
 
             if (spellType != SpellType.Passive)
             {

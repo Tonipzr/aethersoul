@@ -20,5 +20,7 @@ public enum SpellTarget
 {
     Self,
     Targeted,
-    MousePosition
+    MousePosition,
+    SelfBoss,
+    RandomAroundTarget
 }
