@@ -319,6 +319,13 @@ partial struct CollisionSystem : ISystem
                         jobPOIsVisited.Schedule();
                     }
 
+                    loreEntityComponent.Add(new LoreEntityComponent
+                    {
+                        Type = LoreType.Story,
+                        Data = 1,
+                        Data2 = 10
+                    });
+
                     bool foundDelay = false;
                     foreach (var delayEntity in SystemAPI.Query<RefRO<LoreDelayEntityComponent>>())
                     {

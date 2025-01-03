@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -134,6 +133,11 @@ partial class UISystem : SystemBase
                 if (lore[i].Type == LoreType.MapPosition)
                 {
                     UIManager.Instance.ShowMiddleText(lore[i].Data2);
+                }
+
+                if (lore[i].Type == LoreType.Story)
+                {
+                    UIManager.Instance.ShowLore((WhoSpeaksLores)lore[i].Data, lore[i].Data2);
                 }
             }
 

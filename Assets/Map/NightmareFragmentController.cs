@@ -4,8 +4,6 @@ using UnityEngine;
 public class NightmareFragmentController : MonoBehaviour
 {
     Entity entity;
-    bool isActive = false;
-    bool isCompleted = false;
 
     [SerializeField]
     private GameObject Chest;
@@ -37,24 +35,20 @@ public class NightmareFragmentController : MonoBehaviour
 
             if (nightmareComponent.IsActive)
             {
-                isActive = true;
                 Closures.SetActive(true);
             }
             else
             {
-                isActive = false;
                 Closures.SetActive(false);
             }
 
             if (nightmareComponent.IsCompleted)
             {
-                isCompleted = true;
                 Chest.SetActive(false);
                 OpenChest.SetActive(true);
             }
             else
             {
-                isCompleted = false;
                 Chest.SetActive(true);
                 OpenChest.SetActive(false);
             }

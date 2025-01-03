@@ -135,12 +135,6 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject LoreDisplay;
-    [SerializeField]
-    private GameObject LoreBossImage;
-    [SerializeField]
-    private GameObject LorePlayerImage;
-    [SerializeField]
-    private GameObject LoreText;
 
     [Space(10)]
     [Header("Global")]
@@ -539,6 +533,16 @@ public class UIManager : MonoBehaviour
 
         AchievementsManager.Instance.UnlockAchievement(achievementID);
         StartCoroutine(ActivateShowMiddleText());
+    }
+
+    public void ShowLore(WhoSpeaksLores whoSpeaks, int lore)
+    {
+        LoreManager loreManager = LoreDisplay.GetComponent<LoreManager>();
+
+        Debug.Log("ShowLore: " + whoSpeaks + " " + lore);
+        Debug.Log("LoreManager: " + loreManager);
+
+        loreManager.ShowLore(whoSpeaks, lore);
     }
 
     private IEnumerator ActivateShowMiddleText()

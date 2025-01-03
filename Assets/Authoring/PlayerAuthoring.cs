@@ -23,7 +23,7 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(0) });
         AddBuffer<PlayerSelectedSpellsComponent>(playerEntity);
         AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
-        AddComponent(playerEntity, new SpellLearnComponent { SpellID = 2 });
+        AddComponent(playerEntity, new SpellLearnComponent { SpellID = 5 });
         AddBuffer<ActiveUpgradesComponent>(playerEntity);
         AddBuffer<PlayerCastAttemptComponent>(playerEntity);
         AddComponent(playerEntity, new WeatherComponent { Weather = WeatherType.Clear });
