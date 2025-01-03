@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1529525506048
-    m_Localized: "Arriba al nivell 20.\r"
+    m_Localized: Puja un total de 20 nivells entre totes les partides.
     m_Metadata:
       m_Items: []
   - m_Id: 1531450691584
@@ -96,6 +96,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1542691426304
     m_Localized: "Completa 3 punts d'inter\xE8s.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4756958547968
+    m_Localized: "Augmenta la probabilitat de trobar un fragment del malson a 5%.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4792098426880
+    m_Localized: Redueix el cost de totes les teves habilitats en 5%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4794841501696
+    m_Localized: "Augmenta la velocitat de moviment un 10%.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4796766687232
+    m_Localized: Augmenta la velocitat de moviment un 20%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4798310191104
+    m_Localized: "Augmenta tot el mal fet un 5%.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4799706894336
+    m_Localized: "Augmenta tot el mal fet un 25%.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4801128763392
+    m_Localized: Cap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4802663878656
+    m_Localized: "Redueix lexperi\xE8ncia necess\xE0ria per pujar nivell en 5.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4804215771136
+    m_Localized: "Augmenta la quantitat d'or rebuda a 5%.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4805725720576
+    m_Localized: "Augmenta la quantitat d'or rebuda a 10%.\r"
     m_Metadata:
       m_Items: []
   references:

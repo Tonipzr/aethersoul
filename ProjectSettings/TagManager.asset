@@ -47,6 +47,9 @@ TagManager:
   - name: Checkpoint
     uniqueID: 3796510217
     locked: 0
+  - name: Shadows
+    uniqueID: 3017650557
+    locked: 0
   - name: Player
     uniqueID: 2457316553
     locked: 0

@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1529525506048
-    m_Localized: Alcanza el nivel 20.
+    m_Localized: Sube un total de 20 niveles entre todas tus partidas.
     m_Metadata:
       m_Items: []
   - m_Id: 1531450691584
@@ -100,7 +100,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4756958547968
     m_Localized: Aumenta la probabilidad de encontrar un fragmento de la pesadilla
-      en 5%.
+      en {0}%.
     m_Metadata:
       m_Items: []
   - m_Id: 4792098426880

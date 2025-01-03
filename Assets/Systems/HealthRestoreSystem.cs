@@ -54,7 +54,7 @@ partial struct HealthRestoreSystem : ISystem
                     {
                         if (upgrade.Type == UpgradeType.HealthRegen)
                         {
-                            restoreQuantity = (int)(restoreQuantity * (1 + (upgrade.Value / 100)));
+                            restoreQuantity += (int)upgrade.Value;
                         }
                     }
                 }

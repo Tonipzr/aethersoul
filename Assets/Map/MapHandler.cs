@@ -82,7 +82,7 @@ public class MapHandler : MonoBehaviour
                 {
                     tileToPlace = grassTile;
 
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.01f)
+                    if (UnityEngine.Random.Range(0f, 1f) < 0.03f)
                     {
                         GameObject treePrefab = UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree1 : UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;
                         GameObject treeInstance = Instantiate(treePrefab, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
@@ -185,7 +185,7 @@ public class MapHandler : MonoBehaviour
                     newChunkData.checkpointEntities[localPos] = entity;
                 }
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.05f)
                 {
                     GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.buffPositions.Add(localPos, false);

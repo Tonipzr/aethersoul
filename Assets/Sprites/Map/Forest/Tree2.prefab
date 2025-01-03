@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4465141510254517871}
   - component: {fileID: 8658368607698784478}
   - component: {fileID: 7729171862619869946}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 443866411
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 6481247825067083942}
   - component: {fileID: 6671182362999943628}
   - component: {fileID: 5470118143339741723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tree2Shadows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,9 +564,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 443866411
-  m_SortingLayer: 6
-  m_SortingOrder: -1
+  m_SortingLayerID: -1277316739
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

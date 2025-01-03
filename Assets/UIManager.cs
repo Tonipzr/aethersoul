@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider healthBar;
     [SerializeField]
-    private Image healthFill;
+    private TMP_Text healthText;
 
     [Space(10)]
 
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider manaBar;
     [SerializeField]
-    private Image manaFIll;
+    private TMP_Text manaText;
 
     [Space(10)]
 
@@ -163,12 +163,16 @@ public class UIManager : MonoBehaviour
     {
         healthBar.maxValue = maxHP;
         healthBar.value = currentHP;
+
+        healthText.text = currentHP + "/" + maxHP;
     }
 
     public void UpdateMana(int currentMana, int maxMana)
     {
         manaBar.maxValue = maxMana;
         manaBar.value = currentMana;
+
+        manaText.text = currentMana + "/" + maxMana;
     }
 
     public void UpdateExp(int currentExp, int maxExp, bool levelUp = false)

@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 using UnityEngine.Analytics;
 
 partial struct EnemySpawnPositionSystem : ISystem
@@ -104,11 +106,11 @@ partial struct EnemySpawnPositionSystem : ISystem
         int monsterLevel = GetMonsterLevel(gameTime.ElapsedTime, playerLevel.Level);
         int roundLevel = GetRoundLevel(gameTime.ElapsedTime, playerLevel.Level);
 
-        int batCount = 7 * (int)math.pow(2, roundLevel - 1);
-        int crabCount = 7 * (int)math.pow(2, roundLevel - 2);
-        int ratCount = 7 * (int)math.pow(2, roundLevel - 3);
-        int slimeCount = 7 * (int)math.pow(2, roundLevel - 4);
-        int golemCount = 7 * (int)math.pow(2, roundLevel - 5);
+        int batCount = Math.Max(3 * (int)math.pow(2, roundLevel - 1), 7);
+        int crabCount = 3 * (int)math.pow(2, roundLevel - 2);
+        int ratCount = 3 * (int)math.pow(2, roundLevel - 3);
+        int slimeCount = 3 * (int)math.pow(2, roundLevel - 4);
+        int golemCount = 3 * (int)math.pow(2, roundLevel - 5);
 
         int totalMonsterCount = batCount + crabCount + ratCount + slimeCount + golemCount;
 
@@ -193,10 +195,10 @@ partial struct EnemySpawnPositionSystem : ISystem
     {
         int enemyLevel = GetMonsterLevel(elapsedTime, playerLevel);
 
-        if (enemyLevel <= 5) return 1;
-        if (enemyLevel <= 10) return 2;
-        if (enemyLevel <= 15) return 3;
-        if (enemyLevel <= 20) return 4;
+        if (enemyLevel <= 2) return 1;
+        if (enemyLevel <= 4) return 2;
+        if (enemyLevel <= 6) return 3;
+        if (enemyLevel <= 8) return 4;
         return 5;
     }
 
@@ -204,10 +206,15 @@ partial struct EnemySpawnPositionSystem : ISystem
     private int GetMonsterLevel(float elapsedTime, int playerLevel)
     {
         int baseLevel = 1;
-        float timeFactor = 0.2f;
+        float maxElapsedTime = 8f;
+        float timeFactor = 1f;
         float playerLevelFactor = 0.2f;
 
-        return Math.Max((int)(baseLevel + (elapsedTime * timeFactor) + (playerLevel * playerLevelFactor)), 1);
+        float normalizedTime = Mathf.Min(elapsedTime / 60f + (playerLevel * playerLevelFactor), maxElapsedTime);
+
+        int monsterLevel = Mathf.Max(Mathf.FloorToInt(baseLevel + normalizedTime * timeFactor), 1);
+
+        return monsterLevel;
     }
 }
 

@@ -5,7 +5,7 @@
             "Name": "Gold Drop",
             "Description": "Increase the amount of gold you get by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "GoldBonusOnKill"
         },
         {
@@ -13,7 +13,7 @@
             "Name": "Fire Damage",
             "Description": "Increase the damage of your fire spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "FireDamage"
         },
         {
@@ -21,7 +21,7 @@
             "Name": "Water Damage",
             "Description": "Increase the damage of your water spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "WaterDamage"
         },
         {
@@ -29,7 +29,7 @@
             "Name": "Earth Damage",
             "Description": "Increase the damage of your earth spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "EarthDamage"
         },
         {
@@ -37,7 +37,7 @@
             "Name": "Air Damage",
             "Description": "Increase the damage of your air spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "AirDamage"
         },
         {
@@ -45,7 +45,7 @@
             "Name": "Health",
             "Description": "Increase your maximum health by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 100,
             "Type": "MaxHealth"
         },
         {
@@ -53,7 +53,7 @@
             "Name": "Mana",
             "Description": "Increase your maximum mana by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 100,
             "Type": "MaxMana"
         },
         {
@@ -61,7 +61,7 @@
             "Name": "Health Regen",
             "Description": "Increase your health regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 25,
             "Type": "HealthRegen"
         },
         {
@@ -69,7 +69,7 @@
             "Name": "Mana Regen",
             "Description": "Increase your mana regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 25,
             "Type": "ManaRegen"
         },
         {
@@ -125,7 +125,7 @@
             "Name": "Lifeleech",
             "Description": "Gain %=chance%% of the damage you deal as health",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "Lifeleech"
         },
         {
@@ -133,7 +133,7 @@
             "Name": "Manaleech",
             "Description": "Gain %=chance%% of the damage you deal as mana",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "Manaleech"
         },
         {
@@ -157,25 +157,25 @@
         {
             "UpgradeID": 21,
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "AnySpellCostReduce"
         },
         {
             "UpgradeID": 22,
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "MoveSpeed"
         },
         {
             "UpgradeID": 23,
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "KillAnyDamage"
         },
         {
             "UpgradeID": 24,
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "ReduceExpPerLevel"
         },
         {

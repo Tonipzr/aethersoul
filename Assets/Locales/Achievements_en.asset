@@ -87,7 +87,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1529525506048
-    m_Localized: Reach level 20.
+    m_Localized: "Gain a total of 20 levels between all your games.\r"
     m_Metadata:
       m_Items: []
   - m_Id: 1531450691584
@@ -96,6 +96,47 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1542691426304
     m_Localized: Clear 3 Points of interest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4756958547968
+    m_Localized: Aumenta la probabilidad de encontrar un fragmento de la pesadilla
+      en 5%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4792098426880
+    m_Localized: Reduces the cost of all your spells by 5%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4794841501696
+    m_Localized: Increases your movement speed by 10%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4796766687232
+    m_Localized: Increases your movement speed by 20%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4798310191104
+    m_Localized: Increases all damage done by 5%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4799706894336
+    m_Localized: Increases all damage done by 25%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4801128763392
+    m_Localized: None.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4802663878656
+    m_Localized: Reduces the experience needed to level up by 5.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4804215771136
+    m_Localized: Increases the amount of gold received by 5%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4805725720576
+    m_Localized: Increases the amount of gold received by 10%.
     m_Metadata:
       m_Items: []
   references:

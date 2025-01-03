@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3717812817926464843}
   - component: {fileID: 1402077950688377660}
   - component: {fileID: 5648638482290762653}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EscarlinaAA
   m_TagString: Untagged
   m_Icon: {fileID: 0}

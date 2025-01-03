@@ -235,7 +235,8 @@ partial struct DeathSystem : ISystem
                     });
                     _entityManager.SetComponentData(shardEntity, new VelocityComponent
                     {
-                        Velocity = 7
+                        Velocity = 7,
+                        BaseVelocity = 7
                     });
                     _entityManager.SetComponentData(shardAoEEntity, new PositionComponent
                     {
@@ -243,7 +244,8 @@ partial struct DeathSystem : ISystem
                     });
                     _entityManager.SetComponentData(shardAoEEntity, new VelocityComponent
                     {
-                        Velocity = 7
+                        Velocity = 7,
+                        BaseVelocity = 7
                     });
 
                     GameObject shardVisuals = experienceAfterDeathComponent.ExperienceAfterDeath switch
@@ -412,7 +414,8 @@ partial struct DeathSystem : ISystem
 
                 _entityManager.SetComponentData(monsterEntity, new VelocityComponent
                 {
-                    Velocity = 3 * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f)
+                    Velocity = 3 * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f),
+                    BaseVelocity = 3 * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f)
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new DirectionComponent

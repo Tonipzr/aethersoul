@@ -23,7 +23,7 @@ partial class UISystem : SystemBase
 
             UIManager.Instance.UpdateHP(100, 100);
             UIManager.Instance.UpdateMana(100, 100);
-            UIManager.Instance.UpdateExp(0, ExperienceToNextLevel.CalculateExperienceToNextLevel(1));
+            UIManager.Instance.UpdateExp(0, ExperienceToNextLevel.CalculateExperienceToNextLevel(1, 0));
             UIManager.Instance.UpdateSpellSlot(1, "0");
             UIManager.Instance.UpdateSpellSlot(2, "0");
             UIManager.Instance.UpdateSpellSlot(3, "0");

@@ -21,7 +21,22 @@ partial class LevelUpSystem : SystemBase
 
             experience.ValueRW.Experience = levelUp.ValueRO.OverflowExperience;
             level.ValueRW.Level++;
-            experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level);
+
+            int reduction = 0;
+            if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
+            {
+                var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
+
+                foreach (var upgrade in activeUpgrades)
+                {
+                    if (upgrade.Type == UpgradeType.ReduceExpPerLevel)
+                    {
+                        reduction += (int)upgrade.Value;
+                    }
+                }
+            }
+
+            experience.ValueRW.ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(level.ValueRO.Level, reduction);
 
             var jobLevel = new UpdateMapStatsJob
             {

@@ -759,7 +759,8 @@ partial struct SpellCastSystem : ISystem
         });
         entityCommandBuffer.AddComponent(entity, new VelocityComponent
         {
-            Velocity = 10
+            Velocity = 10,
+            BaseVelocity = 10
         });
         entityCommandBuffer.AddComponent(entity, new SpellElementComponent
         {
