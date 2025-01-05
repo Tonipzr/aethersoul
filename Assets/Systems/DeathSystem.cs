@@ -478,7 +478,7 @@ partial struct DeathSystem : ISystem
                 _entityManager.SetComponentData(monsterEntity, new VelocityComponent
                 {
                     Velocity = 3 * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f),
-                    BaseVelocity = 3 * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f)
+                    BaseVelocity = 3
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new DirectionComponent

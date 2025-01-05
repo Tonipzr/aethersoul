@@ -10,17 +10,16 @@ partial struct VelocitySystem : ISystem
     {
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         _entityManager = state.EntityManager;
 
         foreach (var (velocity, entity) in SystemAPI.Query<RefRW<VelocityComponent>>().WithEntityAccess())
         {
+            float velocityCalc = velocity.ValueRO.BaseVelocity;
+
             if (_entityManager.HasComponent<PlayerComponent>(entity))
             {
-                float velocityCalc = velocity.ValueRO.BaseVelocity;
-
                 if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
                 {
                     var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
@@ -33,9 +32,14 @@ partial struct VelocitySystem : ISystem
                         }
                     }
                 }
-
-                velocity.ValueRW.Velocity = velocityCalc;
             }
+
+            if (_entityManager.HasComponent<MonsterComponent>(entity))
+            {
+                velocityCalc = velocity.ValueRO.BaseVelocity * (PlayerPrefsManager.Instance.GetMonsterSpeed() / 100f);
+            }
+
+            velocity.ValueRW.Velocity = velocityCalc;
         }
     }
 

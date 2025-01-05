@@ -34,6 +34,11 @@ public class MainMenuHandler : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown LanguageDropdown;
 
+    [SerializeField]
+    private Button PlayButton;
+    [SerializeField]
+    private Button DreamCityButton;
+
 
     private enum CurrentSettingsLocation
     {
@@ -74,7 +79,24 @@ public class MainMenuHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        Entity mapEntity = entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
 
+        if (entityManager.HasComponent<MapEntityGameStateComponent>(mapEntity))
+        {
+            MapEntityGameStateComponent gameState = entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+
+            if (gameState.GameStarted)
+            {
+                PlayButton.interactable = false;
+                DreamCityButton.interactable = false;
+            }
+            else
+            {
+                PlayButton.interactable = true;
+                DreamCityButton.interactable = true;
+            }
+        }
     }
 
     public void HandlePlayButton()
@@ -179,6 +201,7 @@ public class MainMenuHandler : MonoBehaviour
     private void SetCurrentSettingsLocation(CurrentSettingsLocation location)
     {
         currentSettingsLocation = location;
+        if (AchievementsContainer) AchievementsContainer.SetActive(false);
 
         switch (location)
         {
@@ -211,6 +234,7 @@ public class MainMenuHandler : MonoBehaviour
                 KeybindsPanel.SetActive(false);
                 SoundsPanel.SetActive(false);
                 DificultyPanel.SetActive(false);
+                if (AchievementsContainer) AchievementsContainer.SetActive(true);
                 break;
         }
     }
