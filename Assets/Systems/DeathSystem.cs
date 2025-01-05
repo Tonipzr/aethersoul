@@ -35,6 +35,7 @@ partial struct DeathSystem : ISystem
                   typeof(MonsterStatsComponent),
                   typeof(MonsterComponent),
                   typeof(FollowComponent),
+                  typeof(InvulnerableStateComponent),
                   typeof(MonsterNightmareFragmentComponent)
                 );
 
@@ -92,6 +93,41 @@ partial struct DeathSystem : ISystem
                 entityCommandBuffer.RemoveComponent<PhysicsCollider>(entity);
 
                 entityCommandBuffer.RemoveComponent<DeathComponent>(entity);
+
+                if (SystemAPI.TryGetSingletonEntity<MapEntityComponent>(out Entity mapEntity))
+                {
+                    MapEntityComponent mapEntityComponent = _entityManager.GetComponentData<MapEntityComponent>(mapEntity);
+
+                    if (mapEntityComponent.CurrentEnemiesKilled == 30)
+                    {
+                        if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                        {
+                            DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                            loreEntityComponent.Add(new LoreEntityComponent
+                            {
+                                Type = LoreType.Story,
+                                Data = 1,
+                                Data2 = 6
+                            });
+                        }
+                    }
+
+                    if (mapEntityComponent.CurrentEnemiesKilled == 75)
+                    {
+                        if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                        {
+                            DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                            loreEntityComponent.Add(new LoreEntityComponent
+                            {
+                                Type = LoreType.Story,
+                                Data = 1,
+                                Data2 = 7
+                            });
+                        }
+                    }
+                }
 
                 var jobAnyKilled = new UpdateMapStatsJob
                 {
@@ -278,6 +314,33 @@ partial struct DeathSystem : ISystem
                         MinDistance = 0
                     });
                 }
+
+                MonsterComponent monsterComponent = _entityManager.GetComponentData<MonsterComponent>(entity);
+
+                if (
+                    monsterComponent.MonsterDifficulty == MonsterDifficulty.Boss &&
+                    monsterComponent.MonsterType == MonsterType.Boss &&
+                    _entityManager.HasComponent<BossComponent>(entity)
+                )
+                {
+                    Entity mapEntityAfterBoss = _entityManager.CreateEntityQuery(typeof(MapEntityComponent)).GetSingletonEntity();
+                    MapEntityGameStateComponent mapEntityGameStateComponent = _entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntityAfterBoss);
+
+                    mapEntityGameStateComponent.GamePhase = GamePhase.AfterBoss;
+                    entityCommandBuffer.SetComponent(mapEntityAfterBoss, mapEntityGameStateComponent);
+
+                    if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                    {
+                        DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.Story,
+                            Data = 1,
+                            Data2 = 12
+                        });
+                    }
+                }
             }
 
             if (SystemAPI.HasComponent<SpawnPointComponent>(entity))
@@ -463,6 +526,14 @@ partial struct DeathSystem : ISystem
                     MonsterDifficulty = spawnComponent.Difficulty,
                 });
 
+                _entityManager.SetComponentData(monsterEntity, new InvulnerableStateComponent
+                {
+                    Duration = 0,
+                    ElapsedTime = 0,
+                    isCheckpoint = false
+                });
+                _entityManager.SetComponentEnabled<InvulnerableStateComponent>(monsterEntity, false);
+
                 _entityManager.SetComponentData(monsterEntity, new MonsterNightmareFragmentComponent
                 {
                     Parent = spawnComponent.Parent
@@ -483,6 +554,18 @@ partial struct DeathSystem : ISystem
 
                     entityCommandBuffer.AddBuffer<CastAttemptComponent>(monsterEntity);
                     entityCommandBuffer.AddBuffer<SelectedSpellsComponent>(monsterEntity);
+
+                    if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                    {
+                        DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.Story,
+                            Data = 0,
+                            Data2 = 13
+                        });
+                    }
                 }
             }
         }

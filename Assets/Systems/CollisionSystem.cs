@@ -178,7 +178,9 @@ partial struct CollisionSystem : ISystem
                     continue;
                 }
 
-                entityCommandBuffer.AddComponent(playerEntity, new ExperienceGainComponent
+                DynamicBuffer<ExperienceGainComponent> experienceGainComponent = _entityManager.GetBuffer<ExperienceGainComponent>(playerEntity);
+
+                experienceGainComponent.Add(new ExperienceGainComponent
                 {
                     ExperienceGain = experienceShardEntityComponent.ExperienceQuantity
                 });
@@ -200,6 +202,11 @@ partial struct CollisionSystem : ISystem
                 Entity targetEntity = TargetIsMonsterEntity(entityA, entityB) ? GetMonsterEntity(entityA, entityB) : GetPlayerEntity(entityA, entityB);
                 SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spellEntity);
                 SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spellEntity);
+
+                if (_entityManager.IsComponentEnabled<InvulnerableStateComponent>(targetEntity))
+                {
+                    continue;
+                }
 
                 int damage = spellDamage.Damage;
                 if (TargetIsMonsterEntity(entityA, entityB))
@@ -281,14 +288,17 @@ partial struct CollisionSystem : ISystem
                             });
                         }
                     }
+
+                    entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(targetEntity, true);
+                    entityCommandBuffer.AddComponent(targetEntity, new InvulnerableStateComponent
+                    {
+                        Duration = 0.5f,
+                        ElapsedTime = 0,
+                        isCheckpoint = false
+                    });
                 }
                 else
                 {
-                    if (_entityManager.IsComponentEnabled<InvulnerableStateComponent>(targetEntity))
-                    {
-                        continue;
-                    }
-
                     entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(targetEntity, true);
                     entityCommandBuffer.AddComponent(targetEntity, new InvulnerableStateComponent
                     {

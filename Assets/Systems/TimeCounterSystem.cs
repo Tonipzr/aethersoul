@@ -86,7 +86,7 @@ partial struct TimeCounterSystem : ISystem
                 {
                     MapEntityGameStateComponent gameState = _entityManager.GetComponentData<MapEntityGameStateComponent>(entity);
 
-                    if (gameState.GamePhase != GamePhase.PhaseBoss)
+                    if (gameState.GamePhase != GamePhase.PhaseBoss && gameState.GamePhase != GamePhase.AfterBoss)
                     {
                         gameState.GamePhase = GamePhase.PhaseBoss;
                         entityCommandBuffer.SetComponent(entity, gameState);

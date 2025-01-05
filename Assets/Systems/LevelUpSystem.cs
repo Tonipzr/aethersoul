@@ -22,6 +22,21 @@ partial class LevelUpSystem : SystemBase
             experience.ValueRW.Experience = levelUp.ValueRO.OverflowExperience;
             level.ValueRW.Level++;
 
+            if (level.ValueRO.Level == 5)
+            {
+                if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                {
+                    DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                    loreEntityComponent.Add(new LoreEntityComponent
+                    {
+                        Type = LoreType.Story,
+                        Data = 1,
+                        Data2 = UnityEngine.Random.Range(4, 6)
+                    });
+                }
+            }
+
             int reduction = 0;
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
             {

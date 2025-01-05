@@ -20,18 +20,28 @@ partial struct ExperienceSystem : ISystem
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (_, experience, experienceGain, entity) in SystemAPI.Query<RefRO<LevelComponent>, RefRW<ExperienceComponent>, RefRO<ExperienceGainComponent>>().WithEntityAccess())
+        foreach (var (_, experience, experienceGain, entity) in SystemAPI.Query<RefRO<LevelComponent>, RefRW<ExperienceComponent>, DynamicBuffer<ExperienceGainComponent>>().WithEntityAccess())
         {
-            entityCommandBuffer.RemoveComponent<ExperienceGainComponent>(entity);
-
-            experience.ValueRW.Experience += experienceGain.ValueRO.ExperienceGain;
-
-            if (experience.ValueRO.Experience >= experience.ValueRO.ExperienceToNextLevel)
+            bool levelUp = false;
+            bool experienceUpdated = false;
+            for (int i = 0; i < experienceGain.Length; i++)
             {
-                int experienceOverflow = Math.Max(0, experience.ValueRO.Experience - experience.ValueRO.ExperienceToNextLevel);
-                entityCommandBuffer.AddComponent(entity, new LevelUpComponent { OverflowExperience = experienceOverflow });
+                experience.ValueRW.Experience += experienceGain[i].ExperienceGain;
+                experienceUpdated = true;
+
+                if (experience.ValueRO.Experience >= experience.ValueRO.ExperienceToNextLevel)
+                {
+                    int experienceOverflow = Math.Max(0, experience.ValueRO.Experience - experience.ValueRO.ExperienceToNextLevel);
+                    entityCommandBuffer.AddComponent(entity, new LevelUpComponent { OverflowExperience = experienceOverflow });
+                    levelUp = true;
+                    experienceUpdated = false;
+                    experienceGain.RemoveAt(i);
+                    break;
+                }
+                experienceGain.RemoveAt(i);
             }
-            else
+
+            if (!levelUp && experienceUpdated)
             {
                 entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = false });
             }

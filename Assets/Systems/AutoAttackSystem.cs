@@ -61,7 +61,6 @@ partial struct AutoAttackSystem : ISystem
         Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
 
         MousePositionComponent mousePosition = _entityManager.GetComponentData<MousePositionComponent>(player);
-        SpellRangeComponent spellRange = _entityManager.GetComponentData<SpellRangeComponent>(spell);
         SpellDurationComponent spellDuration = _entityManager.GetComponentData<SpellDurationComponent>(spell);
         SpellCooldownComponent cooldown = _entityManager.GetComponentData<SpellCooldownComponent>(spell);
 

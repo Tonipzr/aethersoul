@@ -21,6 +21,7 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new ManaComponent { MaxMana = 100, CurrentMana = 100, BaseMaxMana = 100 });
         AddComponent(playerEntity, new LevelComponent { Level = 1 });
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(1, 0) });
+        AddBuffer<ExperienceGainComponent>(playerEntity);
         AddBuffer<SelectedSpellsComponent>(playerEntity);
         AddBuffer<PlayerAvailableSpellsComponent>(playerEntity);
         AddComponent(playerEntity, new SpellLearnComponent { SpellID = 5 });

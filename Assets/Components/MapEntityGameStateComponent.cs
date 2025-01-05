@@ -21,4 +21,5 @@ public enum GamePhase
     Phase1,
     Phase2,
     PhaseBoss,
+    AfterBoss,
 }

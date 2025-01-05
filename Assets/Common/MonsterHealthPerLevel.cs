@@ -9,7 +9,7 @@ public static class MonsterHealthPerLevel
         { MonsterType.Golem, 30 },
         { MonsterType.Rat, 40 },
         { MonsterType.Slime, 50 },
-        { MonsterType.Boss, 1000 },
+        { MonsterType.Boss, 500 },
     };
 
     public static int CalculateHealth(int level, MonsterType monsterType)

@@ -2,6 +2,7 @@ using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 
 partial struct DamageSystem : ISystem
 {
@@ -40,6 +41,24 @@ partial struct DamageSystem : ISystem
                     Incremental = false
                 };
                 job.Schedule();
+            }
+
+            if (_entityManager.HasComponent<BossComponent>(entity))
+            {
+                if (health.ValueRO.CurrentHealth <= health.ValueRO.MaxHealth / 2)
+                {
+                    if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                    {
+                        DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.Story,
+                            Data = 1,
+                            Data2 = 15
+                        });
+                    }
+                }
             }
         }
 

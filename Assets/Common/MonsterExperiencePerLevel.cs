@@ -4,11 +4,11 @@ public static class MonsterExperiencePerLevel
 {
     private static readonly Dictionary<MonsterType, int> EXPERIENCE_PER_LEVEL = new Dictionary<MonsterType, int>
     {
-        { MonsterType.Bat, 2 },
-        { MonsterType.Crab, 4 },
-        { MonsterType.Golem, 6 },
-        { MonsterType.Rat, 8 },
-        { MonsterType.Slime, 10 },
+        { MonsterType.Bat, 4 },
+        { MonsterType.Crab, 6 },
+        { MonsterType.Golem, 8 },
+        { MonsterType.Rat, 10 },
+        { MonsterType.Slime, 12 },
         { MonsterType.Boss, 100 },
     };
 

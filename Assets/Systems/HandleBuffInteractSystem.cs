@@ -51,7 +51,9 @@ partial struct HandleBuffInteractSystem : ISystem
                     {
                         ExperienceComponent experienceComponent = _entityManager.GetComponentData<ExperienceComponent>(playerEntity);
 
-                        entityCommandBuffer.AddComponent(playerEntity, new ExperienceGainComponent
+                        DynamicBuffer<ExperienceGainComponent> experienceGainBuffer = _entityManager.GetBuffer<ExperienceGainComponent>(playerEntity);
+
+                        experienceGainBuffer.Add(new ExperienceGainComponent
                         {
                             ExperienceGain = experienceComponent.ExperienceToNextLevel - experienceComponent.Experience
                         });

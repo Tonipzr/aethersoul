@@ -82,6 +82,11 @@ MonoBehaviour:
     m_Localized: Volumen de efectos
     m_Metadata:
       m_Items: []
+  - m_Id: 3158764715970560
+    m_Localized: "Puedes finalizar partida cuando quieras pulsando este bot\xF3n.\n\nNota:
+      Si mueres, sin haber finalizado partida, perder\xE1s el progreso."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

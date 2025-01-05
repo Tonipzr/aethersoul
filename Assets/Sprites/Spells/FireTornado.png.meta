@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 730030d850f20114aa6005bf395593d9
+guid: bf6409ff39d004d4c826e0482952c5c2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MeteorStorm_0
+      name: FireTornado_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b216ccc8f91adbd4fb5fda51606b09e4
-      internalID: -1766751227
+      spriteID: 5adbfa90e33f0724596b7c0a86210854
+      internalID: -283852570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MeteorStorm_1
+      name: FireTornado_1
       rect:
         serializedVersion: 2
         x: 32
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc2e1926f32b74947bdeeafa133e5e5d
-      internalID: -1353336882
+      spriteID: efc2912cd73507d4cb4497c553f05d49
+      internalID: 870427954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MeteorStorm_2
+      name: FireTornado_2
       rect:
         serializedVersion: 2
         x: 64
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94d2df471682d1347917a284a3832474
-      internalID: -1051166707
+      spriteID: a25ff1f5b9aefa64fbe6b71ee90ed15b
+      internalID: -732675316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MeteorStorm_3
+      name: FireTornado_3
       rect:
         serializedVersion: 2
         x: 96
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9d525859d587804c978f56fd2f1e235
-      internalID: 446511777
+      spriteID: 94c55f1a6fcc2fd4b9017a6fabc2e426
+      internalID: 391678326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MeteorStorm_4
+      name: FireTornado_4
       rect:
         serializedVersion: 2
         x: 128
@@ -195,113 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a50606dd4d6f444fb6ef553e276cacb
-      internalID: 883072765
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MeteorStorm_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c141396079bbf2a4d92e1b568645f45e
-      internalID: 1753824850
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MeteorStorm_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 66562b3870ead4241af5aec05bf3eb7f
-      internalID: 1547896849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MeteorStorm_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7584fd44a43ec414dab228dce8c5ac38
-      internalID: -1609242226
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MeteorStorm_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dbd042d90a1bbbe41a6e335d00b39b5a
-      internalID: -1069494412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MeteorStorm_9
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64dd53a9851d3954390243b834854874
-      internalID: 1827693098
+      spriteID: d6221f05a1703124aaefe5fa3ad617e2
+      internalID: 374420506
       vertices: []
       indices: 
       edges: []
@@ -317,16 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MeteorStorm_0: -1766751227
-      MeteorStorm_1: -1353336882
-      MeteorStorm_2: -1051166707
-      MeteorStorm_3: 446511777
-      MeteorStorm_4: 883072765
-      MeteorStorm_5: 1753824850
-      MeteorStorm_6: 1547896849
-      MeteorStorm_7: -1609242226
-      MeteorStorm_8: -1069494412
-      MeteorStorm_9: 1827693098
+      FireTornado_0: -283852570
+      FireTornado_1: 870427954
+      FireTornado_2: -732675316
+      FireTornado_3: 391678326
+      FireTornado_4: 374420506
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -91,6 +91,17 @@
             "Cooldown": 3,
             "Element": "Fire",
             "Duration": 1
+        },
+        {
+            "SpellID": 9,
+            "Name": "FireTornado",
+            "SpellType": "SkillShot",
+            "Target": "MousePosition",
+            "Damage": 0,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Fire"
         }
     ]
 }

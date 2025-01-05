@@ -21,6 +21,14 @@ partial struct SpellCastSystem : ISystem
         _entityManager = state.EntityManager;
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
+        if (SystemAPI.TryGetSingletonEntity<MapEntityComponent>(out Entity mapEntity))
+        {
+            MapEntityGameStateComponent mapGameState = _entityManager.GetComponentData<MapEntityGameStateComponent>(mapEntity);
+
+            if (mapGameState.IsPaused) return;
+        }
+
+
         if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
         {
             DynamicBuffer<SelectedSpellsComponent> selectedSpellsBuffer = _entityManager.GetBuffer<SelectedSpellsComponent>(playerEntity);
@@ -130,6 +138,21 @@ partial struct SpellCastSystem : ISystem
                                 Volume = 1,
                                 Audio = audiotype
                             });
+
+                            if (_entityManager.HasComponent<PlayerComponent>(entity) && spellElement.Element == Element.Fire)
+                            {
+                                if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                                {
+                                    DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                                    loreEntityComponent.Add(new LoreEntityComponent
+                                    {
+                                        Type = LoreType.Story,
+                                        Data = 1,
+                                        Data2 = UnityEngine.Random.Range(1, 4)
+                                    });
+                                }
+                            }
                         }
                     }
                 }
@@ -518,6 +541,48 @@ partial struct SpellCastSystem : ISystem
             Angular = new float3(0, 0, 0)
         });
         spellVisuals.gameObject.transform.position = new Vector3(casterPosition.Position.x, casterPosition.Position.y, 0);
+
+        if (spellComponent.UpgradeLevel >= 1 && spellElement.Element == Element.Fire)
+        {
+            float2[] directions = new float2[]
+            {
+                new float2(0, 10),
+                new float2(0, -10),
+                new float2(10, 0),
+                new float2(-10, 0)
+            };
+
+            foreach (var offset in directions)
+            {
+                float2 targetPosition = casterPosition.Position + offset;
+
+                GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(9));
+                Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                SkillShotToDirection(casterPosition.Position, targetPosition, spellEntity2, spellVisuals2, spellDamage.Damage, spellElement.Element, entityCommandBuffer);
+            }
+        }
+
+        if (spellComponent.UpgradeLevel >= 2 && spellElement.Element == Element.Fire)
+        {
+            float2 directionNorth = new float2(0, 10);
+
+            float2[] diagonals = new float2[]
+            {
+                RotateVector(directionNorth, math.radians(45)),
+                RotateVector(directionNorth, math.radians(-45)),
+                RotateVector(directionNorth, math.radians(135)),
+                RotateVector(directionNorth, math.radians(-135))
+            };
+
+            foreach (var offset in diagonals)
+            {
+                float2 targetPosition = casterPosition.Position + offset;
+
+                GameObject spellVisuals3 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(9));
+                Entity spellEntity3 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                SkillShotToDirection(casterPosition.Position, targetPosition, spellEntity3, spellVisuals3, spellDamage.Damage, spellElement.Element, entityCommandBuffer);
+            }
+        }
     }
 
     private void CastMousePositionSpell(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
@@ -543,91 +608,29 @@ partial struct SpellCastSystem : ISystem
 
         UnityEngine.Debug.Log("Casting spell at mouse position");
 
-        entityCommandBuffer.AddComponent(spellEntity, new SpellDamageComponent
-        {
-            Damage = spellDamage.Damage
-        });
         if (spellComponent.SpellType == SpellType.AreaOfEffect)
         {
-            entityCommandBuffer.AddComponent(spellEntity, new LocalTransform
-            {
-                Position = new float3(mousePosition.Position.x, mousePosition.Position.y, 0),
-                Rotation = quaternion.identity,
-                Scale = 1
-            });
+            AoESpellToPosition(new float2(mousePosition.Position.x, mousePosition.Position.y), spellDuration, spellRange, spellElement, spellDamage, spellEntity, spellVisuals, entityCommandBuffer);
 
-            entityCommandBuffer.AddComponent(spellEntity, new SpellAoEEntityComponent
+            if (spellComponent.UpgradeLevel >= 2)
             {
-                ToPosition = new float2(mousePosition.Position.x, mousePosition.Position.y),
-                AreaOfEffect = spellRangeToNumber(spellRange)
-            });
-            entityCommandBuffer.AddComponent(spellEntity, new SpellEntityGameObjectReferenceComponent
-            {
-                GameObject = spellVisuals
-            });
-            entityCommandBuffer.AddComponent(spellEntity, new TimeCounterComponent
-            {
-                ElapsedTime = 0,
-                EndTime = spellDuration.Duration,
-                isInfinite = false,
-            });
-            entityCommandBuffer.AddComponent(spellEntity, new SpellElementComponent
-            {
-                Element = spellElement.Element
-            });
+                GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                GameObject spellVisuals3 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                Entity spellEntity3 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                GameObject spellVisuals4 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                Entity spellEntity4 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                GameObject spellVisuals5 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                Entity spellEntity5 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
 
-            var collider = new PhysicsCollider
-            {
-                Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
-                {
-                    Center = new float3(0, 0, 0),
-                    Size = new float3(1, 1, 1),
-                    Orientation = quaternion.identity,
-                    BevelRadius = 0,
-                }, new CollisionFilter
-                {
-                    BelongsTo = 4,
-                    CollidesWith = 2,
-                    GroupIndex = 0
-                })
-            };
-            collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
-            entityCommandBuffer.AddComponent(spellEntity, collider);
+                AoESpellToPosition(new float2(mousePosition.Position.x + 1, mousePosition.Position.y + 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity2, spellVisuals2, entityCommandBuffer);
+                AoESpellToPosition(new float2(mousePosition.Position.x - 1, mousePosition.Position.y - 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity3, spellVisuals3, entityCommandBuffer);
 
-            entityCommandBuffer.AddComponent(spellEntity, new PhysicsDamping
-            {
-                Linear = 0.01f,
-                Angular = 0.05f
-            });
-            entityCommandBuffer.SetComponent(spellEntity, new PhysicsDamping
-            {
-                Linear = 0.01f,
-                Angular = 0.05f
-            });
+                AoESpellToPosition(new float2(mousePosition.Position.x - 1, mousePosition.Position.y + 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity4, spellVisuals4, entityCommandBuffer);
+                AoESpellToPosition(new float2(mousePosition.Position.x + 1, mousePosition.Position.y - 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity5, spellVisuals5, entityCommandBuffer);
+            }
 
-            entityCommandBuffer.AddComponent<PhysicsGravityFactor>(spellEntity);
-            entityCommandBuffer.SetComponent(spellEntity, new PhysicsGravityFactor
-            {
-                Value = 0
-            });
 
-            entityCommandBuffer.AddComponent<PhysicsMass>(spellEntity);
-            entityCommandBuffer.SetComponent(spellEntity, new PhysicsMass
-            {
-                InverseInertia = 6,
-                InverseMass = 1,
-                AngularExpansionFactor = 0,
-                InertiaOrientation = quaternion.identity,
-            });
-
-            entityCommandBuffer.AddComponent<PhysicsVelocity>(spellEntity);
-            entityCommandBuffer.SetComponent(spellEntity, new PhysicsVelocity
-            {
-                Linear = new float3(0, 0, 0),
-                Angular = new float3(0, 0, 0)
-            });
-
-            spellVisuals.gameObject.transform.position = new Vector3(mousePosition.Position.x, mousePosition.Position.y, 0);
         }
 
         if (spellComponent.SpellType == SpellType.SkillShot)
@@ -728,6 +731,94 @@ partial struct SpellCastSystem : ISystem
             cos * vector.x - sin * vector.y,
             sin * vector.x + cos * vector.y
         );
+    }
+
+    private void AoESpellToPosition(float2 position, SpellDurationComponent spellDuration, SpellRangeComponent spellRange, SpellElementComponent spellElement, SpellDamageComponent spellDamage, Entity entity, GameObject visuals, EntityCommandBuffer entityCommandBuffer)
+    {
+        entityCommandBuffer.AddComponent(entity, new SpellDamageComponent
+        {
+            Damage = spellDamage.Damage
+        });
+
+        entityCommandBuffer.AddComponent(entity, new LocalTransform
+        {
+            Position = new float3(position.x, position.y, 0),
+            Rotation = quaternion.identity,
+            Scale = 1
+        });
+
+        entityCommandBuffer.AddComponent(entity, new SpellAoEEntityComponent
+        {
+            ToPosition = new float2(position.x, position.y),
+            AreaOfEffect = spellRangeToNumber(spellRange)
+        });
+        entityCommandBuffer.AddComponent(entity, new SpellEntityGameObjectReferenceComponent
+        {
+            GameObject = visuals
+        });
+        entityCommandBuffer.AddComponent(entity, new TimeCounterComponent
+        {
+            ElapsedTime = 0,
+            EndTime = spellDuration.Duration,
+            isInfinite = false,
+        });
+        entityCommandBuffer.AddComponent(entity, new SpellElementComponent
+        {
+            Element = spellElement.Element
+        });
+
+        var collider = new PhysicsCollider
+        {
+            Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+            {
+                Center = new float3(0, 0, 0),
+                Size = new float3(1, 1, 1),
+                Orientation = quaternion.identity,
+                BevelRadius = 0,
+            }, new CollisionFilter
+            {
+                BelongsTo = 4,
+                CollidesWith = 2,
+                GroupIndex = 0
+            })
+        };
+        collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+        entityCommandBuffer.AddComponent(entity, collider);
+
+        entityCommandBuffer.AddComponent(entity, new PhysicsDamping
+        {
+            Linear = 0.01f,
+            Angular = 0.05f
+        });
+        entityCommandBuffer.SetComponent(entity, new PhysicsDamping
+        {
+            Linear = 0.01f,
+            Angular = 0.05f
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsGravityFactor>(entity);
+        entityCommandBuffer.SetComponent(entity, new PhysicsGravityFactor
+        {
+            Value = 0
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsMass>(entity);
+        entityCommandBuffer.SetComponent(entity, new PhysicsMass
+        {
+            InverseInertia = 6,
+            InverseMass = 1,
+            AngularExpansionFactor = 0,
+            InertiaOrientation = quaternion.identity,
+        });
+
+        entityCommandBuffer.AddComponent<PhysicsVelocity>(entity);
+        entityCommandBuffer.SetComponent(entity, new PhysicsVelocity
+        {
+            Linear = new float3(0, 0, 0),
+            Angular = new float3(0, 0, 0)
+        });
+
+        visuals.gameObject.transform.position = new Vector3(position.x, position.y, 0);
     }
 
     private void SkillShotToDirection(float2 casterPosition, float2 targetDirection, Entity entity, GameObject visuals, int Damage, Element element, EntityCommandBuffer entityCommandBuffer)

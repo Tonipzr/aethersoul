@@ -141,19 +141,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 682234155008
-    m_Localized: Desbloquea el hechizo Tajo de fuego
+    m_Localized: Desbloquea o mejora el hechizo Tajo de fuego
     m_Metadata:
       m_Items: []
   - m_Id: 692216598528
-    m_Localized: Desbloquea el hechizo Nova de fuego
+    m_Localized: Desbloquea o mejora el hechizo Nova de fuego
     m_Metadata:
       m_Items: []
   - m_Id: 699720208384
-    m_Localized: Desbloquea el hechizo Lluvia de meteoritos
+    m_Localized: Desbloquea o mejora el hechizo Lluvia de meteoritos
     m_Metadata:
       m_Items: []
   - m_Id: 706296877056
-    m_Localized: "Desbloquea el hechizo Explosi\xF3n infernal"
+    m_Localized: "Desbloquea o mejora el hechizo Explosi\xF3n infernal"
     m_Metadata:
       m_Items:
       - rid: 4534377800979185666

@@ -213,11 +213,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBallPrefab: {fileID: 7890949810695243266, guid: 8b72fb9c154a16349af42c447ab866ef, type: 3}
   flameNovaPrefab: {fileID: 3704293236158683398, guid: 1dd6445cfe2350d418085a83a48da30e, type: 3}
-  meteorstormPrefab: {fileID: 4241185428154036538, guid: 0637e7c9951e51845bb6c8e69b5dcef4, type: 3}
-  infernoburstPrefab: {fileID: 7461329264248713094, guid: 770734f7540f719488f4880a5259266b, type: 3}
+  meteorstormPrefab: {fileID: 7167307324070014138, guid: 0637e7c9951e51845bb6c8e69b5dcef4, type: 3}
+  infernoburstPrefab: {fileID: 3374204070349335081, guid: 770734f7540f719488f4880a5259266b, type: 3}
   gustPrefab: {fileID: 416865255893139594, guid: 4447b1435d8f6f740a06a79271bfa0a6, type: 3}
   airEscarlinaAA: {fileID: 4960388327067514690, guid: 05365484bbfb4ec408fd2a484e4e6d38, type: 3}
   shadowExplosion: {fileID: 2003923267568827144, guid: 911706dc98f8492439e4b63cf94acbad, type: 3}
+  fireTornado: {fileID: 8431841102211864454, guid: 7ea5b287099273a46ab239bdcc84ff13, type: 3}
 --- !u!1 &798666405
 GameObject:
   m_ObjectHideFlags: 0

@@ -308,6 +308,8 @@ public class UIManager : MonoBehaviour
 
     public void ToggleMenu()
     {
+        if (levelUpCardPickerContainer.activeSelf) return;
+
         mainMenuContainer.SetActive(!mainMenuContainer.activeSelf);
 
         if (mainMenuContainer.activeSelf)

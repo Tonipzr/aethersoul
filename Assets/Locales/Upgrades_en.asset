@@ -129,7 +129,7 @@ MonoBehaviour:
       m_Items:
       - rid: 4534377800979185665
   - m_Id: 706296877056
-    m_Localized: Unlocks the Infernal Blast spell
+    m_Localized: Unlocks or upgrades the Infernal Blast spell
     m_Metadata:
       m_Items:
       - rid: 4534377800979185665
@@ -151,15 +151,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 682234155008
-    m_Localized: Unlocks the Fire Slash spell
+    m_Localized: Unlocks or upgrades the Fire Slash spell
     m_Metadata:
       m_Items: []
   - m_Id: 692216598528
-    m_Localized: Unlocks the Fire Nova spell
+    m_Localized: Unlocks or upgrades the Fire Nova spell
     m_Metadata:
       m_Items: []
   - m_Id: 699720208384
-    m_Localized: Unlocks the Meteor Storm spell
+    m_Localized: Unlocks or upgrades the Meteor Storm spell
     m_Metadata:
       m_Items: []
   - m_Id: 730883887104
