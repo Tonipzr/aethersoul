@@ -42,6 +42,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager Instance { get; private set; }
 
+    private bool initialized;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -57,12 +59,21 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!initialized)
+        {
+            if (PlayerPrefsManager.Instance != null)
+            {
+                SetVolumeToChannel("SpellsVolume", PlayerPrefsManager.Instance.GetSpellsVolume());
+                SetVolumeToChannel("MusicVolume", PlayerPrefsManager.Instance.GetMusicVolume());
+                SetVolumeToChannel("SFXVolume", PlayerPrefsManager.Instance.GetSFXVolume());
+                initialized = true;
+            }
+        }
     }
 
     public void SetVolumeToChannel(string channel, float volume)
