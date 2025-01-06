@@ -215,10 +215,18 @@ partial struct CollisionSystem : ISystem
 
                     VisualsReferenceComponent visualsReferenceComponent = _entityManager.GetComponentData<VisualsReferenceComponent>(targetEntity);
 
-                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
-
                     if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
                     {
+                        if (SystemAPI.IsComponentEnabled<InvulnerableStateComponent>(playerEntity))
+                        {
+                            InvulnerableStateComponent invulnerableStateComponent = _entityManager.GetComponentData<InvulnerableStateComponent>(playerEntity);
+
+                            if (invulnerableStateComponent.isCheckpoint)
+                            {
+                                continue;
+                            }
+                        }
+
                         int spellIncreasePercentage = spellElement.Element switch
                         {
                             Element.Fire => DreamCityStatsGameObject.FireBuff,
@@ -288,6 +296,8 @@ partial struct CollisionSystem : ISystem
                             });
                         }
                     }
+
+                    visualsReferenceComponent.gameObject.GetComponent<Animator>().SetTrigger("Hit");
 
                     entityCommandBuffer.SetComponentEnabled<InvulnerableStateComponent>(targetEntity, true);
                     entityCommandBuffer.AddComponent(targetEntity, new InvulnerableStateComponent

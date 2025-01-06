@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -35,11 +37,79 @@ public class MapHandler : MonoBehaviour
 
     private EntityManager _entityManager;
 
+    private List<Vector2Int> blockedTiles = new List<Vector2Int>();
+
     // Start is called before the first frame update
     void Start()
     {
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         GenerateChunkAtPosition(0, 0);
+    }
+
+    public void BlockArea(Vector2Int position, Vector2Int areaSize, bool centered = false)
+    {
+        int startX, startY, endX, endY;
+
+        if (centered)
+        {
+            startX = position.x - areaSize.x / 2;
+            startY = position.y - areaSize.y / 2;
+            endX = position.x + areaSize.x / 2;
+            endY = position.y + areaSize.y / 2;
+        }
+        else
+        {
+            startX = position.x;
+            startY = position.y;
+            endX = position.x + areaSize.x;
+            endY = position.y + areaSize.y;
+        }
+
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int y = startY; y <= endY; y++)
+            {
+                if (!blockedTiles.Contains(new Vector2Int(x, y))) blockedTiles.Add(new Vector2Int(x, y));
+            }
+        }
+    }
+
+    private bool IsTileBlocked(int x, int y)
+    {
+        return blockedTiles.Contains(new Vector2Int(x, y));
+    }
+
+    private bool IsTileAreaBlocked(Vector2Int position, Vector2Int areaSize, bool centered = false)
+    {
+        int startX, startY, endX, endY;
+
+        if (centered)
+        {
+            startX = position.x - areaSize.x / 2;
+            startY = position.y - areaSize.y / 2;
+            endX = position.x + areaSize.x / 2;
+            endY = position.y + areaSize.y / 2;
+        }
+        else
+        {
+            startX = position.x;
+            startY = position.y;
+            endX = position.x + areaSize.x;
+            endY = position.y + areaSize.y;
+        }
+
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int y = startY; y <= endY; y++)
+            {
+                if (IsTileBlocked(x, y))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     void GenerateChunkAtPosition(int chunkX, int chunkY)
@@ -70,6 +140,7 @@ public class MapHandler : MonoBehaviour
                 TileBase tileToPlace;
                 Vector3Int tilePos = new Vector3Int(tileX, tileY, 0);
                 Vector2Int localPos = new Vector2Int(x, y);
+                bool isGrass = false;
                 if (noiseValue < 0.3f)
                 {
                     tileToPlace = stoneTile;
@@ -81,126 +152,12 @@ public class MapHandler : MonoBehaviour
                 else
                 {
                     tileToPlace = grassTile;
-
-                    if (UnityEngine.Random.Range(0f, 1f) < 0.03f)
-                    {
-                        GameObject treePrefab = UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree1 : UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;
-                        GameObject treeInstance = Instantiate(treePrefab, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
-                        newChunkData.treePositions.Add(localPos, treePrefab);
-                        newChunkData.instantiatedTrees.Add(treeInstance);
-
-                        Entity entity = _entityManager.CreateEntity(
-                            typeof(LocalTransform),
-                            typeof(CollisionComponent),
-                            typeof(PhysicsWorldIndex)
-                        );
-
-                        _entityManager.SetComponentData(entity, new LocalTransform
-                        {
-                            Position = new float3(tileX, tileY, 0),
-                            Rotation = quaternion.identity,
-                            Scale = 1
-                        });
-
-                        _entityManager.SetComponentData(entity, new CollisionComponent
-                        {
-                            Type = CollisionType.Tree,
-                        });
-                    }
+                    isGrass = true;
                 }
 
                 newChunkData.tiles[localPos] = tileToPlace;
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
-                {
-                    GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
-                    newChunkData.checkpointPositions.Add(localPos);
-                    newChunkData.instantiatedCheckpoints.Add(checkPointInstance);
-
-                    Entity entity = _entityManager.CreateEntity(
-                        typeof(MapCheckpointEntityComponent),
-                        typeof(PhysicsWorldIndex),
-                        typeof(LocalTransform),
-                        typeof(PhysicsCollider),
-                        typeof(PhysicsDamping),
-                        typeof(PhysicsGravityFactor),
-                        typeof(PhysicsMass),
-                        typeof(PhysicsVelocity)
-                    );
-                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsColliding = false, IsVisited = false });
-
-                    _entityManager.SetComponentData(entity, new LocalTransform
-                    {
-                        Position = new float3(tileX, tileY, 0),
-                        Rotation = quaternion.identity,
-                        Scale = 1
-                    });
-
-                    var collider = new PhysicsCollider
-                    {
-                        Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
-                        {
-                            Center = new float3(0.5f, 0.5f, 0),
-                            Size = new float3(2, 2, 1),
-                            Orientation = quaternion.identity,
-                            BevelRadius = 0,
-                        }, new CollisionFilter
-                        {
-                            BelongsTo = 16,
-                            CollidesWith = 1,
-                            GroupIndex = 0
-                        })
-                    };
-                    collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
-                    _entityManager.SetComponentData(entity, collider);
-
-                    _entityManager.SetComponentData(entity, new PhysicsDamping
-                    {
-                        Linear = 0.01f,
-                        Angular = 0.05f
-                    });
-
-                    _entityManager.SetComponentData(entity, new PhysicsGravityFactor
-                    {
-                        Value = 0
-                    });
-
-                    _entityManager.SetComponentData(entity, new PhysicsMass
-                    {
-                        InverseInertia = 6,
-                        InverseMass = 1,
-                        AngularExpansionFactor = 0,
-                        InertiaOrientation = quaternion.identity,
-                    });
-
-                    _entityManager.SetComponentData(entity, new PhysicsVelocity
-                    {
-                        Linear = new float3(0, 0, 0),
-                        Angular = new float3(0, 0, 0)
-                    });
-
-                    CheckpointStatusController checkpontStatusController = checkPointInstance.GetComponent<CheckpointStatusController>();
-                    checkpontStatusController.SetEntity(entity);
-
-                    newChunkData.checkpointEntities[localPos] = entity;
-                }
-
-                if (UnityEngine.Random.Range(0f, 75f) < 0.05f)
-                {
-                    GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
-                    newChunkData.buffPositions.Add(localPos, false);
-                    newChunkData.instantiatedBuffs.Add(buffInstance);
-
-                    Entity entity = _entityManager.CreateEntity(typeof(MapBuffEntityComponent));
-                    _entityManager.SetComponentData(entity, new MapBuffEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsUsed = false });
-
-                    BuffStatusController buffStatusController = buffInstance.GetComponent<BuffStatusController>();
-                    buffStatusController.SetEntity(entity);
-
-                    newChunkData.buffEntities[localPos] = entity;
-                }
-
-                if (UnityEngine.Random.Range(0f, 75f) < 0.01f)
+                if (UnityEngine.Random.Range(0f, 75f) < 0.02f && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(3, 3), true))
                 {
                     GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.nightmareFragmentPositions.Add(localPos, false);
@@ -236,6 +193,12 @@ public class MapHandler : MonoBehaviour
 
                     int tileXBottomRight = tileX + 6;
                     int tileYBottomRight = tileY - 6;
+
+                    BlockArea(new Vector2Int(tileX, tileY), new Vector2Int(3, 3), true);
+                    BlockArea(new Vector2Int(tileXTopLeft, tileYTopLeft), new Vector2Int(3, 3), true);
+                    BlockArea(new Vector2Int(tileXTopRight, tileYTopRight), new Vector2Int(3, 3), true);
+                    BlockArea(new Vector2Int(tileXBottomLeft, tileYBottomLeft), new Vector2Int(3, 3), true);
+                    BlockArea(new Vector2Int(tileXBottomRight, tileYBottomRight), new Vector2Int(3, 3), true);
 
                     Entity entityTL = _entityManager.CreateEntity(
                         typeof(LocalTransform),
@@ -338,6 +301,125 @@ public class MapHandler : MonoBehaviour
                     nightmareController.SetEntity(entity);
 
                     newChunkData.nightmareFragmentEntities[localPos] = entity;
+                }
+
+                if (UnityEngine.Random.Range(0f, 75f) < 0.07f && !IsTileAreaBlocked(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false))
+                {
+                    GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                    newChunkData.buffPositions.Add(localPos, false);
+                    newChunkData.instantiatedBuffs.Add(buffInstance);
+
+                    Entity entity = _entityManager.CreateEntity(typeof(MapBuffEntityComponent));
+                    _entityManager.SetComponentData(entity, new MapBuffEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsUsed = false });
+
+                    BuffStatusController buffStatusController = buffInstance.GetComponent<BuffStatusController>();
+                    buffStatusController.SetEntity(entity);
+
+                    newChunkData.buffEntities[localPos] = entity;
+
+                    BlockArea(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false);
+                }
+
+                if (UnityEngine.Random.Range(0f, 75f) < 0.02f && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true))
+                {
+                    GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                    newChunkData.checkpointPositions.Add(localPos);
+                    newChunkData.instantiatedCheckpoints.Add(checkPointInstance);
+
+                    Entity entity = _entityManager.CreateEntity(
+                        typeof(MapCheckpointEntityComponent),
+                        typeof(PhysicsWorldIndex),
+                        typeof(LocalTransform),
+                        typeof(PhysicsCollider),
+                        typeof(PhysicsDamping),
+                        typeof(PhysicsGravityFactor),
+                        typeof(PhysicsMass),
+                        typeof(PhysicsVelocity)
+                    );
+                    _entityManager.SetComponentData(entity, new MapCheckpointEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsColliding = false, IsVisited = false });
+
+                    _entityManager.SetComponentData(entity, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+
+                    var collider = new PhysicsCollider
+                    {
+                        Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                        {
+                            Center = new float3(0.5f, 0.5f, 0),
+                            Size = new float3(2, 2, 1),
+                            Orientation = quaternion.identity,
+                            BevelRadius = 0,
+                        }, new CollisionFilter
+                        {
+                            BelongsTo = 16,
+                            CollidesWith = 1,
+                            GroupIndex = 0
+                        })
+                    };
+                    collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
+                    _entityManager.SetComponentData(entity, collider);
+
+                    _entityManager.SetComponentData(entity, new PhysicsDamping
+                    {
+                        Linear = 0.01f,
+                        Angular = 0.05f
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsGravityFactor
+                    {
+                        Value = 0
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsMass
+                    {
+                        InverseInertia = 6,
+                        InverseMass = 1,
+                        AngularExpansionFactor = 0,
+                        InertiaOrientation = quaternion.identity,
+                    });
+
+                    _entityManager.SetComponentData(entity, new PhysicsVelocity
+                    {
+                        Linear = new float3(0, 0, 0),
+                        Angular = new float3(0, 0, 0)
+                    });
+
+                    CheckpointStatusController checkpontStatusController = checkPointInstance.GetComponent<CheckpointStatusController>();
+                    checkpontStatusController.SetEntity(entity);
+
+                    newChunkData.checkpointEntities[localPos] = entity;
+                    BlockArea(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true);
+                }
+
+                if (isGrass && UnityEngine.Random.Range(0f, 1f) < 0.07f && !IsTileAreaBlocked(new Vector2Int(tileX - 2, tileY), new Vector2Int(4, 4), false))
+                {
+                    GameObject treePrefab = UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree1 : UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;
+                    GameObject treeInstance = Instantiate(treePrefab, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
+                    newChunkData.treePositions.Add(localPos, treePrefab);
+                    newChunkData.instantiatedTrees.Add(treeInstance);
+
+                    Entity entity = _entityManager.CreateEntity(
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
+
+                    _entityManager.SetComponentData(entity, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+
+                    _entityManager.SetComponentData(entity, new CollisionComponent
+                    {
+                        Type = CollisionType.Tree,
+                    });
+                    BlockArea(new Vector2Int(tileX - 2, tileY), new Vector2Int(4, 4), false);
                 }
 
                 world.SetTile(tilePos, tileToPlace);

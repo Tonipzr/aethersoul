@@ -55,16 +55,18 @@ partial class UISystem : SystemBase
 
         foreach (var (experience, _, entity) in SystemAPI.Query<RefRO<ExperienceUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
         {
-            UIManager.Instance.UpdateExp(experience.ValueRO.CurrentExperience, experience.ValueRO.MaxExperience, experience.ValueRO.CurrentLevelUpdated);
-
-            if (experience.ValueRO.CurrentLevelUpdated)
-            {
-                UIManager.Instance.UpdateCoins(DreamCityStatsGameObject.CurrentCoins);
-
-                UIManager.Instance.ToggleCardPicker();
-            }
+            UIManager.Instance.UpdateExp(experience.ValueRO.CurrentExperience, experience.ValueRO.MaxExperience);
 
             entityCommandBuffer.RemoveComponent<ExperienceUpdatedComponent>(entity);
+        }
+
+        foreach (var (level, _, entity) in SystemAPI.Query<RefRO<LevelUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())
+        {
+            UIManager.Instance.UpdateLevel(level.ValueRO.NewLevel);
+            UIManager.Instance.UpdateCoins(DreamCityStatsGameObject.CurrentCoins);
+            UIManager.Instance.ToggleCardPicker();
+
+            entityCommandBuffer.RemoveComponent<LevelUpdatedComponent>(entity);
         }
 
         foreach (var (mana, _, entity) in SystemAPI.Query<RefRO<ManaUpdatedComponent>, RefRO<PlayerComponent>>().WithEntityAccess())

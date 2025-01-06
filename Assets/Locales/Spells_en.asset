@@ -17,7 +17,77 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: e29a638f231023044a87bf897bc85a27, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 173431525376
+    m_Localized: Fireslash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215131295744
+    m_Localized: A simple injury can mark the start of a wildfire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262686314496
+    m_Localized: Escarlina concentrates her pain into a fiery blade that slashes
+      at her enemies. This slash reflects the flame that consumes her memories, reminding
+      her of that night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316830584832
+    m_Localized: Fire Nova
+    m_Metadata:
+      m_Items: []
+  - m_Id: 348875067392
+    m_Localized: The heat of despair can consume everything around them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 406731296768
+    m_Localized: Escarlina unleashes an explosion of fire that radiates from her
+      heart. It is an echo of the fury she felt at the sight of the flames.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425655996416
+    m_Localized: Meteor Storm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444102545408
+    m_Localized: The sky can also cry fire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471243886592
+    m_Localized: When Escarlina invokes this storm of destruction, she recalls the
+      stories of other dreamers, of worlds that fell under the weight of their own
+      pride. Are these memories hers, or those of those who came before her?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 485940727808
+    m_Localized: Infernal Blast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521583923200
+    m_Localized: Flames not only destroy, they also purify.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567276670976
+    m_Localized: "Escarlina concentrates all her power in a devastating explosion,
+      capable of devastating everything around her. Each time she does so, a voice
+      in her mind whispers: \u2018Is it you who controls the fire, or is it the fire
+      that controls you?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 597052035072
+    m_Localized: Gust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 627741757440
+    m_Localized: The wind has always been their refuge... but is it enough?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642606370816
+    m_Localized: 'Escarlina unleashes a swift gust of wind, a reminder of who she
+      was and the freedom that has always defined her. Yet, in the back of her mind,
+      a doubt lingers: should she continue to embrace the breeze?'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -177,8 +177,6 @@ public class DreamCityUIHandler : MonoBehaviour
 
     public void CheckPointInteract()
     {
-        // TODO: Save upgrades
-
         SceneToLoadGameObject.FromSceneToScene("DreamCityScene", "MainMenuScene");
 
         SceneManager.LoadScene("LoadingScene");

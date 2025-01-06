@@ -2,7 +2,6 @@
     "Spells": [
         {
             "SpellID": 1,
-            "Name": "Fireslash",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
             "Damage": 50,
@@ -14,7 +13,6 @@
         },
         {
             "SpellID": 2,
-            "Name": "Flame Nova",
             "SpellType": "AreaOfEffect",
             "Target": "Self",
             "Damage": 30,
@@ -26,7 +24,6 @@
         },
         {
             "SpellID": 3,
-            "Name": "Meteor Strike",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
             "Damage": 70,
@@ -38,7 +35,6 @@
         },
         {
             "SpellID": 4,
-            "Name": "Inferno Burst",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
             "Damage": 60,
@@ -50,7 +46,6 @@
         },
         {
             "SpellID": 5,
-            "Name": "Gust",
             "SpellType": "SkillShot",
             "Target": "MousePosition",
             "Damage": 30,

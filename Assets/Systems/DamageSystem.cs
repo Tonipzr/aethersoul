@@ -2,7 +2,6 @@ using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
 
 partial struct DamageSystem : ISystem
 {

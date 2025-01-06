@@ -34,7 +34,7 @@ partial struct MovementSystem : ISystem
 
         float3 previousPosition = float3.zero;
         float3 newPosition = float3.zero;
-        if (inputComponent.pressingSpace)
+        if (inputComponent.pressingSpace && !state.EntityManager.IsComponentEnabled<DashCooldownComponent>(playerEntity))
         {
             // Update the player's position
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
@@ -49,6 +49,11 @@ partial struct MovementSystem : ISystem
             newPosition = playerTransform.Position;
 
             _entityManager.SetComponentData(playerEntity, positionComponent);
+
+            DashCooldownComponent dashCooldownComponent = _entityManager.GetComponentData<DashCooldownComponent>(playerEntity);
+            dashCooldownComponent.CurrentTimeOnCooldown = 0;
+            _entityManager.SetComponentData(playerEntity, dashCooldownComponent);
+            _entityManager.SetComponentEnabled<DashCooldownComponent>(playerEntity, true);
         }
         else
         {

@@ -43,7 +43,7 @@ partial struct ExperienceSystem : ISystem
 
             if (!levelUp && experienceUpdated)
             {
-                entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = false });
+                entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel });
             }
         }
 

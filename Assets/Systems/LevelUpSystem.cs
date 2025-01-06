@@ -61,7 +61,8 @@ partial class LevelUpSystem : SystemBase
             };
             jobLevel.Schedule();
 
-            entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel, CurrentLevelUpdated = true });
+            entityCommandBuffer.AddComponent(entity, new ExperienceUpdatedComponent { CurrentExperience = experience.ValueRW.Experience, MaxExperience = experience.ValueRW.ExperienceToNextLevel });
+            entityCommandBuffer.AddComponent(entity, new LevelUpdatedComponent { NewLevel = level.ValueRO.Level });
 
             int coins = 5 + (level.ValueRO.Level - 1);
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))

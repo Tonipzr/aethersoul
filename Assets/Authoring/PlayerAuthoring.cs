@@ -31,6 +31,8 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         SetComponentEnabled<IsInSafeZoneComponent>(playerEntity, false);
         AddComponent(playerEntity, new InvulnerableStateComponent { Duration = 1, ElapsedTime = 0 });
         SetComponentEnabled<InvulnerableStateComponent>(playerEntity, false);
+        AddComponent(playerEntity, new DashCooldownComponent { Cooldown = 1, CurrentTimeOnCooldown = 0 });
+        SetComponentEnabled<DashCooldownComponent>(playerEntity, false);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }
