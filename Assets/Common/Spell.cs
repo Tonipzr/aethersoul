@@ -22,5 +22,6 @@ public enum SpellTarget
     Targeted,
     MousePosition,
     SelfBoss,
-    RandomAroundTarget
+    RandomAroundTarget,
+    Player
 }

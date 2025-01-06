@@ -107,6 +107,7 @@ partial struct SpellCastSystem : ISystem
                         if (spellTarget.ValueRO.Target == SpellTarget.Self) CastSelfSpell(entity, spellEntity, entityCommandBuffer);
                         if (spellTarget.ValueRO.Target == SpellTarget.SelfBoss) CastSelfBossSpell(entity, spellEntity, entityCommandBuffer);
                         if (spellTarget.ValueRO.Target == SpellTarget.RandomAroundTarget) CastRandomAroundTarget(entity, spellEntity, entityCommandBuffer);
+                        if (spellTarget.ValueRO.Target == SpellTarget.Player) CastPlayerSpell(entity, spellEntity, entityCommandBuffer);
 
                         RemoveMana(entity, spellEntity, entityCommandBuffer);
 
@@ -166,6 +167,7 @@ partial struct SpellCastSystem : ISystem
         entityCommandBuffer.Dispose();
     }
 
+    [BurstCompile]
     private void RemoveMana(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
     {
         if (
@@ -178,9 +180,23 @@ partial struct SpellCastSystem : ISystem
 
         SpellCostComponent spellCostComponent = _entityManager.GetComponentData<SpellCostComponent>(spell);
 
+        float percentageReduction = 0;
+        if (_entityManager.HasComponent<ActiveUpgradesComponent>(caster))
+        {
+            var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(caster);
+
+            foreach (var upgrade in activeUpgrades)
+            {
+                if (upgrade.Type == UpgradeType.AnySpellCostReduce)
+                {
+                    percentageReduction = upgrade.Value;
+                }
+            }
+        }
+
         entityCommandBuffer.AddComponent(caster, new ManaRestoreComponent()
         {
-            RestoreAmount = -spellCostComponent.Cost
+            RestoreAmount = Mathf.RoundToInt(-spellCostComponent.Cost / (1 + (percentageReduction / 100)))
         });
     }
 
@@ -221,6 +237,32 @@ partial struct SpellCastSystem : ISystem
         SpellCostComponent spellCost = state.EntityManager.GetComponentData<SpellCostComponent>(spellEntity);
 
         return mana.CurrentMana >= spellCost.Cost;
+    }
+
+    private void CastPlayerSpell(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
+    {
+        if (!SystemAPI.ManagedAPI.TryGetSingleton(out SpellAnimationVisualsPrefabs spellAnimationVisualsPrefabs)) return;
+
+        SpellComponent spellComponent = _entityManager.GetComponentData<SpellComponent>(spell);
+        SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spell);
+        SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spell);
+
+        PositionComponent casterPosition = _entityManager.GetComponentData<PositionComponent>(caster);
+        PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(SystemAPI.GetSingletonEntity<PlayerComponent>());
+        SpellRangeComponent spellRange = _entityManager.GetComponentData<SpellRangeComponent>(spell);
+        SpellDurationComponent spellDuration = _entityManager.GetComponentData<SpellDurationComponent>(spell);
+
+        UnityEngine.Debug.Log("Casting targeted player spell");
+
+        float2 targetPosition = new float2(playerPosition.Position.x, playerPosition.Position.y);
+        float2 direction = math.normalize(targetPosition - casterPosition.Position);
+
+        targetPosition += direction * 5;
+
+        GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+        Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+        SkillShotToDirection(casterPosition.Position, targetPosition, spellEntity, spellVisuals, spellDamage.Damage, spellElement.Element, entityCommandBuffer, false);
+        return;
     }
 
     private void CastRandomAroundTarget(Entity caster, Entity spell, EntityCommandBuffer entityCommandBuffer)
@@ -821,7 +863,7 @@ partial struct SpellCastSystem : ISystem
         visuals.gameObject.transform.position = new Vector3(position.x, position.y, 0);
     }
 
-    private void SkillShotToDirection(float2 casterPosition, float2 targetDirection, Entity entity, GameObject visuals, int Damage, Element element, EntityCommandBuffer entityCommandBuffer)
+    private void SkillShotToDirection(float2 casterPosition, float2 targetDirection, Entity entity, GameObject visuals, int Damage, Element element, EntityCommandBuffer entityCommandBuffer, bool isPlayerSpell = true)
     {
         entityCommandBuffer.AddComponent(entity, new SpellDamageComponent
         {
@@ -858,6 +900,22 @@ partial struct SpellCastSystem : ISystem
             Element = element
         });
 
+        CollisionFilter collisionFilter = isPlayerSpell switch
+        {
+            true => new CollisionFilter
+            {
+                BelongsTo = 4,
+                CollidesWith = 2,
+                GroupIndex = 0
+            },
+            false => new CollisionFilter
+            {
+                BelongsTo = 128,
+                CollidesWith = 1,
+                GroupIndex = 0
+            }
+        };
+
         var collider = new PhysicsCollider
         {
             Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
@@ -866,12 +924,7 @@ partial struct SpellCastSystem : ISystem
                 Size = new float3(1, 1, 1),
                 Orientation = quaternion.identity,
                 BevelRadius = 0,
-            }, new CollisionFilter
-            {
-                BelongsTo = 4,
-                CollidesWith = 2,
-                GroupIndex = 0
-            })
+            }, collisionFilter)
         };
         collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.RaiseTriggerEvents);
         entityCommandBuffer.AddComponent(entity, collider);

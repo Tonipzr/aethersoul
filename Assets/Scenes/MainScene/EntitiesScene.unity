@@ -219,6 +219,7 @@ MonoBehaviour:
   airEscarlinaAA: {fileID: 4960388327067514690, guid: 05365484bbfb4ec408fd2a484e4e6d38, type: 3}
   shadowExplosion: {fileID: 2003923267568827144, guid: 911706dc98f8492439e4b63cf94acbad, type: 3}
   fireTornado: {fileID: 8431841102211864454, guid: 7ea5b287099273a46ab239bdcc84ff13, type: 3}
+  shadowAA: {fileID: 8490077438367648332, guid: 887165acfbfca2d41a083ef773efb71d, type: 3}
 --- !u!1 &798666405
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ partial struct BossSystem : ISystem
         {
             entityCommandBuffer.AppendToBuffer(bossEntity, new SelectedSpellsComponent { SpellID = 7 });
             entityCommandBuffer.AppendToBuffer(bossEntity, new SelectedSpellsComponent { SpellID = 8 });
+            entityCommandBuffer.AppendToBuffer(bossEntity, new SelectedSpellsComponent { SpellID = 10 });
         }
 
         entityCommandBuffer.Playback(_entityManager);

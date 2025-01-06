@@ -19,6 +19,8 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
     private GameObject shadowExplosion;
     [SerializeField]
     private GameObject fireTornado;
+    [SerializeField]
+    private GameObject shadowAA;
 
     private class SpellAnimationVisualsPrefabsAuthoringBaker : Baker<SpellAnimationVisualsPrefabsAuthoring>
     {
@@ -36,7 +38,8 @@ class SpellAnimationVisualsPrefabsAuthoring : MonoBehaviour
                 AirEscarlinaAA = authoring.airEscarlinaAA,
                 ShadowExplosion = authoring.shadowExplosion,
                 ShadowExplosion2 = authoring.shadowExplosion,
-                FireTornado = authoring.fireTornado
+                FireTornado = authoring.fireTornado,
+                ShadowAA = authoring.shadowAA
             });
         }
     }

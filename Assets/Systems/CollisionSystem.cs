@@ -266,6 +266,11 @@ partial struct CollisionSystem : ISystem
                                     spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
                                 }
 
+                                if (upgrade.Type == UpgradeType.KillAnyDamage)
+                                {
+                                    spellIncreaseByCurrentGameBuffsPercentage += (int)upgrade.Value;
+                                }
+
                                 if (upgrade.Type == UpgradeType.Lifeleech)
                                 {
                                     lifeLeech = (int)upgrade.Value;

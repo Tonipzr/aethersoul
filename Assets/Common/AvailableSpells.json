@@ -72,7 +72,7 @@
             "Damage": 50,
             "Range": "Five",
             "Cost": 10,
-            "Cooldown": 5,
+            "Cooldown": 15,
             "Element": "Fire",
             "Duration": 3
         },
@@ -83,7 +83,7 @@
             "Damage": 20,
             "Range": "Three",
             "Cost": 10,
-            "Cooldown": 3,
+            "Cooldown": 8,
             "Element": "Fire",
             "Duration": 1
         },
@@ -96,6 +96,16 @@
             "Range": "Five",
             "Cost": 0,
             "Cooldown": 0,
+            "Element": "Fire"
+        },
+        {
+            "SpellID": 10,
+            "SpellType": "SkillShot",
+            "Target": "Player",
+            "Damage": 10,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 1,
             "Element": "Fire"
         }
     ]

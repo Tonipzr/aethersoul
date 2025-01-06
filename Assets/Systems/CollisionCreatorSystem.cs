@@ -169,6 +169,34 @@ partial struct CollisionCreatorSystem : ISystem
                 entityCommandBuffer.AddComponent(entity, collider);
             }
 
+            if (collision.ValueRO.Type == CollisionType.Buff)
+            {
+                var collider = new PhysicsCollider
+                {
+                    Value = Unity.Physics.BoxCollider.Create(new BoxGeometry
+                    {
+                        Center = new float3(0.5f, 1f, 0),
+                        Size = new float3(1f, 2f, 0.5f),
+                        Orientation = quaternion.identity,
+                    }, new CollisionFilter
+                    {
+                        BelongsTo = 64,
+                        CollidesWith = 3,
+                        GroupIndex = 0
+                    }),
+                };
+
+                collider.Value.Value.SetCollisionResponse(CollisionResponsePolicy.Collide);
+                entityCommandBuffer.AddComponent(entity, collider);
+
+                entityCommandBuffer.AddComponent(entity, new PhysicsMass
+                {
+                    Transform = RigidTransform.identity,
+                    InverseInertia = float3.zero,
+                    InverseMass = 0,
+                });
+            }
+
             collision.ValueRW.IsCreated = true;
         }
 

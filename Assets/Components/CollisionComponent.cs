@@ -12,4 +12,5 @@ public enum CollisionType
     POI_Pillar,
     POI_Chest,
     POI_Area,
+    Buff,
 }

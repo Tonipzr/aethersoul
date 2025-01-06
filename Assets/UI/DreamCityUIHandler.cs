@@ -177,6 +177,40 @@ public class DreamCityUIHandler : MonoBehaviour
 
     public void CheckPointInteract()
     {
+        SaveData gameSave = new SaveData(
+            DreamCityStatsGameObject.FireBuff,
+            DreamCityStatsGameObject.WaterBuff,
+            DreamCityStatsGameObject.EarthBuff,
+            DreamCityStatsGameObject.AirBuff,
+            DreamCityStatsGameObject.CurrentCoins,
+            new SaveSettingsData(
+                PlayerPrefsManager.Instance.GetSpellsVolume(),
+                PlayerPrefsManager.Instance.GetMusicVolume(),
+                PlayerPrefsManager.Instance.GetSFXVolume(),
+                PlayerPrefsManager.Instance.GetMonsterSpeed(),
+                PlayerPrefsManager.Instance.GetLanguage()
+            ),
+            new SaveAchievements(
+                AchievementsManager.Instance.GetUnlockedAchievements().ToArray()
+            ),
+            new SaveStats(
+                GameStatsManager.Instance.TotalSpellsUsed,
+                GameStatsManager.Instance.TotalGoldCollected,
+                GameStatsManager.Instance.TotalGoldUsed,
+                GameStatsManager.Instance.TotalEnemiesKilled,
+                GameStatsManager.Instance.TotalEnemiesKilledNoDamage,
+                GameStatsManager.Instance.TotalTraveledDistance,
+                GameStatsManager.Instance.TotalPOIsVisited,
+                GameStatsManager.Instance.TotalPOIsCleared,
+                GameStatsManager.Instance.TotalBuffsCollected,
+                GameStatsManager.Instance.TotalCheckpointsReached,
+                GameStatsManager.Instance.TotalLevelsUp,
+                GameStatsManager.Instance.TotalSpellsUnlocked
+            )
+        );
+
+        SaveGame.Save(gameSave);
+
         SceneToLoadGameObject.FromSceneToScene("DreamCityScene", "MainMenuScene");
 
         SceneManager.LoadScene("LoadingScene");

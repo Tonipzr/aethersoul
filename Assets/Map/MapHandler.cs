@@ -112,6 +112,45 @@ public class MapHandler : MonoBehaviour
         return false;
     }
 
+    private Dictionary<string, float> GetIncreasedPercentages()
+    {
+        World world = World.DefaultGameObjectInjectionWorld;
+
+        Dictionary<string, float> increasedPercentages = new Dictionary<string, float>
+            {
+                { "Checkpoint", 0 },
+                { "Buff", 0 },
+                { "POI", 0 }
+            };
+
+        if (world.EntityManager.CreateEntityQuery(typeof(PlayerComponent)).CalculateEntityCount() == 0)
+        {
+            return increasedPercentages;
+        }
+
+        Entity player = world.EntityManager.CreateEntityQuery(typeof(PlayerComponent)).GetSingletonEntity();
+
+        DynamicBuffer<ActiveUpgradesComponent> activeUpgrades = world.EntityManager.GetBuffer<ActiveUpgradesComponent>(player);
+
+        foreach (ActiveUpgradesComponent upgrade in activeUpgrades)
+        {
+            switch (upgrade.Type)
+            {
+                case UpgradeType.ExploreChance1:
+                    increasedPercentages["Checkpoint"] = upgrade.Value;
+                    break;
+                case UpgradeType.ExploreChance2:
+                    increasedPercentages["Buff"] = upgrade.Value;
+                    break;
+                case UpgradeType.ExploreChance3:
+                    increasedPercentages["POI"] = upgrade.Value;
+                    break;
+            }
+        }
+
+        return increasedPercentages;
+    }
+
     void GenerateChunkAtPosition(int chunkX, int chunkY)
     {
         // Debug.Log("Generating chunk at " + chunkX + ", " + chunkY);
@@ -127,6 +166,8 @@ public class MapHandler : MonoBehaviour
 
         float offsetX = UnityEngine.Random.Range(-1000f, 1000f);
         float offsetY = UnityEngine.Random.Range(-1000f, 1000f);
+
+        Dictionary<string, float> increasedPercentages = GetIncreasedPercentages();
 
         for (int x = 0; x < chunkSize; x++)
         {
@@ -157,7 +198,7 @@ public class MapHandler : MonoBehaviour
 
                 newChunkData.tiles[localPos] = tileToPlace;
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.02f && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(3, 3), true))
+                if (UnityEngine.Random.Range(0f, 75f) < (0.02f * (1 + (increasedPercentages["POI"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(3, 3), true))
                 {
                     GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.nightmareFragmentPositions.Add(localPos, false);
@@ -303,14 +344,31 @@ public class MapHandler : MonoBehaviour
                     newChunkData.nightmareFragmentEntities[localPos] = entity;
                 }
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.07f && !IsTileAreaBlocked(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false))
+                if (UnityEngine.Random.Range(0f, 75f) < (0.07f * (1 + (increasedPercentages["Buff"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false))
                 {
                     GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.buffPositions.Add(localPos, false);
                     newChunkData.instantiatedBuffs.Add(buffInstance);
 
-                    Entity entity = _entityManager.CreateEntity(typeof(MapBuffEntityComponent));
+                    Entity entity = _entityManager.CreateEntity(
+                        typeof(MapBuffEntityComponent),
+                        typeof(LocalTransform),
+                        typeof(CollisionComponent),
+                        typeof(PhysicsWorldIndex)
+                    );
                     _entityManager.SetComponentData(entity, new MapBuffEntityComponent { Coordinates = new Vector2Int(tileX, tileY), IsUsed = false });
+
+                    _entityManager.SetComponentData(entity, new LocalTransform
+                    {
+                        Position = new float3(tileX, tileY, 0),
+                        Rotation = quaternion.identity,
+                        Scale = 1
+                    });
+
+                    _entityManager.SetComponentData(entity, new CollisionComponent
+                    {
+                        Type = CollisionType.Buff,
+                    });
 
                     BuffStatusController buffStatusController = buffInstance.GetComponent<BuffStatusController>();
                     buffStatusController.SetEntity(entity);
@@ -320,7 +378,7 @@ public class MapHandler : MonoBehaviour
                     BlockArea(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false);
                 }
 
-                if (UnityEngine.Random.Range(0f, 75f) < 0.02f && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true))
+                if (UnityEngine.Random.Range(0f, 75f) < (0.02f * (1 + (increasedPercentages["Checkpoint"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true))
                 {
                     GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
                     newChunkData.checkpointPositions.Add(localPos);
