@@ -237,6 +237,14 @@ MonoBehaviour:
     m_Localized: Gust
     m_Metadata:
       m_Items: []
+  - m_Id: 3907677483896832
+    m_Localized: Unlocks the Windstorm spell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3907641190584320
+    m_Localized: Windstorm
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

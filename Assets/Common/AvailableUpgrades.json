@@ -185,6 +185,14 @@
             "Icon": "UpgradeIcon",
             "UpgradePerLevel": 5,
             "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 26,
+            "Name": "Gust",
+            "Description": "Unlocks the WindStorm spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 11,
+            "Type": "UnlockSpell"
         }
     ]
 }

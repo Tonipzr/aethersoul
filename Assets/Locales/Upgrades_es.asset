@@ -239,6 +239,14 @@ MonoBehaviour:
     m_Localized: "R\xE0faga"
     m_Metadata:
       m_Items: []
+  - m_Id: 3907677483896832
+    m_Localized: Desbloquea el hechizo Vendaval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3907641190584320
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
