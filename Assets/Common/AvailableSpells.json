@@ -107,6 +107,16 @@
             "Cost": 0,
             "Cooldown": 1,
             "Element": "Fire"
+        },
+        {
+            "SpellID": 11,
+            "SpellType": "ScreenSweep",
+            "Target": "MousePosition",
+            "Damage": 100,
+            "Range": "Five",
+            "Cost": 75,
+            "Cooldown": 20,
+            "Element": "Air"
         }
     ]
 }

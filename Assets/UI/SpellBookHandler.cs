@@ -44,7 +44,10 @@ public class SpellBookHandler : MonoBehaviour
     {
         SpellDataCollection spells = JsonUtility.FromJson<SpellDataCollection>(spellsJSON.text);
         allSpells = new List<SpellData>(spells.Spells);
-        allSpells = new List<SpellData>(allSpells.GetRange(0, 5));
+        allSpells = new List<SpellData>(allSpells.GetRange(0, 5))
+        {
+            allSpells[10]
+        };
     }
 
     // Start is called before the first frame update
@@ -54,10 +57,10 @@ public class SpellBookHandler : MonoBehaviour
         {
             GameObject spellBookEntry = Instantiate(spellBookEntryPrefab, spellBookEntryContainer.transform);
 
-            spellBookEntry.GetComponentInChildren<Image>().sprite = GetSpellIcon(i + 1);
+            spellBookEntry.GetComponentInChildren<Image>().sprite = GetSpellIcon(allSpells[i].SpellID);
 
             SpellBookEntryTooltipHandler tooltipHandler = spellBookEntry.GetComponent<SpellBookEntryTooltipHandler>();
-            tooltipHandler.spellID = i + 1;
+            tooltipHandler.spellID = allSpells[i].SpellID;
         }
 
         spellBook.SetActive(false);
@@ -67,7 +70,8 @@ public class SpellBookHandler : MonoBehaviour
             { 2, false },
             { 3, false },
             { 4, false },
-            { 5, false }
+            { 5, false },
+            { 11, false}
         };
     }
 
@@ -140,6 +144,7 @@ public class SpellBookHandler : MonoBehaviour
             case 4:
                 return infernoBurstIcon;
             case 5:
+            case 11:
                 return gustIcon;
             default:
                 return null;
@@ -153,6 +158,7 @@ public class SpellBookHandler : MonoBehaviour
         string spell3 = LanguageManager.Instance.GetText("SPELL_3_NAME", AvailableLocalizationTables.Spells);
         string spell4 = LanguageManager.Instance.GetText("SPELL_4_NAME", AvailableLocalizationTables.Spells);
         string spell5 = LanguageManager.Instance.GetText("SPELL_5_NAME", AvailableLocalizationTables.Spells);
+        string spell11 = LanguageManager.Instance.GetText("SPELL_11_NAME", AvailableLocalizationTables.Spells);
 
         if (spellName == spell1)
             return 1;
@@ -168,6 +174,9 @@ public class SpellBookHandler : MonoBehaviour
 
         if (spellName == spell5)
             return 5;
+
+        if (spellName == spell11)
+            return 11;
 
         return -1;
     }

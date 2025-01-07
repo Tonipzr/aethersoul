@@ -220,6 +220,7 @@ MonoBehaviour:
   shadowExplosion: {fileID: 2003923267568827144, guid: 911706dc98f8492439e4b63cf94acbad, type: 3}
   fireTornado: {fileID: 8431841102211864454, guid: 7ea5b287099273a46ab239bdcc84ff13, type: 3}
   shadowAA: {fileID: 8490077438367648332, guid: 887165acfbfca2d41a083ef773efb71d, type: 3}
+  windStorm: {fileID: 416865255893139594, guid: f7b32752e0760ba4e81212c921fd5eaa, type: 3}
 --- !u!1 &798666405
 GameObject:
   m_ObjectHideFlags: 0

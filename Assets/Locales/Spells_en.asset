@@ -88,6 +88,20 @@ MonoBehaviour:
       a doubt lingers: should she continue to embrace the breeze?'
     m_Metadata:
       m_Items: []
+  - m_Id: 3896178380050432
+    m_Localized: Windstorm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896201742323712
+    m_Localized: The wind embraces me and lifts me up. In its fury, I find calm;
+      in its strength, the promise of a new beginning.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Localized: Escarlina invokes tornadoes that sweep across the land, clearing
+      everything in their path. For her, wind does not destroy, it liberates.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

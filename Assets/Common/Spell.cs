@@ -4,7 +4,8 @@ public enum SpellType
     AreaOfEffect,
     Buff,
     Healing,
-    Passive
+    Passive,
+    ScreenSweep
 }
 
 public enum SpellRange

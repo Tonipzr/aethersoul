@@ -641,17 +641,96 @@ partial struct SpellCastSystem : ISystem
         SpellDamageComponent spellDamage = _entityManager.GetComponentData<SpellDamageComponent>(spell);
         SpellElementComponent spellElement = _entityManager.GetComponentData<SpellElementComponent>(spell);
 
-        GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
-        Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
-
         MousePositionComponent mousePosition = _entityManager.GetComponentData<MousePositionComponent>(caster);
         SpellRangeComponent spellRange = _entityManager.GetComponentData<SpellRangeComponent>(spell);
         SpellDurationComponent spellDuration = _entityManager.GetComponentData<SpellDurationComponent>(spell);
 
         UnityEngine.Debug.Log("Casting spell at mouse position");
 
+        if (spellComponent.SpellType == SpellType.ScreenSweep)
+        {
+            PositionComponent casterPosition = _entityManager.GetComponentData<PositionComponent>(caster);
+
+            float2 direction = math.normalize(new float2(mousePosition.Position.x, mousePosition.Position.y) - casterPosition.Position);
+
+            Vector2 north = new Vector2(0, 1);
+            Vector2 south = new Vector2(0, -1);
+            Vector2 east = new Vector2(1, 0);
+            Vector2 west = new Vector2(-1, 0);
+
+            float dotNorth = Vector2.Dot(direction, north);
+            float dotSouth = Vector2.Dot(direction, south);
+            float dotEast = Vector2.Dot(direction, east);
+            float dotWest = Vector2.Dot(direction, west);
+
+            float maxDot = Mathf.Max(dotNorth, dotSouth, dotEast, dotWest);
+
+            if (maxDot == dotNorth)
+            {
+                float2 startPosition = new float2(casterPosition.Position.x - 10, casterPosition.Position.y - 5);
+                float2 endPosition = new float2(casterPosition.Position.x + 10, casterPosition.Position.y - 5);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    float2 startPositionIteration = new float2(startPosition.x + i, startPosition.y);
+                    float2 endPositionIteration = new float2(startPositionIteration.x, endPosition.y + 10);
+                    GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                    Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                    SkillShotToDirection(startPositionIteration, endPositionIteration, spellEntity2, spellVisuals2, spellDamage.Damage, spellElement.Element, entityCommandBuffer, true, false);
+                }
+            }
+
+            if (maxDot == dotSouth)
+            {
+                float2 startPosition = new float2(casterPosition.Position.x - 10, casterPosition.Position.y + 5);
+                float2 endPosition = new float2(casterPosition.Position.x + 10, casterPosition.Position.y + 5);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    float2 startPositionIteration = new float2(startPosition.x + i, startPosition.y);
+                    float2 endPositionIteration = new float2(startPositionIteration.x, endPosition.y - 10);
+                    GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                    Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                    SkillShotToDirection(startPositionIteration, endPositionIteration, spellEntity2, spellVisuals2, spellDamage.Damage, spellElement.Element, entityCommandBuffer, true, false);
+                }
+            }
+
+            if (maxDot == dotEast)
+            {
+                float2 startPosition = new float2(casterPosition.Position.x - 10, casterPosition.Position.y - 5);
+                float2 endPosition = new float2(casterPosition.Position.x - 10, casterPosition.Position.y + 5);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    float2 startPositionIteration = new float2(startPosition.x, startPosition.y + i);
+                    float2 endPositionIteration = new float2(endPosition.x + 20, startPositionIteration.y);
+                    GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                    Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                    SkillShotToDirection(startPositionIteration, endPositionIteration, spellEntity2, spellVisuals2, spellDamage.Damage, spellElement.Element, entityCommandBuffer, true, false);
+                }
+            }
+
+            if (maxDot == dotWest)
+            {
+                float2 startPosition = new float2(casterPosition.Position.x + 10, casterPosition.Position.y - 5);
+                float2 endPosition = new float2(casterPosition.Position.x + 10, casterPosition.Position.y + 5);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    float2 startPositionIteration = new float2(startPosition.x, startPosition.y + i);
+                    float2 endPositionIteration = new float2(endPosition.x - 20, startPositionIteration.y);
+                    GameObject spellVisuals2 = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+                    Entity spellEntity2 = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+                    SkillShotToDirection(startPositionIteration, endPositionIteration, spellEntity2, spellVisuals2, spellDamage.Damage, spellElement.Element, entityCommandBuffer, true, false);
+                }
+            }
+        }
+
         if (spellComponent.SpellType == SpellType.AreaOfEffect)
         {
+            GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+            Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+
             AoESpellToPosition(new float2(mousePosition.Position.x, mousePosition.Position.y), spellDuration, spellRange, spellElement, spellDamage, spellEntity, spellVisuals, entityCommandBuffer);
 
             if (spellComponent.UpgradeLevel >= 2)
@@ -671,12 +750,13 @@ partial struct SpellCastSystem : ISystem
                 AoESpellToPosition(new float2(mousePosition.Position.x - 1, mousePosition.Position.y + 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity4, spellVisuals4, entityCommandBuffer);
                 AoESpellToPosition(new float2(mousePosition.Position.x + 1, mousePosition.Position.y - 1), spellDuration, spellRange, spellElement, spellDamage, spellEntity5, spellVisuals5, entityCommandBuffer);
             }
-
-
         }
 
         if (spellComponent.SpellType == SpellType.SkillShot)
         {
+            GameObject spellVisuals = Object.Instantiate(spellAnimationVisualsPrefabs.GetSpellPrefab(spellComponent.SpellID));
+            Entity spellEntity = _entityManager.CreateEntity(typeof(PhysicsWorldIndex));
+
             PositionComponent casterPosition = _entityManager.GetComponentData<PositionComponent>(caster);
 
             SkillShotToDirection(casterPosition.Position, new float2(mousePosition.Position.x, mousePosition.Position.y), spellEntity, spellVisuals, spellDamage.Damage, spellElement.Element, entityCommandBuffer);
@@ -863,7 +943,7 @@ partial struct SpellCastSystem : ISystem
         visuals.gameObject.transform.position = new Vector3(position.x, position.y, 0);
     }
 
-    private void SkillShotToDirection(float2 casterPosition, float2 targetDirection, Entity entity, GameObject visuals, int Damage, Element element, EntityCommandBuffer entityCommandBuffer, bool isPlayerSpell = true)
+    private void SkillShotToDirection(float2 casterPosition, float2 targetDirection, Entity entity, GameObject visuals, int Damage, Element element, EntityCommandBuffer entityCommandBuffer, bool isPlayerSpell = true, bool destroyOnCollision = true)
     {
         entityCommandBuffer.AddComponent(entity, new SpellDamageComponent
         {
@@ -880,7 +960,8 @@ partial struct SpellCastSystem : ISystem
         entityCommandBuffer.AddComponent(entity, new SpellSkillShotEntityComponent
         {
             ToPosition = targetDirection,
-            FromPosition = new float2(casterPosition.x, casterPosition.y)
+            FromPosition = new float2(casterPosition.x, casterPosition.y),
+            DestroyOnCollision = destroyOnCollision,
         });
         entityCommandBuffer.AddComponent(entity, new SpellEntityGameObjectReferenceComponent
         {

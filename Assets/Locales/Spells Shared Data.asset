@@ -75,6 +75,18 @@ MonoBehaviour:
     m_Key: SPELL_5_LORE_ESCARLINA
     m_Metadata:
       m_Items: []
+  - m_Id: 3896178380050432
+    m_Key: SPELL_11_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896201742323712
+    m_Key: SPELL_11_DESCRIPTION_ESCARLINA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Key: SPELL_11_LORE_ESCARLINA
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

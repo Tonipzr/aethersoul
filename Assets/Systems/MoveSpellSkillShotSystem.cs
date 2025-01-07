@@ -28,9 +28,7 @@ partial struct MoveSpellSkillShotSystem : ISystem
             }
 
             if (
-                new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, currentPosition.z) == currentPosition ||
-                Vector3.Distance(currentPosition, new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, 0)) < 0.1f ||
-                Vector3.Distance(currentPosition, new Vector3(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y, 0)) > 50.0f
+                math.dot(new float2(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y) - position.ValueRW.Position, new float2(skillShot.ValueRO.ToPosition.x, skillShot.ValueRO.ToPosition.y) - new float2(skillShot.ValueRO.FromPosition.x, skillShot.ValueRO.FromPosition.y)) < 0
             )
             {
                 entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(entity);

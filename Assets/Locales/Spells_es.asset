@@ -89,6 +89,20 @@ MonoBehaviour:
       brisa?"
     m_Metadata:
       m_Items: []
+  - m_Id: 3896201742323712
+    m_Localized: El viento me abraza y me eleva. En su furia, encuentro calma; en
+      su fuerza, la promesa de un nuevo comienzo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Localized: Escarlina invoca tornados que barren el terreno, limpiando todo
+      a su paso. Para ella, el viento no destruye, libera.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896178380050432
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

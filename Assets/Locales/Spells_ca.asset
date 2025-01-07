@@ -90,6 +90,20 @@ MonoBehaviour:
       la brisa?\r"
     m_Metadata:
       m_Items: []
+  - m_Id: 3896178380050432
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896201742323712
+    m_Localized: "El vent m'abra\xE7a i m'eleva. En la seva f\xFAria, trobo calma;
+      en la seva for\xE7a, la promesa d'un nou comen\xE7ament."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Localized: Escarlina invoca tornados que escombren el terreny, netejant tot
+      al seu pas. Per a ella, el vent no destrueix, allibera.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

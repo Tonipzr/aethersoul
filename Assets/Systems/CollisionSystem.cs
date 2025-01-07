@@ -336,7 +336,10 @@ partial struct CollisionSystem : ISystem
 
                 if (_entityManager.HasComponent<SpellSkillShotEntityComponent>(spellEntity))
                 {
-                    entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(spellEntity);
+                    SpellSkillShotEntityComponent spellSkillShotEntityComponent = _entityManager.GetComponentData<SpellSkillShotEntityComponent>(spellEntity);
+
+                    if (spellSkillShotEntityComponent.DestroyOnCollision)
+                        entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(spellEntity);
                 }
             }
 

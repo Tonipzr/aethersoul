@@ -210,6 +210,7 @@ public class UIManager : MonoBehaviour
             case 4:
                 return infernoBurstIcon;
             case 5:
+            case 11:
                 return gustIcon;
             default:
                 return null;
