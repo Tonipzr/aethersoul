@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-public struct PlayerCastAttemptComponent : IBufferElementData
+public struct CastAttemptComponent : IBufferElementData
 {
     public int SpellID;
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: DreamCity
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 2353d6400a7dde64c9d6f22d3edc5166, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: f06cd0a31ee32634dbf38d1b6ce52311, type: 2}
+  - {fileID: 11400000, guid: cc539b755b5db654ab3c8409d61f457b, type: 2}
+  - {fileID: 11400000, guid: 68dbf767884a984479ded93e961603a0, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

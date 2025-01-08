@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -12,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider healthBar;
     [SerializeField]
-    private Image healthFill;
+    private TMP_Text healthText;
 
     [Space(10)]
 
@@ -20,15 +23,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider manaBar;
     [SerializeField]
-    private Image manaFIll;
+    private TMP_Text manaText;
 
     [Space(10)]
 
     [Header("Experience")]
     [SerializeField]
     private Slider expBar;
-    [SerializeField]
-    private Image expFill;
     [SerializeField]
     private TextMeshProUGUI levelText;
 
@@ -60,48 +61,79 @@ public class UIManager : MonoBehaviour
     [Header("MainMenu")]
     [SerializeField]
     private GameObject mainMenuContainer;
+    [SerializeField]
+    private GameObject SettingsMenuContainer;
 
     [Space(10)]
 
     [Header("Spells")]
     [SerializeField]
-    private TextMeshProUGUI spell1Id;
+    private Image spell1Background;
     [SerializeField]
     private Image spell1CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell2Id;
+    private Image spell2Background;
     [SerializeField]
     private Image spell2CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell3Id;
+    private Image spell3Background;
     [SerializeField]
     private Image spell3CooldownVisual;
     [SerializeField]
-    private TextMeshProUGUI spell4Id;
+    private Image spell4Background;
     [SerializeField]
     private Image spell4CooldownVisual;
+
+    [SerializeField]
+    private Sprite fireSlashIcon;
+    [SerializeField]
+    private Sprite flameNovaIcon;
+    [SerializeField]
+    private Sprite gustIcon;
+    [SerializeField]
+    private Sprite infernoBurstIcon;
+    [SerializeField]
+    private Sprite meteorStormIcon;
 
     [Header("Spell Book")]
     [SerializeField]
     private GameObject spellBook;
-    [SerializeField]
-    private GameObject spellBookEntryPrefab;
-    [SerializeField]
-    private TextAsset spellsJSON;
-    [SerializeField]
-    private TMP_InputField spellBookSearchInput;
-    [SerializeField]
-    private GameObject spellBookLearnDebugButtonContainer;
 
+    [Space(10)]
+
+    [Header("Objectives")]
+    [SerializeField]
+    private GameObject objective1;
+    [SerializeField]
+    private GameObject objective2;
+    [SerializeField]
+    private GameObject objective3;
+
+    private Dictionary<int, GameObject> objectivesRefs = new();
+
+    [Space(10)]
+
+    [Header("Story")]
+    [SerializeField]
+    private GameObject MiddleTextWarn;
+    [SerializeField]
+    private GameObject MiddleTextWarnTitle;
+    [SerializeField]
+    private GameObject MiddleTextWarnText;
+
+    [SerializeField]
+    private GameObject LoreDisplay;
+
+    [Space(10)]
+    [Header("Global")]
+    [SerializeField]
+    private GameObject InteractContainer;
+    [SerializeField]
+    private TextMeshProUGUI InteractText;
 
     #region private fields
 
-    private int spellBookEntryPerRow = 10;
-    private List<SpellData> allSpells;
-    private List<SpellData> searchedSpells;
-    private int[] learnedSpells;
     private int[] selectedSpells = new int[4];
-    private Color learnedColor = new(0.1843137f, 0.7882353f, 1f);
 
     private List<UpgradeData> allUpgrades;
 
@@ -114,24 +146,28 @@ public class UIManager : MonoBehaviour
     {
         healthBar.maxValue = maxHP;
         healthBar.value = currentHP;
+
+        healthText.text = currentHP + "/" + maxHP;
     }
 
     public void UpdateMana(int currentMana, int maxMana)
     {
         manaBar.maxValue = maxMana;
         manaBar.value = currentMana;
+
+        manaText.text = currentMana + "/" + maxMana;
     }
 
-    public void UpdateExp(int currentExp, int maxExp, bool levelUp = false)
+    public void UpdateExp(int currentExp, int maxExp)
     {
         expBar.maxValue = maxExp;
         expBar.value = currentExp;
+    }
 
-        if (levelUp)
-        {
-            currentLevel++;
-            levelText.text = currentLevel.ToString();
-        }
+    public void UpdateLevel(int level)
+    {
+        currentLevel++;
+        levelText.text = currentLevel.ToString();
     }
 
     public void UpdateSpellSlot(int slot, string spellId)
@@ -139,28 +175,47 @@ public class UIManager : MonoBehaviour
         switch (slot)
         {
             case 1:
-                spell1Id.text = spellId;
+                spell1Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[0] = int.Parse(spellId);
                 break;
             case 2:
-                spell2Id.text = spellId;
+                spell2Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[1] = int.Parse(spellId);
                 break;
             case 3:
-                spell3Id.text = spellId;
+                spell3Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[2] = int.Parse(spellId);
                 break;
             case 4:
-                spell4Id.text = spellId;
+                spell4Background.sprite = GetSpellIcon(int.Parse(spellId));
                 selectedSpells[3] = int.Parse(spellId);
                 break;
         }
     }
 
+    private Sprite GetSpellIcon(int spellID)
+    {
+        switch (spellID)
+        {
+            case 1:
+                return fireSlashIcon;
+            case 2:
+                return flameNovaIcon;
+            case 3:
+                return meteorStormIcon;
+            case 4:
+                return infernoBurstIcon;
+            case 5:
+            case 11:
+                return gustIcon;
+            default:
+                return null;
+        }
+    }
+
     public void UpdateSpellCooldown(int spellID, float elapsedTime, float cooldown)
     {
-        Image cooldownVisual = null;
-
+        List<Image> cooldownVisuals = new List<Image>();
         for (int i = 0; i < selectedSpells.Length; i++)
         {
             if (selectedSpells[i] == spellID)
@@ -168,34 +223,35 @@ public class UIManager : MonoBehaviour
                 switch (i)
                 {
                     case 0:
-                        cooldownVisual = spell1CooldownVisual;
+                        cooldownVisuals.Add(spell1CooldownVisual);
                         break;
                     case 1:
-                        cooldownVisual = spell2CooldownVisual;
+                        cooldownVisuals.Add(spell2CooldownVisual);
                         break;
                     case 2:
-                        cooldownVisual = spell3CooldownVisual;
+                        cooldownVisuals.Add(spell3CooldownVisual);
                         break;
                     case 3:
-                        cooldownVisual = spell4CooldownVisual;
+                        cooldownVisuals.Add(spell4CooldownVisual);
                         break;
                     default:
                         return;
                 }
-
-                break;
             }
         }
 
-        if (cooldownVisual == null) return;
+        if (cooldownVisuals.Count == 0) return;
 
-        if (elapsedTime >= cooldown)
+        foreach (Image cooldownVisual in cooldownVisuals)
         {
-            cooldownVisual.fillAmount = 0;
-        }
-        else
-        {
-            cooldownVisual.fillAmount = 1 - elapsedTime / cooldown;
+            if (elapsedTime >= cooldown)
+            {
+                cooldownVisual.fillAmount = 0;
+            }
+            else
+            {
+                cooldownVisual.fillAmount = 1 - elapsedTime / cooldown;
+            }
         }
     }
 
@@ -213,30 +269,51 @@ public class UIManager : MonoBehaviour
 
     public void LearnSpell(int spellID)
     {
-        if (learnedSpells[spellID - 1] == 1) return;
-
-        learnedSpells[spellID - 1] = 1;
-
-        for (int i = 0; i < allSpells.Count; i++)
-        {
-            if (allSpells[i].SpellID == spellID)
-            {
-                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
-                spellBookEntry.GetComponent<Button>().interactable = false;
-                spellBookEntry.GetComponentInChildren<Image>().color = learnedColor;
-                break;
-            }
-        }
+        spellBook.GetComponent<SpellBookHandler>().LearnSpell(spellID);
     }
 
     public void ToggleSpellBook()
     {
-        spellBook.SetActive(!spellBook.activeSelf);
+        spellBook.GetComponent<SpellBookHandler>().ToggleSpellBook();
+    }
+
+    public void UpdatedSelectedSpellSlot(TMP_Dropdown dropDown)
+    {
+        SpellBookHandler spellBookHandler = spellBook.GetComponent<SpellBookHandler>();
+
+        int slot = int.Parse(dropDown.name);
+        int value = spellBookHandler.GetSpellDropdownOption(slot, dropDown.value);
+
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        Entity playerEntity = entityManager.CreateEntityQuery(typeof(PlayerComponent)).GetSingletonEntity();
+
+        DynamicBuffer<SelectedSpellsComponent> selectedSpellsBuffer = entityManager.GetBuffer<SelectedSpellsComponent>(playerEntity);
+        int slot1 = slot == 1 ? value : selectedSpells[0];
+        int slot2 = slot == 2 ? value : selectedSpells[1];
+        int slot3 = slot == 3 ? value : selectedSpells[2];
+        int slot4 = slot == 4 ? value : selectedSpells[3];
+
+        selectedSpellsBuffer.Clear();
+        selectedSpellsBuffer.Add(new SelectedSpellsComponent { SpellID = slot1 });
+        selectedSpellsBuffer.Add(new SelectedSpellsComponent { SpellID = slot2 });
+        selectedSpellsBuffer.Add(new SelectedSpellsComponent { SpellID = slot3 });
+        selectedSpellsBuffer.Add(new SelectedSpellsComponent { SpellID = slot4 });
     }
 
     public void ToggleMenu()
     {
+        if (levelUpCardPickerContainer.activeSelf) return;
+
         mainMenuContainer.SetActive(!mainMenuContainer.activeSelf);
+
+        if (mainMenuContainer.activeSelf)
+        {
+            SettingsMenuContainer.SetActive(false);
+        }
+        else
+        {
+            SettingsMenuContainer.SetActive(mainMenuContainer.activeSelf);
+        }
 
         ToggleGamePause();
     }
@@ -249,7 +326,7 @@ public class UIManager : MonoBehaviour
 
         if (levelUpCardPickerContainer.activeSelf)
         {
-            List<UpgradeData> randomUpgrades = selectRandomUpgrades();
+            List<UpgradeData> randomUpgrades = SelectRandomUpgrades();
 
             BuildCard(Card1, randomUpgrades[0]);
             BuildCard(Card2, randomUpgrades[1]);
@@ -284,7 +361,7 @@ public class UIManager : MonoBehaviour
     {
         TextMeshProUGUI cardTextComponents = card.GetComponentInChildren<TextMeshProUGUI>();
         Image[] cardImage = card.GetComponentsInChildren<Image>();
-        cardTextComponents.text = getUpgradeDescription(upgrade);
+        cardTextComponents.text = GetUpgradeDescription(upgrade);
         cardImage[1].sprite = cardUpgradeImage;
 
         EventTrigger eventTrigger = card.GetComponent<EventTrigger>();
@@ -345,18 +422,7 @@ public class UIManager : MonoBehaviour
 
             var buffer = entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
 
-            float upgradeLevel = 0;
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                if (buffer[i].UpgradeID == upgrade.UpgradeID)
-                {
-                    upgradeLevel = buffer[i].Value;
-                    buffer.RemoveAt(i);
-                    break;
-                }
-            }
-
-            buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel + upgradeLevel });
+            buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel });
             AudioManager.Instance.PlayAudio(AudioType.Buff);
         }
 
@@ -370,19 +436,12 @@ public class UIManager : MonoBehaviour
         eventTrigger.triggers.Clear();
     }
 
-    private string getUpgradeDescription(UpgradeData upgrade)
+    private string GetUpgradeDescription(UpgradeData upgrade)
     {
-        if (upgrade.Description.Contains("%=chance%"))
-        {
-            return upgrade.Description.Replace("%=chance%", upgrade.UpgradePerLevel.ToString());
-        }
-        else
-        {
-            return upgrade.Description;
-        }
+        return LanguageManager.Instance.GetText("UPGRADE_" + upgrade.UpgradeID + "_DESCRIPTION", AvailableLocalizationTables.Upgrades, upgrade.UpgradePerLevel.ToString());
     }
 
-    private List<UpgradeData> selectRandomUpgrades()
+    private List<UpgradeData> SelectRandomUpgrades()
     {
         List<UpgradeData> result = new();
 
@@ -404,6 +463,91 @@ public class UIManager : MonoBehaviour
         return result;
     }
 
+    public void AddObjectives(int[] objectiveID)
+    {
+        if (objectiveID.Length != 3) return;
+
+        for (int i = 0; i < objectiveID.Length; i++)
+        {
+            GameObject objective = null;
+
+            switch (i)
+            {
+                case 0:
+                    objective = objective1;
+                    break;
+                case 1:
+                    objective = objective2;
+                    break;
+                case 2:
+                    objective = objective3;
+                    break;
+            }
+
+            objective.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString { TableReference = AvailableLocalizationTables.Objectives.ToString(), TableEntryReference = "OBJECTIVE_" + objectiveID[i] + "_DESCRIPTION" };
+            objectivesRefs.Add(objectiveID[i], objective);
+        }
+    }
+
+    public void CompleteObjective(int objectiveID)
+    {
+        if (objectivesRefs.ContainsKey(objectiveID))
+        {
+            GameObject objective = objectivesRefs[objectiveID];
+            objective.GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+        }
+    }
+
+    public void ShowMiddleText(int type)
+    {
+        if (type == 0)
+        {
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Lore, "POI_ENDLESS_SIEGE_TITLE");
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Lore, "POI_ENDLESS_SIEGE_DESCRIPTION");
+        }
+
+        if (type == 1)
+        {
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Lore, "POI_FURY_TITLE");
+            LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Lore, "POI_FURY_DESCRIPTION");
+        }
+
+        StartCoroutine(ActivateShowMiddleText());
+    }
+
+    public void ShowAchievement(int achievementID)
+    {
+        LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnTitle, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_NAME");
+        LanguageManager.Instance.UpdateLocalizeStringEvent(MiddleTextWarnText, AvailableLocalizationTables.Achievements, "ACHIEVEMENT_" + achievementID + "_DESCRIPTION");
+
+        AchievementsManager.Instance.UnlockAchievement(achievementID);
+        StartCoroutine(ActivateShowMiddleText());
+    }
+
+    public void ShowLore(WhoSpeaksLores whoSpeaks, int lore)
+    {
+        LoreManager loreManager = LoreDisplay.GetComponent<LoreManager>();
+
+        loreManager.ShowLore(whoSpeaks, lore);
+    }
+
+    private IEnumerator ActivateShowMiddleText()
+    {
+        MiddleTextWarn.SetActive(true);
+
+        yield return new WaitForSeconds(5);
+
+        MiddleTextWarn.SetActive(false);
+    }
+
+    public void ToggleInteractImage(bool status)
+    {
+        InteractContainer.SetActive(status);
+
+        InteractText.text = UserInputManager.Instance.GetKeyMap("Interact");
+    }
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -414,84 +558,11 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
 
-        SpellDataCollection spells = JsonUtility.FromJson<SpellDataCollection>(spellsJSON.text);
         UpgradeDataCollection upgrades = JsonUtility.FromJson<UpgradeDataCollection>(UpgradeJSON.text);
-        allSpells = new List<SpellData>(spells.Spells);
         allUpgrades = new List<UpgradeData>(upgrades.Upgrades);
     }
 
     private void Start()
     {
-        for (int i = 0; i < allSpells.Count; i++)
-        {
-            GameObject spellBookEntry = Instantiate(spellBookEntryPrefab, spellBook.transform);
-            spellBookEntry.GetComponentInChildren<TextMeshProUGUI>().text = allSpells[i].SpellID.ToString();
-
-            if (i % spellBookEntryPerRow == 0)
-            {
-                spellBookEntry.transform.localPosition = new Vector3(-275, 100 - i / spellBookEntryPerRow * 60, 0);
-            }
-            else
-            {
-                spellBookEntry.transform.localPosition = new Vector3(-275 + i % spellBookEntryPerRow * 60, 100 - i / spellBookEntryPerRow * 60, 0);
-            }
-
-            spellBookEntry.GetComponent<Button>().interactable = false;
-        }
-
-        spellBook.SetActive(false);
-        learnedSpells = new int[allSpells.Count];
-
-        spellBookSearchInput.onValueChanged.AddListener(OnSpellSearchValueChanged);
-
-        // Debug button
-        spellBookLearnDebugButtonContainer.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(1));
-        spellBookLearnDebugButtonContainer.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(2));
-        spellBookLearnDebugButtonContainer.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(3));
-        spellBookLearnDebugButtonContainer.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(4));
-        spellBookLearnDebugButtonContainer.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => debugLearnSpell(5));
-    }
-
-    private void debugLearnSpell(int SpellID)
-    {
-        EntityManager entityMananger = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-        Entity playerEntity = entityMananger.CreateEntityQuery(typeof(PlayerComponent)).GetSingletonEntity();
-
-        entityMananger.AddComponentData(playerEntity, new SpellLearnComponent { SpellID = SpellID });
-    }
-
-    private void OnSpellSearchValueChanged(string input)
-    {
-        List<SpellData> filteredSpells = searchSpellByName(input);
-
-        for (int i = 0; i < allSpells.Count; i++)
-        {
-            if (filteredSpells.IndexOf(allSpells[i]) != -1)
-            {
-                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
-                spellBookEntry.SetActive(true);
-            }
-            else
-            {
-                GameObject spellBookEntry = spellBook.transform.GetChild(i + 3).gameObject;
-                spellBookEntry.SetActive(false);
-            }
-        }
-    }
-
-    private List<SpellData> searchSpellByName(string name)
-    {
-        List<SpellData> result = new();
-
-        foreach (var spell in allSpells)
-        {
-            if (spell.Name.ToLower().Contains(name.ToLower()))
-            {
-                result.Add(spell);
-            }
-        }
-
-        return result;
     }
 }

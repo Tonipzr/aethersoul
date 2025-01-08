@@ -21,4 +21,11 @@ public enum UpgradeType
     ManaRegen,
     Lifeleech,
     Manaleech,
+    ExploreChance1,
+    ExploreChance2,
+    ExploreChance3,
+    AnySpellCostReduce,
+    MoveSpeed,
+    KillAnyDamage,
+    ReduceExpPerLevel,
 }

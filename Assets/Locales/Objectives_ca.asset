@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Objectives_ca
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca
+  m_SharedData: {fileID: 11400000, guid: 705a29ae8ea3eb14380fd80eb7b63e75, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 25179656192
+    m_Localized: "Cendres a les cendres\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142196543488
+    m_Localized: "Derrota 50 enemics en una sola partida.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 163671379968
+    m_Localized: "C\xE0rrega daurada\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169082032128
+    m_Localized: "Recull 150 d'or.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 179077058560
+    m_Localized: "La prova espera\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 188153532416
+    m_Localized: "Troba i completa 1 Fragment de malson.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 189650898944
+    m_Localized: "Ecos de poder\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200388317184
+    m_Localized: "Fes servir qualsevol encanteri 25 vegades.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 201868906496
+    m_Localized: "Moneda d'ombres\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289655689216
+    m_Localized: "Gasta 100 d'or.\r"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

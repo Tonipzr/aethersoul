@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DreamCity_ca
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca
+  m_SharedData: {fileID: 11400000, guid: 2353d6400a7dde64c9d6f22d3edc5166, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 16598110208
+    m_Localized: Emberis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51062706176
+    m_Localized: Mareira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65126207488
+    m_Localized: Sylvara
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68632645632
+    m_Localized: Brisalia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 242947919872
+    m_Localized: La flama eterna que escalfa i consumeix.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 248593453056
+    m_Localized: "La seva calma nodreix la vida; la seva tempesta devora els secrets
+      del m\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250501861376
+    m_Localized: "El m\xF3n es mant\xE9 sobre la seva paci\xE8ncia inquebrantable."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252443824128
+    m_Localized: "Una brisa suau o un hurac\xE0 imparable. Pot ser qualsevol cosa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 588910891008
+    m_Localized: "Emberis, la deessa del foc, representa tant la creaci\xF3 com la
+      destrucci\xF3. El seu cor crema amb passi\xF3, per\xF2 la seva f\xFAria \xE9s
+      capa\xE7 de reduir els mons a cendres. Els seus seguidors la veneren com la
+      portadora de l'espurna que enc\xE9n la vida, per\xF2 tamb\xE9 temen la seva
+      capacitat de devastar tot el que es troba al seu pas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633315987456
+    m_Localized: "Mareira, la deessa de l'aigua, \xE9s un flux constant entre serenitat
+      i caos. Ella guarda les mem\xF2ries del temps en oceans que murmuren les hist\xF2ries
+      oblidades dels somiadors. Les seves ll\xE0grimes cauen com a pluja benevolent,
+      per\xF2 la seva ira es manifesta en tsunamis que devoren civilitzacions. Mareira
+      ensenya als seus escollits que la for\xE7a rau en l'adaptabilitat i la persist\xE8ncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 659429724160
+    m_Localized: "Sylvara, la deessa de la terra, \xE9s la protectora de l'estabilitat
+      i la guardiana dels secrets antics. En les seves arrels viu la saviesa d'edats
+      oblidades i en les seves muntanyes es forja la for\xE7a dels somiadors. Sylvara
+      \xE9s ferma, materna i severa, guiada aquells que l'escolten amb lli\xE7ons
+      de resist\xE8ncia i perseveran\xE7a. No obstant aix\xF2, la seva paci\xE8ncia
+      no \xE9s infinita; aquells que la desafien s'enfrontaran a terratr\xE8mols
+      i c\xE0stigs de for\xE7a implacable."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692493422592
+    m_Localized: "Brisalia, la deessa de l'aire, \xE9s la m\xE9s lliure i capriciosa.
+      Lleugera com una brisa o devastadora com un cicl\xF3, mai es queda en un lloc
+      ni en un estat massa temps. Els seus seguidors aprenen que el canvi \xE9s inevitable
+      i que la veritable llibertat es troba en deixar anar, fins i tot quan el dest\xED
+      sembla conf\xFAs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 955342065664
+    m_Localized: "El foc que consumeix pot alliberar-te, per\xF2 realment vols cremar-te?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 975835435008
+    m_Localized: "L'aigua flueix sense pietat, arrossegant tot al seu pas. Com aquell
+      dia, quan el dolor es va convertir en una marea incontrolable. Potser la calma
+      tamb\xE9 em salvar\xE0?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 992432295936
+    m_Localized: "El terra que em va sostenir ja no \xE9s suficient. Vull ser forta
+      com la terra, per\xF2... com puc trobar la pau quan tot el que toco es crema?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1031573540864
+    m_Localized: "El vent sempre m'ha guiat, per\xF2... Hauria de volar endavant
+      o caure en la tempesta que crema dins meu?"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

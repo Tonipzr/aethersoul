@@ -2,10 +2,9 @@
     "Spells": [
         {
             "SpellID": 1,
-            "Name": "Fireslash",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
-            "Damage": 50,
+            "Damage": 20,
             "Range": "Three",
             "Cost": 10,
             "Cooldown": 1,
@@ -14,10 +13,9 @@
         },
         {
             "SpellID": 2,
-            "Name": "Flame Nova",
             "SpellType": "AreaOfEffect",
             "Target": "Self",
-            "Damage": 30,
+            "Damage": 15,
             "Range": "Five",
             "Cost": 15,
             "Cooldown": 6,
@@ -26,10 +24,9 @@
         },
         {
             "SpellID": 3,
-            "Name": "Meteor Strike",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
-            "Damage": 70,
+            "Damage": 15,
             "Range": "Five",
             "Cost": 40,
             "Cooldown": 12,
@@ -38,10 +35,9 @@
         },
         {
             "SpellID": 4,
-            "Name": "Inferno Burst",
             "SpellType": "AreaOfEffect",
             "Target": "MousePosition",
-            "Damage": 60,
+            "Damage": 15,
             "Range": "Five",
             "Cost": 25,
             "Cooldown": 5,
@@ -50,13 +46,76 @@
         },
         {
             "SpellID": 5,
-            "Name": "Gust",
             "SpellType": "SkillShot",
             "Target": "MousePosition",
-            "Damage": 20,
+            "Damage": 5,
             "Range": "Five",
             "Cost": 5,
             "Cooldown": 0.5,
+            "Element": "Air"
+        },
+        {
+            "SpellID": 6,
+            "SpellType": "AreaOfEffect",
+            "Target": "MousePosition",
+            "Damage": 5,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 1,
+            "Element": "Air",
+            "Duration": 0.4
+        },
+        {
+            "SpellID": 7,
+            "SpellType": "AreaOfEffect",
+            "Target": "SelfBoss",
+            "Damage": 50,
+            "Range": "Five",
+            "Cost": 10,
+            "Cooldown": 15,
+            "Element": "Fire",
+            "Duration": 3
+        },
+        {
+            "SpellID": 8,
+            "SpellType": "AreaOfEffect",
+            "Target": "RandomAroundTarget",
+            "Damage": 20,
+            "Range": "Three",
+            "Cost": 10,
+            "Cooldown": 8,
+            "Element": "Fire",
+            "Duration": 1
+        },
+        {
+            "SpellID": 9,
+            "Name": "FireTornado",
+            "SpellType": "SkillShot",
+            "Target": "MousePosition",
+            "Damage": 0,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 0,
+            "Element": "Fire"
+        },
+        {
+            "SpellID": 10,
+            "SpellType": "SkillShot",
+            "Target": "Player",
+            "Damage": 10,
+            "Range": "Five",
+            "Cost": 0,
+            "Cooldown": 1,
+            "Element": "Fire"
+        },
+        {
+            "SpellID": 11,
+            "SpellType": "ScreenSweep",
+            "Target": "MousePosition",
+            "Damage": 65,
+            "Range": "Five",
+            "Cost": 75,
+            "Cooldown": 20,
             "Element": "Air"
         }
     ]

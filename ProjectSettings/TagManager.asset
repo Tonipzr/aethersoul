@@ -17,7 +17,7 @@ TagManager:
   - Enemy
   - Spell
   - Experience
-  - 
+  - Minimap
   - 
   - 
   - 
@@ -47,6 +47,9 @@ TagManager:
   - name: Checkpoint
     uniqueID: 3796510217
     locked: 0
+  - name: Shadows
+    uniqueID: 3017650557
+    locked: 0
   - name: Player
     uniqueID: 2457316553
     locked: 0
@@ -67,4 +70,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 122067489
+    locked: 0
+  - name: Minimap
+    uniqueID: 1253949851
     locked: 0

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +16,10 @@ public class DreamCityUIHandler : MonoBehaviour
     [SerializeField]
     private GameObject buffDescription;
     [SerializeField]
+    private GameObject buffLore;
+    [SerializeField]
+    private GameObject buffCharacterLore;
+    [SerializeField]
     private GameObject currentBuffLevel;
     [SerializeField]
     private GameObject buffCost;
@@ -22,29 +27,9 @@ public class DreamCityUIHandler : MonoBehaviour
     private Button increaseBuffButton;
 
     [SerializeField]
-    private GameObject audioUpgradeEffect;
+    private TextMeshProUGUI interactText;
 
     public static DreamCityUIHandler Instance { get; private set; }
-
-    #region FireVars
-    private static string fireName = "Emberis";
-    private static string fireDescription = "Diosa del fuego, encarna pasión, renacimiento y poder ardiente.";
-    #endregion
-
-    #region WaterVars
-    private static string waterName = "Mareira";
-    private static string waterDescription = "Diosa del agua, símbolo de fluidez, mareas y vida oceánica.";
-    #endregion
-
-    #region EarthVars
-    private static string earthName = "Sylvara";
-    private static string earthDescription = "Diosa de la tierra, protectora de bosques y fauna.";
-    #endregion
-
-    #region AirVars
-    private static string airName = "Brisalia";
-    private static string airDescription = "Diosa del viento, portadora de libertad, calma e inspiración.";
-    #endregion
 
     #region SharedVars
     public bool BoughtBuff = false;
@@ -64,6 +49,10 @@ public class DreamCityUIHandler : MonoBehaviour
     public void ToggleInteractImage(bool status)
     {
         interactImage.SetActive(status);
+
+        // Debug.Log(UserInputManager.Instance.GetKeyMap("Interact"));
+
+        interactText.text = UserInputManager.Instance.GetKeyMap("Interact");
     }
 
     public void ToggleBuffUI(bool status, string statueType)
@@ -133,38 +122,95 @@ public class DreamCityUIHandler : MonoBehaviour
 
     private void SetBuffUI(string statueType)
     {
+        string name;
+        string description;
+        string lore;
+        string characterLore;
+        string currentLevel;
+        string cost;
         switch (statueType)
         {
             case "FireStatue":
-                buffTitle.GetComponent<TMPro.TextMeshProUGUI>().text = fireName;
-                buffDescription.GetComponent<TMPro.TextMeshProUGUI>().text = fireDescription;
-                currentBuffLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + DreamCityStatsGameObject.FireBuff;
-                buffCost.GetComponent<TMPro.TextMeshProUGUI>().text = "Price " + (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.FireBuff + 1)).ToString();
+            default:
+                name = "GODS_FIRE_NAME";
+                description = "GODS_FIRE_DESCRIPTION";
+                lore = "GODS_FIRE_LORE_DEFAULT";
+                characterLore = "GODS_FIRE_LORE_ESCARLINA";
+                currentLevel = LanguageManager.Instance.GetText("LEVEL_TEXT", AvailableLocalizationTables.UI, DreamCityStatsGameObject.FireBuff.ToString());
+                cost = LanguageManager.Instance.GetText("PRICE_TEXT", AvailableLocalizationTables.UI, (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.FireBuff + 1)).ToString());
                 break;
             case "WaterStatue":
-                buffTitle.GetComponent<TMPro.TextMeshProUGUI>().text = waterName;
-                buffDescription.GetComponent<TMPro.TextMeshProUGUI>().text = waterDescription;
-                currentBuffLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + DreamCityStatsGameObject.WaterBuff;
-                buffCost.GetComponent<TMPro.TextMeshProUGUI>().text = "Price " + (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.WaterBuff + 1)).ToString();
+                name = "GODS_WATER_NAME";
+                description = "GODS_WATER_DESCRIPTION";
+                lore = "GODS_WATER_LORE_DEFAULT";
+                characterLore = "GODS_WATER_LORE_ESCARLINA";
+                currentLevel = LanguageManager.Instance.GetText("LEVEL_TEXT", AvailableLocalizationTables.UI, DreamCityStatsGameObject.WaterBuff.ToString());
+                cost = LanguageManager.Instance.GetText("PRICE_TEXT", AvailableLocalizationTables.UI, (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.WaterBuff + 1)).ToString());
                 break;
             case "EarthStatue":
-                buffTitle.GetComponent<TMPro.TextMeshProUGUI>().text = earthName;
-                buffDescription.GetComponent<TMPro.TextMeshProUGUI>().text = earthDescription;
-                currentBuffLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + DreamCityStatsGameObject.EarthBuff;
-                buffCost.GetComponent<TMPro.TextMeshProUGUI>().text = "Price " + (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.EarthBuff + 1)).ToString();
+                name = "GODS_EARTH_NAME";
+                description = "GODS_EARTH_DESCRIPTION";
+                lore = "GODS_EARTH_LORE_DEFAULT";
+                characterLore = "GODS_EARTH_LORE_ESCARLINA";
+                currentLevel = LanguageManager.Instance.GetText("LEVEL_TEXT", AvailableLocalizationTables.UI, DreamCityStatsGameObject.EarthBuff.ToString());
+                cost = LanguageManager.Instance.GetText("PRICE_TEXT", AvailableLocalizationTables.UI, (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.EarthBuff + 1)).ToString());
                 break;
             case "WindStatue":
-                buffTitle.GetComponent<TMPro.TextMeshProUGUI>().text = airName;
-                buffDescription.GetComponent<TMPro.TextMeshProUGUI>().text = airDescription;
-                currentBuffLevel.GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + DreamCityStatsGameObject.AirBuff;
-                buffCost.GetComponent<TMPro.TextMeshProUGUI>().text = "Price " + (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.AirBuff + 1)).ToString();
+                name = "GODS_AIR_NAME";
+                description = "GODS_AIR_DESCRIPTION";
+                lore = "GODS_AIR_LORE_DEFAULT";
+                characterLore = "GODS_AIR_LORE_ESCARLINA";
+                currentLevel = LanguageManager.Instance.GetText("LEVEL_TEXT", AvailableLocalizationTables.UI, DreamCityStatsGameObject.AirBuff.ToString());
+                cost = LanguageManager.Instance.GetText("PRICE_TEXT", AvailableLocalizationTables.UI, (DreamCityStatsGameObject.IncreaseCostPerLevel * (DreamCityStatsGameObject.AirBuff + 1)).ToString());
                 break;
         }
+
+        LanguageManager.Instance.UpdateLocalizeStringEvent(buffTitle.gameObject, AvailableLocalizationTables.DreamCity, name);
+        LanguageManager.Instance.UpdateLocalizeStringEvent(buffDescription.gameObject, AvailableLocalizationTables.DreamCity, description);
+        LanguageManager.Instance.UpdateLocalizeStringEvent(buffLore.gameObject, AvailableLocalizationTables.DreamCity, lore);
+        LanguageManager.Instance.UpdateLocalizeStringEvent(buffCharacterLore.gameObject, AvailableLocalizationTables.DreamCity, characterLore);
+        currentBuffLevel.GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel;
+        buffCost.GetComponent<TMPro.TextMeshProUGUI>().text = cost;
+
         HandleIncreaseButton(statueType);
     }
 
     public void CheckPointInteract()
     {
+        SaveData gameSave = new SaveData(
+            DreamCityStatsGameObject.FireBuff,
+            DreamCityStatsGameObject.WaterBuff,
+            DreamCityStatsGameObject.EarthBuff,
+            DreamCityStatsGameObject.AirBuff,
+            DreamCityStatsGameObject.CurrentCoins,
+            new SaveSettingsData(
+                PlayerPrefsManager.Instance.GetSpellsVolume(),
+                PlayerPrefsManager.Instance.GetMusicVolume(),
+                PlayerPrefsManager.Instance.GetSFXVolume(),
+                PlayerPrefsManager.Instance.GetMonsterSpeed(),
+                PlayerPrefsManager.Instance.GetLanguage()
+            ),
+            new SaveAchievements(
+                AchievementsManager.Instance.GetUnlockedAchievements().ToArray()
+            ),
+            new SaveStats(
+                GameStatsManager.Instance.TotalSpellsUsed,
+                GameStatsManager.Instance.TotalGoldCollected,
+                GameStatsManager.Instance.TotalGoldUsed,
+                GameStatsManager.Instance.TotalEnemiesKilled,
+                GameStatsManager.Instance.TotalEnemiesKilledNoDamage,
+                GameStatsManager.Instance.TotalTraveledDistance,
+                GameStatsManager.Instance.TotalPOIsVisited,
+                GameStatsManager.Instance.TotalPOIsCleared,
+                GameStatsManager.Instance.TotalBuffsCollected,
+                GameStatsManager.Instance.TotalCheckpointsReached,
+                GameStatsManager.Instance.TotalLevelsUp,
+                GameStatsManager.Instance.TotalSpellsUnlocked
+            )
+        );
+
+        SaveGame.Save(gameSave);
+
         SceneToLoadGameObject.FromSceneToScene("DreamCityScene", "MainMenuScene");
 
         SceneManager.LoadScene("LoadingScene");
@@ -172,6 +218,6 @@ public class DreamCityUIHandler : MonoBehaviour
 
     public void PlayAudioUpgradeEffect()
     {
-        audioUpgradeEffect.GetComponent<AudioSource>().Play();
+        AudioManager.Instance.PlayAudio(AudioType.UpgradeEffect);
     }
 }

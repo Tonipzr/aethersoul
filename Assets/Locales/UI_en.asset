@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: d6a0494a597e17147bd3111c40e9fb91, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42007203840
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 90405277696
+    m_Localized: Dream City
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133522722816
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 152535502848
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 201941645987840
+    m_Localized: Increase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 201967294156800
+    m_Localized: Level {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 201985304498176
+    m_Localized: Price {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284043410345984
+    m_Localized: Keybinds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284283035127808
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284423703695360
+    m_Localized: Dificulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284625789456384
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285130590720000
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288628938051584
+    m_Localized: Monsters Speed (%)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288683568861184
+    m_Localized: Spells volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288705198886912
+    m_Localized: Music volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288721963520000
+    m_Localized: SFX volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3158764715970560
+    m_Localized: 'You can end the game at any time by pressing this button.
+
+
+      Note:
+      If you die, without ending the game, you will lose your progress.'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

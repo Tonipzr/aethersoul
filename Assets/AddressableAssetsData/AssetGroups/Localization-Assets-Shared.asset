@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Shared
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 326348483ee37804e942faf86cf24e4e
+  m_SerializeEntries:
+  - m_GUID: 2353d6400a7dde64c9d6f22d3edc5166
+    m_Address: Assets/Locales/DreamCity Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 705a29ae8ea3eb14380fd80eb7b63e75
+    m_Address: Assets/Locales/Objectives Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 906a28317f10d8a49a7091b47d426e06
+    m_Address: Assets/Locales/Lore Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2071d6a78b813f47b8259f655f036fd
+    m_Address: Assets/Locales/Achievements Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6a0494a597e17147bd3111c40e9fb91
+    m_Address: Assets/Locales/UI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da64c89b172b17a4bb57c8a8087b7fad
+    m_Address: Assets/Locales/Upgrades Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e29a638f231023044a87bf897bc85a27
+    m_Address: Assets/Locales/Spells Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: c77735f625d4f8742a968277f5f8b91a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: becb5e1a6c26c3849a8b304cb8fccd03, type: 2}
+    - {fileID: 11400000, guid: fb805979c94a9fd4e816c86ad4bee218, type: 2}

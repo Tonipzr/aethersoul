@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lore_ca
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca
+  m_SharedData: {fileID: 11400000, guid: 906a28317f10d8a49a7091b47d426e06, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 275302780928
+    m_Localized: "Setge interminable\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381263482880
+    m_Localized: Els malsons no acaben, has de resistir fins que ho facin.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399022166016
+    m_Localized: "F\xFAria continguda\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519302221824
+    m_Localized: "El foc d'Escarlina no s'apaga mai, per\xF2 de vegades ha de cremar
+      r\xE0pid."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444886722744320
+    m_Localized: "Les flames em van treure tot... i no obstant, aqu\xED estic, usant-les
+      per sobreviure."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444899586674688
+    m_Localized: "\rEl foc consumeix, destrueix, arrasa... i ara ho dirigeixo jo.
+      Qui \xE9s el veritable monstre?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444918473625600
+    m_Localized: "\rMai no vaig voler tornar a sentir aquesta calor... per\xF2 la
+      desesperaci\xF3 no em deixa cap altra opci\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444925251620864
+    m_Localized: "Cada pas m'acosta m\xE9s a trobar pau o, si m\xE9s no, respostes.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444932595847168
+    m_Localized: Cada pas em recorda quant he perdut... i quant he de guanyar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444948664225792
+    m_Localized: "\rUn m\xE9s. Sempre un m\xE9s. Mai suficient."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444955287031808
+    m_Localized: "\rNo lluito per gl\xF2ria, sin\xF3 per silenciar les veus del foc
+      a la meva ment."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444963935686656
+    m_Localized: "Per un moment, el fred m'abra\xE7a i les flames semblen m\xE9s
+      llunyanes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444972911497216
+    m_Localized: "Les gotes intenten apagar les flames, per\xF2 cremen dins meu..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444985951588352
+    m_Localized: "Cada fragment guarda un ress\xF2 de dolor. Estic destinada a escoltar-ho."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445005106974720
+    m_Localized: "Una altra caiguda, un altre frac\xE0s. Com m\xE9s he de patir per
+      guanyar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445012279234560
+    m_Localized: "No hi ha vict\xF2ria aqu\xED, nom\xE9s un breu respir abans del
+      seg\xFCent."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445017828298752
+    m_Localized: "\rTu i jo som iguals. Tots dos vam n\xE9ixer de les flames, tots
+      dos cremem tot al nostre pas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445023100538880
+    m_Localized: "\rEls malsons no acaben, Escarlina. Tu ets el malson."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445027630387200
+    m_Localized: "\rCrems per dins, Escarlina! Ho s\xE9, perqu\xE8 jo tamb\xE9 ho
+      sento."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

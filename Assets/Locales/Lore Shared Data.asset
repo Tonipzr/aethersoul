@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Lore Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Lore
+  m_TableCollectionNameGuidString: 906a28317f10d8a49a7091b47d426e06
+  m_Entries:
+  - m_Id: 275302780928
+    m_Key: POI_ENDLESS_SIEGE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381263482880
+    m_Key: POI_ENDLESS_SIEGE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399022166016
+    m_Key: POI_FURY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519302221824
+    m_Key: POI_FURY_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444886722744320
+    m_Key: LORE_MESSAGE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444899586674688
+    m_Key: LORE_MESSAGE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444918473625600
+    m_Key: LORE_MESSAGE_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444925251620864
+    m_Key: LORE_MESSAGE_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444932595847168
+    m_Key: LORE_MESSAGE_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444948664225792
+    m_Key: LORE_MESSAGE_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444955287031808
+    m_Key: LORE_MESSAGE_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444963935686656
+    m_Key: LORE_MESSAGE_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444972911497216
+    m_Key: LORE_MESSAGE_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444985951588352
+    m_Key: LORE_MESSAGE_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445005106974720
+    m_Key: LORE_MESSAGE_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445012279234560
+    m_Key: LORE_MESSAGE_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445017828298752
+    m_Key: LORE_MESSAGE_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445023100538880
+    m_Key: LORE_MESSAGE_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445027630387200
+    m_Key: LORE_MESSAGE_15
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7165567894912237568
+  references:
+    version: 2
+    RefIds:
+    - rid: 7165567894912237568
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1735752588543

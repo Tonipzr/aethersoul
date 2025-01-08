@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Spells_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: e29a638f231023044a87bf897bc85a27, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 173431525376
+    m_Localized: Tajo de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215131295744
+    m_Localized: Una simple herida puede marcar el inicio de un incendio descontrolado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262686314496
+    m_Localized: "Escarlina concentra su dolor en una hoja ardiente que corta a sus
+      enemigos. Este tajo refleja la llama que consume sus recuerdos, record\xE1ndole
+      aquella noche."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316830584832
+    m_Localized: Nova de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 348875067392
+    m_Localized: "El calor de la desesperaci\xF3n puede consumir todo a su alrededor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425655996416
+    m_Localized: Lluvia de meteoritos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 485940727808
+    m_Localized: "Explosi\xF3n infernal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 597052035072
+    m_Localized: "R\xE1faga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 406731296768
+    m_Localized: "Escarlina desata una explosi\xF3n de fuego que irradia desde su
+      coraz\xF3n. Es un eco de la furia que sinti\xF3 al ver las llamas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444102545408
+    m_Localized: "El cielo tambi\xE9n puede llorar fuego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471243886592
+    m_Localized: "Cuando Escarlina invoca esta tormenta de destrucci\xF3n, recuerda
+      las historias de otros so\xF1adores, de mundos que cayeron bajo el peso de
+      su propio orgullo. \xBFSon estas memorias suyas, o de aquellos que la precedieron?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521583923200
+    m_Localized: "Las llamas no solo destruyen, tambi\xE9n purifican."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567276670976
+    m_Localized: "Escarlina concentra todo su poder en una explosi\xF3n devastadora,
+      capaz de arrasar con todo a su alrededor. Cada vez que lo hace, una voz en
+      su mente le susurra: \"\xBFEres t\xFA quien controla el fuego, o es el fuego
+      quien te controla?\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 627741757440
+    m_Localized: "El viento siempre ha sido su refugio... pero, \xBFes suficiente?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642606370816
+    m_Localized: "Escarlina desata una veloz r\xE1faga de viento, un recordatorio
+      de qui\xE9n fue y de la libertad que siempre la defini\xF3. Sin embargo, en
+      el fondo de su mente, una duda persiste: \xBFDeber\xEDa seguir abrazando la
+      brisa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896201742323712
+    m_Localized: El viento me abraza y me eleva. En su furia, encuentro calma; en
+      su fuerza, la promesa de un nuevo comienzo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Localized: Escarlina invoca tornados que barren el terreno, limpiando todo
+      a su paso. Para ella, el viento no destruye, libera.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896178380050432
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

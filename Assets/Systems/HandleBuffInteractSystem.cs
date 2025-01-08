@@ -38,6 +38,37 @@ partial struct HandleBuffInteractSystem : ISystem
                 if (Vector3.Distance(playerPosition, buffPosition) < 1.5f)
                 {
                     buff.ValueRW.IsUsed = true;
+
+                    var jobBuffs = new UpdateMapStatsJob
+                    {
+                        Type = MapStatsType.CurrentBuffsCollected,
+                        Value = 1,
+                        Incremental = true
+                    };
+                    jobBuffs.Schedule();
+
+                    if (SystemAPI.HasComponent<ExperienceComponent>(playerEntity))
+                    {
+                        ExperienceComponent experienceComponent = _entityManager.GetComponentData<ExperienceComponent>(playerEntity);
+
+                        DynamicBuffer<ExperienceGainComponent> experienceGainBuffer = _entityManager.GetBuffer<ExperienceGainComponent>(playerEntity);
+
+                        experienceGainBuffer.Add(new ExperienceGainComponent
+                        {
+                            ExperienceGain = experienceComponent.ExperienceToNextLevel - experienceComponent.Experience
+                        });
+                    }
+
+                    foreach (var (experienceShard, experienceShardEntity) in SystemAPI.Query<RefRW<ExperienceShardEntityComponent>>().WithEntityAccess())
+                    {
+                        if (experienceShard.ValueRO.IsProcessed) continue;
+
+                        entityCommandBuffer.AddComponent(experienceShardEntity, new FollowComponent
+                        {
+                            Target = playerEntity,
+                            MinDistance = 0
+                        });
+                    }
                 }
             }
         }

@@ -66,7 +66,7 @@ partial struct ManaRestoreSystem : ISystem
                     {
                         if (upgrade.Type == UpgradeType.ManaRegen)
                         {
-                            restoreQuantity = (int)(restoreQuantity * (1 + (upgrade.Value / 100)));
+                            restoreQuantity += (int)upgrade.Value;
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 183bc6cc13e92854ea522ea7296f8cee
+guid: d4a3aea917dd00b46a2b31918060126d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gust_0
+      name: Gust (1)_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d599208701bccc4aaa8624c889d1e22
-      internalID: -1628908970
+      spriteID: 706b1d837f11d874ca7ecbbcb017b9df
+      internalID: -187317157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gust_1
+      name: Gust (1)_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 663e16c05188fba45813ef55e51c42f2
+      internalID: 924636652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gust (1)_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +153,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e16dffb3756b6d41992a0b73b36b37e
-      internalID: 2039541777
+      spriteID: 0bf17b965b45d2c4797e20cd80c5a59b
+      internalID: 1356601750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gust_2
+      name: Gust (1)_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7ef450bb4ad8774ea0b2a6ef66ba17c
+      internalID: 916709393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gust (1)_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,29 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d91ee1c08a3216c4e912b621f5a378a3
-      internalID: 2107111288
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gust_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad8735083249b3c418c45a7803a2fc1f
-      internalID: 618378108
+      spriteID: c193e755e6553714fb541902965192b4
+      internalID: -2087560824
       vertices: []
       indices: 
       edges: []
@@ -191,10 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Gust_0: -1628908970
-      Gust_1: 2039541777
-      Gust_2: 2107111288
-      Gust_3: 618378108
+      Gust (1)_0: -187317157
+      Gust (1)_1: 924636652
+      Gust (1)_2: 1356601750
+      Gust (1)_3: 916709393
+      Gust (1)_4: -2087560824
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -5,4 +5,5 @@ public struct SpellSkillShotEntityComponent : IComponentData
 {
     public float2 ToPosition;
     public float2 FromPosition;
+    public bool DestroyOnCollision;
 }

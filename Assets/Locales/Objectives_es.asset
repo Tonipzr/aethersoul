@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Objectives_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 705a29ae8ea3eb14380fd80eb7b63e75, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 25179656192
+    m_Localized: Cenizas a las cenizas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142196543488
+    m_Localized: Derrota a 50 enemigos en una sola partida.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 163671379968
+    m_Localized: Carga dorada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169082032128
+    m_Localized: Recoge 150 de oro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 179077058560
+    m_Localized: La prueba espera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 188153532416
+    m_Localized: Encuentra y completa 1 Fragmento de pesadilla.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 189650898944
+    m_Localized: Ecos de poder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 200388317184
+    m_Localized: Usa cualquier hechizo 25 veces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 201868906496
+    m_Localized: Moneda de sombras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289655689216
+    m_Localized: Gasta 100 de oro.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

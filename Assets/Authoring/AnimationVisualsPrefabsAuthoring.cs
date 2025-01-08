@@ -16,6 +16,8 @@ public class AnimationVisualsPrefabsAuthoring : MonoBehaviour
     [SerializeField]
     private GameObject Slime;
     [SerializeField]
+    private GameObject Boss;
+    [SerializeField]
     private GameObject GreenShardExperience;
     [SerializeField]
     private GameObject BlueShardExperience;
@@ -41,6 +43,7 @@ public class AnimationVisualsPrefabsAuthoring : MonoBehaviour
                 Golem = authoring.Golem,
                 Rat = authoring.Rat,
                 Slime = authoring.Slime,
+                Boss = authoring.Boss,
                 GreenShardExperience = authoring.GreenShardExperience,
                 BlueShardExperience = authoring.BlueShardExperience,
                 PinkShardExperience = authoring.PinkShardExperience,

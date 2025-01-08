@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lore_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 906a28317f10d8a49a7091b47d426e06, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 275302780928
+    m_Localized: Asedio interminable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381263482880
+    m_Localized: Las pesadillas no terminan, debes resistir hasta que lo hagan.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399022166016
+    m_Localized: Furia contenida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519302221824
+    m_Localized: "El fuego de Escarlina nunca se apaga, pero a veces debe arder r\xE1pido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444886722744320
+    m_Localized: "Las llamas me quitaron todo... y sin embargo, aqu\xED estoy, us\xE1ndolas
+      para sobrevivir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444899586674688
+    m_Localized: "El fuego consume, destruye, arrasa... y ahora lo dirijo yo. \xBFQui\xE9n
+      es el verdadero monstruo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444918473625600
+    m_Localized: "Nunca quise volver a sentir este calor... pero la desesperaci\xF3n
+      no me deja otra opci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444925251620864
+    m_Localized: "Cada paso me acerca m\xE1s a encontrar paz, o al menos, respuestas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444932595847168
+    m_Localized: "Cada avance me recuerda cu\xE1nto he perdido... y cu\xE1nto debo
+      ganar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444948664225792
+    m_Localized: "Uno m\xE1s. Siempre uno m\xE1s. Nunca suficiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444955287031808
+    m_Localized: No lucho por gloria, sino para silenciar las voces del fuego en
+      mi mente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444963935686656
+    m_Localized: "Por un momento, el fr\xEDo me abraza, y las llamas parecen m\xE1s
+      lejanas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444972911497216
+    m_Localized: "Las gotas intentan apagar las llamas, pero arden dentro de m\xED..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444985951588352
+    m_Localized: Cada fragmento guarda un eco de dolor. Estoy destinada a escucharlo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445005106974720
+    m_Localized: "Otra ca\xEDda, otro fracaso. \xBFCu\xE1nto m\xE1s debo sufrir para
+      ganar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445012279234560
+    m_Localized: "No hay victoria aqu\xED, solo un breve respiro antes de lo siguiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445017828298752
+    m_Localized: "T\xFA y yo somos iguales. Ambos nacimos de las llamas, ambos quemamos
+      todo a nuestro paso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445023100538880
+    m_Localized: "Las pesadillas no terminan, Escarlina. T\xFA eres la pesadilla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445027630387200
+    m_Localized: "\xA1Ardes por dentro, Escarlina! Lo s\xE9, porque yo tambi\xE9n
+      lo siento."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -6,6 +6,9 @@ public class BuffStatusController : MonoBehaviour
     Entity entity;
     bool isUsed = true;
 
+    [SerializeField] private GameObject MinimapIcon;
+    [SerializeField] private GameObject Light;
+
     // Update is called once per frame
     void Update()
     {
@@ -27,6 +30,16 @@ public class BuffStatusController : MonoBehaviour
                 runes.gameObject.SetActive(false);
 
                 SetIsUsed(true);
+
+                if (MinimapIcon != null)
+                {
+                    MinimapIcon.SetActive(false);
+                }
+
+                if (Light != null)
+                {
+                    Light.SetActive(false);
+                }
             }
         }
     }

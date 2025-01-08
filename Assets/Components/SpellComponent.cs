@@ -4,4 +4,5 @@ public struct SpellComponent : IComponentData
 {
     public int SpellID;
     public SpellType SpellType;
+    public int UpgradeLevel;
 }
