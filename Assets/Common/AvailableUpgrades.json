@@ -5,7 +5,7 @@
             "Name": "Gold Drop",
             "Description": "Increase the amount of gold you get by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "GoldBonusOnKill"
         },
         {
@@ -13,31 +13,15 @@
             "Name": "Fire Damage",
             "Description": "Increase the damage of your fire spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "FireDamage"
-        },
-        {
-            "UpgradeID": 3,
-            "Name": "Water Damage",
-            "Description": "Increase the damage of your water spells by %=chance%%",
-            "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
-            "Type": "WaterDamage"
-        },
-        {
-            "UpgradeID": 4,
-            "Name": "Earth Damage",
-            "Description": "Increase the damage of your earth spells by %=chance%%",
-            "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
-            "Type": "EarthDamage"
         },
         {
             "UpgradeID": 5,
             "Name": "Air Damage",
             "Description": "Increase the damage of your air spells by %=chance%%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 10,
             "Type": "AirDamage"
         },
         {
@@ -45,7 +29,7 @@
             "Name": "Health",
             "Description": "Increase your maximum health by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 100,
             "Type": "MaxHealth"
         },
         {
@@ -53,7 +37,7 @@
             "Name": "Mana",
             "Description": "Increase your maximum mana by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 100,
             "Type": "MaxMana"
         },
         {
@@ -61,7 +45,7 @@
             "Name": "Health Regen",
             "Description": "Increase your health regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "HealthRegen"
         },
         {
@@ -69,7 +53,7 @@
             "Name": "Mana Regen",
             "Description": "Increase your mana regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 1,
+            "UpgradePerLevel": 5,
             "Type": "ManaRegen"
         },
         {
@@ -135,6 +119,64 @@
             "Icon": "UpgradeIcon",
             "UpgradePerLevel": 1,
             "Type": "Manaleech"
+        },
+        {
+            "UpgradeID": 18,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance1"
+        },
+        {
+            "UpgradeID": 19,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance2"
+        },
+        {
+            "UpgradeID": 20,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 1,
+            "Type": "ExploreChance3"
+        },
+        {
+            "UpgradeID": 21,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 10,
+            "Type": "AnySpellCostReduce"
+        },
+        {
+            "UpgradeID": 22,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 5,
+            "Type": "MoveSpeed"
+        },
+        {
+            "UpgradeID": 23,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 5,
+            "Type": "KillAnyDamage"
+        },
+        {
+            "UpgradeID": 24,
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 5,
+            "Type": "ReduceExpPerLevel"
+        },
+        {
+            "UpgradeID": 25,
+            "Name": "Gust",
+            "Description": "Unlocks the Gust spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 5,
+            "Type": "UnlockSpell"
+        },
+        {
+            "UpgradeID": 26,
+            "Name": "Gust",
+            "Description": "Unlocks the WindStorm spell",
+            "Icon": "UpgradeIcon",
+            "UpgradePerLevel": 11,
+            "Type": "UnlockSpell"
         }
     ]
 }

@@ -4,7 +4,8 @@ public enum SpellType
     AreaOfEffect,
     Buff,
     Healing,
-    Passive
+    Passive,
+    ScreenSweep
 }
 
 public enum SpellRange
@@ -20,5 +21,8 @@ public enum SpellTarget
 {
     Self,
     Targeted,
-    MousePosition
+    MousePosition,
+    SelfBoss,
+    RandomAroundTarget,
+    Player
 }

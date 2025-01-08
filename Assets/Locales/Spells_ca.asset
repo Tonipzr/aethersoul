@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Spells_ca
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ca
+  m_SharedData: {fileID: 11400000, guid: e29a638f231023044a87bf897bc85a27, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 173431525376
+    m_Localized: Tall de foc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215131295744
+    m_Localized: "\rUna ferida simple pot marcar l'inici d'un incendi descontrolat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262686314496
+    m_Localized: Escarlina concentra el seu dolor en un full ardent que talla els
+      seus enemics. Aquest tall reflecteix la flama que consumeix els seus records,
+      recordant-li aquella nit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316830584832
+    m_Localized: "Nova de foc\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 348875067392
+    m_Localized: "La calor de la desesperaci\xF3 pot consumir-ho tot al seu voltant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 406731296768
+    m_Localized: "Escarlina provoca una explosi\xF3 de foc que irradia des del seu
+      cor. \xC9s un ress\xF2 de la f\xFAria que va sentir en veure les flames."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 425655996416
+    m_Localized: Tempesta de meteors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444102545408
+    m_Localized: "El cel tamb\xE9 pot plorar foc.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471243886592
+    m_Localized: "Quan Escarlina invoca aquesta tempesta de destrucci\xF3, recorda
+      les hist\xF2ries d'altres somiadors, de mons que van caure sota el pes del
+      seu propi orgull. S\xF3n aquestes mem\xF2ries seves, o d'aquells que la van
+      precedir?\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 485940727808
+    m_Localized: "Explosi\xF3 infernal\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521583923200
+    m_Localized: "Les flames no nom\xE9s destrueixen, tamb\xE9 purifiquen.\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567276670976
+    m_Localized: "\rEscarlina concentra tot el poder en una explosi\xF3 devastadora,
+      capa\xE7 d'arrasar amb tot al seu voltant. Cada vegada que ho fa, una veu a
+      la seva ment li xiuxiueja: \"Ets tu qui controla el foc, o \xE9s el foc qui
+      et controla?\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 597052035072
+    m_Localized: "R\xE0fega"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 627741757440
+    m_Localized: "El vent sempre ha estat el seu refugi... per\xF2, n'hi ha prou?\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 642606370816
+    m_Localized: "Escarlina desferma una r\xE0pida r\xE0fega de vent, un recordatori
+      de qui va ser i de la llibertat que sempre la va definir. Tot i aix\xF2, en
+      el fons de la seva ment, un dubte persisteix: Hauria de continuar abra\xE7ant
+      la brisa?\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896178380050432
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896201742323712
+    m_Localized: "El vent m'abra\xE7a i m'eleva. En la seva f\xFAria, trobo calma;
+      en la seva for\xE7a, la promesa d'un nou comen\xE7ament."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3896222579625984
+    m_Localized: Escarlina invoca tornados que escombren el terreny, netejant tot
+      al seu pas. Per a ella, el vent no destrueix, allibera.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

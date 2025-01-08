@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Lore_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 906a28317f10d8a49a7091b47d426e06, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 275302780928
+    m_Localized: Endless siege
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381263482880
+    m_Localized: The nightmares don't end, you must resist until they do.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399022166016
+    m_Localized: Restrained rage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519302221824
+    m_Localized: Escarlina's fire never goes out, but sometimes it must burn fast.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444886722744320
+    m_Localized: The flames took everything from me... and yet here I am, using them
+      to survive.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444899586674688
+    m_Localized: The fire consumes, destroys, ravages... and now I'm running it.
+      Who is the real monster?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444918473625600
+    m_Localized: I never wanted to feel this heat again... but desperation leaves
+      me no choice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444925251620864
+    m_Localized: Each step brings me closer to finding peace, or at least answers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444932595847168
+    m_Localized: Every step reminds me how much I have lost... and how much I have
+      to gain.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444948664225792
+    m_Localized: One more. Always one more. Never enough.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444955287031808
+    m_Localized: I fight not for glory, but to silence the voices of fire in my mind.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444963935686656
+    m_Localized: For a moment, the cold embraces me, and the flames seem further
+      away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444972911497216
+    m_Localized: The drops try to extinguish the flames, but they burn inside me...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 444985951588352
+    m_Localized: Each fragment holds an echo of pain. I am destined to hear it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445005106974720
+    m_Localized: Another fall, another failure. How much more must I suffer to win?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445012279234560
+    m_Localized: There is no victory here, just a brief respite before the next thing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445017828298752
+    m_Localized: You and I are the same. We are both born of flames, we both burn
+      everything in our path.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445023100538880
+    m_Localized: Nightmares don't end, Escarlina. You are the nightmare.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 445027630387200
+    m_Localized: You're burning inside, Escarlina! I know, because I feel it too.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

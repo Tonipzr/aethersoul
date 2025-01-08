@@ -4,4 +4,6 @@ public struct MapCheckpointEntityComponent : IComponentData
 {
     public UnityEngine.Vector2Int Coordinates;
     public bool IsColliding;
+
+    public bool IsVisited;
 }

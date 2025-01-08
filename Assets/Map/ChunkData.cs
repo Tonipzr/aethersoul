@@ -12,8 +12,11 @@ public class ChunkData
     public Dictionary<Vector2Int, Entity> checkpointEntities = new Dictionary<Vector2Int, Entity>();
     public Dictionary<Vector2Int, bool> buffPositions = new Dictionary<Vector2Int, bool>();
     public Dictionary<Vector2Int, Entity> buffEntities = new Dictionary<Vector2Int, Entity>();
+    public Dictionary<Vector2Int, bool> nightmareFragmentPositions = new Dictionary<Vector2Int, bool>();
+    public Dictionary<Vector2Int, Entity> nightmareFragmentEntities = new Dictionary<Vector2Int, Entity>();
 
     public List<GameObject> instantiatedTrees = new List<GameObject>();
     public List<GameObject> instantiatedCheckpoints = new List<GameObject>();
     public List<GameObject> instantiatedBuffs = new List<GameObject>();
+    public List<GameObject> instantiatedNightmareFragments = new List<GameObject>();
 }

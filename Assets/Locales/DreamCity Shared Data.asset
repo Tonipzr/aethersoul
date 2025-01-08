@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: DreamCity Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: DreamCity
+  m_TableCollectionNameGuidString: 2353d6400a7dde64c9d6f22d3edc5166
+  m_Entries:
+  - m_Id: 16598110208
+    m_Key: GODS_FIRE_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51062706176
+    m_Key: GODS_WATER_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65126207488
+    m_Key: GODS_EARTH_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68632645632
+    m_Key: GODS_AIR_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 242947919872
+    m_Key: GODS_FIRE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 248593453056
+    m_Key: GODS_WATER_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250501861376
+    m_Key: GODS_EARTH_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252443824128
+    m_Key: GODS_AIR_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 588910891008
+    m_Key: GODS_FIRE_LORE_DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633315987456
+    m_Key: GODS_WATER_LORE_DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 659429724160
+    m_Key: GODS_EARTH_LORE_DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692493422592
+    m_Key: GODS_AIR_LORE_DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 955342065664
+    m_Key: GODS_FIRE_LORE_ESCARLINA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 975835435008
+    m_Key: GODS_WATER_LORE_ESCARLINA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 992432295936
+    m_Key: GODS_EARTH_LORE_ESCARLINA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1031573540864
+    m_Key: GODS_AIR_LORE_ESCARLINA
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4534377800979185669
+  references:
+    version: 2
+    RefIds:
+    - rid: 4534377800979185669
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1735388792202

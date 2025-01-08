@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DreamCity_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2353d6400a7dde64c9d6f22d3edc5166, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 16598110208
+    m_Localized: Emberis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51062706176
+    m_Localized: Mareira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65126207488
+    m_Localized: Sylvara
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68632645632
+    m_Localized: Brisalia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 242947919872
+    m_Localized: The eternal flame that heats and consumes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 248593453056
+    m_Localized: Its calm nourishes life; its storm devours the secrets of the world.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250501861376
+    m_Localized: The world stands on its unwavering patience.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252443824128
+    m_Localized: A gentle breeze or an unstoppable hurricane. It can be anything.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 955342065664
+    m_Localized: The consuming fire can set you free, but do you really want to burn?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 975835435008
+    m_Localized: The water flows mercilessly, sweeping away everything in its path.
+      Like that day, when the pain became an uncontrollable tide. Maybe the calm
+      will save me too?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 992432295936
+    m_Localized: The ground that once held me is no longer enough. I want to be strong
+      like the earth, but... how can I find peace when everything I touch burns?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1031573540864
+    m_Localized: The wind has always guided me, but... Should I fly on or fall into
+      the storm that burns inside me?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 588910891008
+    m_Localized: Emberis, the goddess of fire, represents both creation and destruction.
+      Her heart burns with passion but her fury is capable of reducing worlds to
+      ashes. Her followers revere her as the bearer of the spark that ignites life
+      but also fear her ability to lay waste to everything in her path.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633315987456
+    m_Localized: Mareira, the goddess of water, is a constant flux between serenity
+      and chaos. She holds the memories of time in oceans that murmur the forgotten
+      stories of dreamers. Her tears fall as benevolent rains, but her wrath manifests
+      itself in tsunamis that devour civilisations. Mareira teaches her chosen ones
+      that strength lies in adaptability and persistence.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 659429724160
+    m_Localized: Sylvara, the goddess of the earth, is the protector of stability
+      and the keeper of ancient secrets. In her roots lives the wisdom of forgotten
+      ages and in her mountains is forged the strength of dreamers. Sylvara is firm,
+      motherly and stern, guiding those who listen to her with lessons of resilience
+      and endurance. However, her patience is not infinite, those who defy her will
+      face earthquakes and punishments of unrelenting force.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692493422592
+    m_Localized: Brisalia, the goddess of air, is the freest and most capricious.
+      Light as a breeze or devastating as a cyclone, she never stays in one place
+      or one state for long. Her followers learn that change is inevitable and that
+      true freedom is found in letting go, even when fate seems confusing.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

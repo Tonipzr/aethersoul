@@ -1,6 +1,8 @@
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 
 partial struct TimeCounterSystem : ISystem
 {
@@ -38,28 +40,57 @@ partial struct TimeCounterSystem : ISystem
                     entityCommandBuffer.AddComponent<DestroySpellEntityComponent>(entity);
                 }
 
-                if (SystemAPI.HasComponent<WeatherComponent>(entity) && SystemAPI.HasComponent<WeatherEntityComponent>(entity))
-                {
-                    int random = UnityEngine.Random.Range(1, 3);
-
-                    if (random == 1)
-                    {
-                        entityCommandBuffer.SetComponent(entity, new WeatherComponent { Weather = WeatherType.Clear });
-                    }
-                    else
-                    {
-                        entityCommandBuffer.SetComponent(entity, new WeatherComponent { Weather = WeatherType.Rain });
-                    }
-
-                    entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
-                    entityCommandBuffer.AddComponent<TimeCounterComponent>(entity, new TimeCounterComponent { ElapsedTime = 0, EndTime = 120, isInfinite = false });
-
-                }
-
                 if (SystemAPI.HasComponent<SpawnPointComponent>(entity))
                 {
                     entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
                     entityCommandBuffer.AddComponent<DeathComponent>(entity);
+                }
+
+                if (SystemAPI.HasComponent<LoreDelayEntityComponent>(entity))
+                {
+                    entityCommandBuffer.RemoveComponent<TimeCounterComponent>(entity);
+                }
+            }
+
+            if (
+                timeCounter.ValueRW.isInfinite &&
+                SystemAPI.HasComponent<MapEntityComponent>(entity))
+            {
+                if (timeCounter.ValueRW.ElapsedTime >= 300 && timeCounter.ValueRO.ElapsedTime < 600)
+                {
+                    MapEntityGameStateComponent gameState = _entityManager.GetComponentData<MapEntityGameStateComponent>(entity);
+
+                    if (gameState.GamePhase != GamePhase.Phase2)
+                    {
+                        gameState.GamePhase = GamePhase.Phase2;
+                        entityCommandBuffer.SetComponent(entity, gameState);
+                    }
+                }
+
+                if (timeCounter.ValueRW.ElapsedTime >= 450 && timeCounter.ValueRO.ElapsedTime < 600)
+                {
+                    if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                    {
+                        DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.Story,
+                            Data = 0,
+                            Data2 = 14
+                        });
+                    }
+                }
+
+                if (timeCounter.ValueRO.ElapsedTime >= 600)
+                {
+                    MapEntityGameStateComponent gameState = _entityManager.GetComponentData<MapEntityGameStateComponent>(entity);
+
+                    if (gameState.GamePhase != GamePhase.PhaseBoss && gameState.GamePhase != GamePhase.AfterBoss)
+                    {
+                        gameState.GamePhase = GamePhase.PhaseBoss;
+                        entityCommandBuffer.SetComponent(entity, gameState);
+                    }
                 }
             }
         }

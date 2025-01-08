@@ -18,6 +18,7 @@ partial class AudioSystem : SystemBase
         {
             if (audio.ValueRO.IsProcessed)
             {
+                entityCommandBuffer.DestroyEntity(entity);
                 continue;
             }
 
@@ -28,6 +29,7 @@ partial class AudioSystem : SystemBase
         }
 
 
+        // Step sounds
         if (SystemAPI.TryGetSingletonEntity<InputComponent>(out Entity inputEntity))
         {
             InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);

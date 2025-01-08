@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DreamCity_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 2353d6400a7dde64c9d6f22d3edc5166, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 16598110208
+    m_Localized: Emberis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51062706176
+    m_Localized: Mareira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65126207488
+    m_Localized: Sylvara
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68632645632
+    m_Localized: Brisalia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 242947919872
+    m_Localized: La llama eterna que calienta y consume.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 248593453056
+    m_Localized: Su calma nutre la vida; su tempestad devora los secretos del mundo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 250501861376
+    m_Localized: El mundo se erige sobre su paciencia inquebrantable.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252443824128
+    m_Localized: "Una brisa suave o un hurac\xE1n imparable. Puede ser cualquier
+      cosa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 588910891008
+    m_Localized: "Emberis, la diosa del fuego, representa tanto la creaci\xF3n como
+      la destrucci\xF3n. Su coraz\xF3n arde con pasi\xF3n pero su furia es capaz
+      de reducir mundos a cenizas. Sus seguidores la veneran como la portadora de
+      la chispa que enciende la vida pero tambi\xE9n temen su capacidad para arrasar
+      todo a su paso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633315987456
+    m_Localized: "Mareira, la diosa del agua, es un constante flujo entre serenidad
+      y caos. Ella guarda los recuerdos del tiempo en los oc\xE9anos que murmuran
+      las historias olvidadas de los so\xF1adores. Sus l\xE1grimas caen como lluvias
+      ben\xE9volas, pero su ira se manifiesta en tsunamis que devoran civilizaciones.
+      Mareira ense\xF1a a sus elegidos que la fuerza reside en la adaptabilidad y
+      la persistencia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 659429724160
+    m_Localized: "Sylvara, la diosa de la tierra, es la protectora de la estabilidad
+      y la guardiana de los secretos m\xE1s antiguos. En sus ra\xEDces vive la sabidur\xEDa
+      de eras olvidadas y en sus monta\xF1as se forja la fortaleza de los so\xF1adores.
+      Sylvara es firme, maternal y severa, guiando a quienes la escuchan con lecciones
+      de resiliencia y resistencia. Sin embargo, su paciencia no es infinita, aquellos
+      que desaf\xEDan su voluntad enfrentan terremotos y castigos de una fuerza implacable."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692493422592
+    m_Localized: "Brisalia, la diosa del aire, es la m\xE1s libre y caprichosa. Ligera
+      como una brisa o devastadora como un cicl\xF3n, nunca permanece en un solo
+      lugar ni en un solo estado por mucho tiempo. Sus seguidores aprenden que el
+      cambio es inevitable y que la verdadera libertad se encuentra al dejarse llevar,
+      incluso cuando el destino parece confuso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 955342065664
+    m_Localized: "El fuego que consume puede liberarte, pero \xBFrealmente deseas
+      arder?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 975835435008
+    m_Localized: "El agua fluye sin piedad arrastrando todo a su paso. Como aquel
+      d\xEDa, cuando el dolor se convirti\xF3 en una marea incontrolable. \xBFQuiz\xE1
+      la calma tambi\xE9n me salve?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 992432295936
+    m_Localized: "El suelo que una vez me sostuvo ya no es suficiente. Quiero ser
+      fuerte como la tierra, pero... \xBFc\xF3mo encontrar paz cuando todo lo que
+      toco se quema?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1031573540864
+    m_Localized: "El viento siempre me ha guiado, pero... \xBFDeber\xEDa seguir volando
+      o caer hacia la tormenta que arde dentro de m\xED?"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

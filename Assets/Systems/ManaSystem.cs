@@ -22,6 +22,7 @@ partial struct ManaSystem : ISystem
 
         foreach (var (mana, entity) in SystemAPI.Query<RefRW<ManaComponent>>().WithEntityAccess())
         {
+            float extraMana = 0;
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
             {
                 var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
@@ -30,10 +31,12 @@ partial struct ManaSystem : ISystem
                 {
                     if (upgrade.Type == UpgradeType.MaxMana)
                     {
-                        mana.ValueRW.MaxMana = mana.ValueRO.BaseMaxMana + Mathf.RoundToInt(upgrade.Value);
+                        extraMana += upgrade.Value;
                     }
                 }
             }
+
+            mana.ValueRW.MaxMana = mana.ValueRO.BaseMaxMana + Mathf.RoundToInt(extraMana);
         }
 
         entityCommandBuffer.Playback(_entityManager);

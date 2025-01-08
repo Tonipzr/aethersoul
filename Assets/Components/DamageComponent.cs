@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-public struct DamageComponent : IComponentData
+public struct DamageComponent : IBufferElementData
 {
     public int DamageAmount;
 }

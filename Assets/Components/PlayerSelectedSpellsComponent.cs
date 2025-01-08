@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-public struct PlayerSelectedSpellsComponent : IBufferElementData
+public struct SelectedSpellsComponent : IBufferElementData
 {
     public int SpellID;
 }

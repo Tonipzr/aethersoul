@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -20,41 +21,8 @@ partial struct MovementSystem : ISystem
                 case MovementType.PlayerInput:
                     MovePlayer(velocity.ValueRW.Velocity, ref state);
                     break;
-                case MovementType.AIControlled:
-                    if (!_entityManager.HasComponent<DeathComponent>(entity) && !_entityManager.HasComponent<DestroyAfterDelayComponent>(entity))
-                    {
-                        MoveAI(velocity.ValueRW.Velocity, entity, ref state);
-                    }
-                    break;
             }
         }
-    }
-
-    [BurstCompile]
-    private void MoveAI(float velocity, Entity monsterEntity, ref SystemState state)
-    {
-        Entity playerEntity = SystemAPI.GetSingletonEntity<PlayerComponent>();
-        PositionComponent playerPosition = _entityManager.GetComponentData<PositionComponent>(playerEntity);
-
-        LocalTransform monsterTransform = _entityManager.GetComponentData<LocalTransform>(monsterEntity);
-        Vector3 moveVector = Vector3.MoveTowards(monsterTransform.Position, new Vector3(playerPosition.Position.x, playerPosition.Position.y, 0), velocity * Time.deltaTime);
-        monsterTransform.Position = new float3(moveVector.x, moveVector.y, 0);
-        _entityManager.SetComponentData(monsterEntity, monsterTransform);
-
-        PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(monsterEntity);
-        positionComponent.Position = new float2(monsterTransform.Position.x, monsterTransform.Position.y);
-        _entityManager.SetComponentData(monsterEntity, positionComponent);
-
-        DirectionComponent directionComponent = _entityManager.GetComponentData<DirectionComponent>(monsterEntity);
-        if (monsterTransform.Position.x < playerPosition.Position.x)
-        {
-            directionComponent.Direction = Direction.Right;
-        }
-        else
-        {
-            directionComponent.Direction = Direction.Left;
-        }
-        _entityManager.SetComponentData(monsterEntity, directionComponent);
     }
 
     [BurstCompile]
@@ -64,10 +32,13 @@ partial struct MovementSystem : ISystem
         Entity inputEntity = SystemAPI.GetSingletonEntity<InputComponent>();
         InputComponent inputComponent = _entityManager.GetComponentData<InputComponent>(inputEntity);
 
-        if (inputComponent.pressingSpace)
+        float3 previousPosition = float3.zero;
+        float3 newPosition = float3.zero;
+        if (inputComponent.pressingSpace && !state.EntityManager.IsComponentEnabled<DashCooldownComponent>(playerEntity))
         {
             // Update the player's position
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
+            previousPosition = playerTransform.Position;
             playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime * 100, 0);
 
             _entityManager.SetComponentData(playerEntity, playerTransform);
@@ -75,22 +46,42 @@ partial struct MovementSystem : ISystem
             // Update the player's position component
             PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
             positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+            newPosition = playerTransform.Position;
 
             _entityManager.SetComponentData(playerEntity, positionComponent);
+
+            DashCooldownComponent dashCooldownComponent = _entityManager.GetComponentData<DashCooldownComponent>(playerEntity);
+            dashCooldownComponent.CurrentTimeOnCooldown = 0;
+            _entityManager.SetComponentData(playerEntity, dashCooldownComponent);
+            _entityManager.SetComponentEnabled<DashCooldownComponent>(playerEntity, true);
         }
         else
         {
-            // Update the player's position
             LocalTransform playerTransform = _entityManager.GetComponentData<LocalTransform>(playerEntity);
-            playerTransform.Position += new float3(inputComponent.movement * velocity * SystemAPI.Time.DeltaTime, 0);
+            previousPosition = playerTransform.Position;
 
-            _entityManager.SetComponentData(playerEntity, playerTransform);
+            PhysicsVelocity physicsVelocity = _entityManager.GetComponentData<PhysicsVelocity>(playerEntity);
+            float3 movementDirection = new float3(inputComponent.movement.x, inputComponent.movement.y, 0);
 
-            // Update the player's position component
+            physicsVelocity.Linear = movementDirection * velocity;
+
+            _entityManager.SetComponentData(playerEntity, physicsVelocity);
+
             PositionComponent positionComponent = _entityManager.GetComponentData<PositionComponent>(playerEntity);
             positionComponent.Position = new float2(playerTransform.Position.x, playerTransform.Position.y);
+            newPosition = new float3(playerTransform.Position.x + physicsVelocity.Linear.x * SystemAPI.Time.DeltaTime, playerTransform.Position.y + physicsVelocity.Linear.y * SystemAPI.Time.DeltaTime, playerTransform.Position.z);
 
             _entityManager.SetComponentData(playerEntity, positionComponent);
         }
+
+        float distanceMoved = math.distance(previousPosition, newPosition);
+
+        var job = new UpdateMapStatsJob
+        {
+            Type = MapStatsType.CurrentTraveledDistance,
+            ValueFloat = distanceMoved,
+            Incremental = true
+        };
+        job.Schedule();
     }
 }

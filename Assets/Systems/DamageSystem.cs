@@ -20,16 +20,53 @@ partial struct DamageSystem : ISystem
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (damage, health, entity) in SystemAPI.Query<RefRO<DamageComponent>, RefRW<HealthComponent>>().WithEntityAccess())
+        foreach (var (damage, health, entity) in SystemAPI.Query<DynamicBuffer<DamageComponent>, RefRW<HealthComponent>>().WithEntityAccess())
         {
-            entityCommandBuffer.RemoveComponent<DamageComponent>(entity);
+            int totalDamage = 0;
+            for (int i = 0; i < damage.Length; i++)
+            {
+                if (damage[i].DamageAmount <= 0) continue;
+
+                totalDamage += damage[i].DamageAmount;
+
+                health.ValueRW.CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage[i].DamageAmount);
+            }
+
+            damage.Clear();
             entityCommandBuffer.AddComponent(entity, new HealthUpdatedComponent
             {
-                CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage.ValueRO.DamageAmount),
+                CurrentHealth = health.ValueRO.CurrentHealth,
                 MaxHealth = health.ValueRO.MaxHealth,
             });
 
-            health.ValueRW.CurrentHealth = Math.Max(0, health.ValueRO.CurrentHealth - damage.ValueRO.DamageAmount);
+            if (_entityManager.HasComponent<PlayerComponent>(entity) && totalDamage > 0)
+            {
+                var job = new UpdateMapStatsJob
+                {
+                    Type = MapStatsType.CurrentEnemiesKilledNoDamage,
+                    Value = 0,
+                    Incremental = false
+                };
+                job.Schedule();
+            }
+
+            if (_entityManager.HasComponent<BossComponent>(entity) && totalDamage > 0)
+            {
+                if (health.ValueRO.CurrentHealth <= health.ValueRO.MaxHealth / 2)
+                {
+                    if (SystemAPI.TryGetSingletonEntity<LoreEntityComponent>(out Entity loreEntity))
+                    {
+                        DynamicBuffer<LoreEntityComponent> loreEntityComponent = _entityManager.GetBuffer<LoreEntityComponent>(loreEntity);
+
+                        loreEntityComponent.Add(new LoreEntityComponent
+                        {
+                            Type = LoreType.Story,
+                            Data = 1,
+                            Data2 = 15
+                        });
+                    }
+                }
+            }
         }
 
         entityCommandBuffer.Playback(_entityManager);

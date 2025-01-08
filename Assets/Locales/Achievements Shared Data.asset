@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Achievements Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Achievements
+  m_TableCollectionNameGuidString: b2071d6a78b813f47b8259f655f036fd
+  m_Entries:
+  - m_Id: 51851235328
+    m_Key: ACHIEVEMENT_1_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125327052800
+    m_Key: ACHIEVEMENT_2_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 140434935808
+    m_Key: ACHIEVEMENT_3_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143010238464
+    m_Key: ACHIEVEMENT_4_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 145010921472
+    m_Key: ACHIEVEMENT_5_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147191959552
+    m_Key: ACHIEVEMENT_6_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149423329280
+    m_Key: ACHIEVEMENT_7_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 152040574976
+    m_Key: ACHIEVEMENT_8_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 154288721920
+    m_Key: ACHIEVEMENT_9_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 156696252416
+    m_Key: ACHIEVEMENT_10_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1482205368320
+    m_Key: ACHIEVEMENT_1_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515273261056
+    m_Key: ACHIEVEMENT_2_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1521409527808
+    m_Key: ACHIEVEMENT_3_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1523305353216
+    m_Key: ACHIEVEMENT_4_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1525029212160
+    m_Key: ACHIEVEMENT_5_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526530772992
+    m_Key: ACHIEVEMENT_6_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1528007168000
+    m_Key: ACHIEVEMENT_7_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1529525506048
+    m_Key: ACHIEVEMENT_8_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1531450691584
+    m_Key: ACHIEVEMENT_9_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1542691426304
+    m_Key: ACHIEVEMENT_10_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4756958547968
+    m_Key: ACHIEVEMENT_1_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4792098426880
+    m_Key: ACHIEVEMENT_2_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4794841501696
+    m_Key: ACHIEVEMENT_3_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4796766687232
+    m_Key: ACHIEVEMENT_4_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4798310191104
+    m_Key: ACHIEVEMENT_5_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4799706894336
+    m_Key: ACHIEVEMENT_6_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4801128763392
+    m_Key: ACHIEVEMENT_7_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4802663878656
+    m_Key: ACHIEVEMENT_8_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4804215771136
+    m_Key: ACHIEVEMENT_9_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4805725720576
+    m_Key: ACHIEVEMENT_10_REWARD
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4534377800979185678
+  references:
+    version: 2
+    RefIds:
+    - rid: 4534377800979185678
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1735416555698

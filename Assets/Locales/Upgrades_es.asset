@@ -1,0 +1,275 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Upgrades_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: da64c89b172b17a4bb57c8a8087b7fad, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4534377800979185666
+  m_TableData:
+  - m_Id: 44007886848
+    m_Localized: "Ca\xEDda de oro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 184831643648
+    m_Localized: "Da\xF1o de fuego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202523217920
+    m_Localized: "Da\xF1o de agua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 220806189056
+    m_Localized: "Da\xF1o de tierra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231950454784
+    m_Localized: "Da\xF1o de aire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 249444896768
+    m_Localized: Salud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258928218112
+    m_Localized: "Man\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277957775360
+    m_Localized: "Recuperaci\xF3n de salud"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288946851840
+    m_Localized: "Recuperaci\xF3n de man\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 302720946176
+    m_Localized: Restaurar salud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 317929492480
+    m_Localized: "Restaurar man\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326813028352
+    m_Localized: Tajo de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 335990165504
+    m_Localized: Nova de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 343820931072
+    m_Localized: Lluvia de meteoritos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 354877116416
+    m_Localized: "Explosi\xF3n infernal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 364142333952
+    m_Localized: Robo de vida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373789233152
+    m_Localized: "Robo de man\xE1"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 559945027584
+    m_Localized: Aumenta la candidad de oro que recibes en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 584192299008
+    m_Localized: "Aumenta el da\xF1o de tus hechizos de fuego en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 592346025984
+    m_Localized: "Aumenta el da\xF1o de tus hechizos de agua en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 602005508096
+    m_Localized: "Aumenta el da\xF1o de tus hechizos de tierra en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 609618169856
+    m_Localized: "Aumenta el da\xF1o de tus hechizos de aire en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 618690449408
+    m_Localized: "Aumenta tu salud m\xE1xima en {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 628110856192
+    m_Localized: "Aumenta tu man\xE1 m\xE1ximo en {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 635685769216
+    m_Localized: Aumenta la cantidad de salud que recuperas en {0}
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 647173967872
+    m_Localized: "Aumenta la cantidad de man\xE1 que recuperas en {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663485616128
+    m_Localized: Recupera la salud de tu personaje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 674269171712
+    m_Localized: "Recupera el man\xE1 de tu personaje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 682234155008
+    m_Localized: Desbloquea o mejora el hechizo Tajo de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 692216598528
+    m_Localized: Desbloquea o mejora el hechizo Nova de fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699720208384
+    m_Localized: Desbloquea o mejora el hechizo Lluvia de meteoritos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 706296877056
+    m_Localized: "Desbloquea o mejora el hechizo Explosi\xF3n infernal"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 722994401280
+    m_Localized: "Recupera un {0}% del da\xF1o realizado como salud"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 730883887104
+    m_Localized: "Recupera un {0}% del da\xF1o realizado como man\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961219839332352
+    m_Localized: Rastreo de puntos de control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961261979504640
+    m_Localized: Rastreo de mejoras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961276521156608
+    m_Localized: Rastreo de Fragmentos de pesadilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961307454148608
+    m_Localized: "Reducci\xF3n de costes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961318296424448
+    m_Localized: Velocidad de movimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961325653233664
+    m_Localized: "Da\xF1o a enemigos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 961335606317056
+    m_Localized: "Reducci\xF3n de experiencia"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962706338418688
+    m_Localized: Aumenta la probabilidad de encontrar un punto de control en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962726638850048
+    m_Localized: Aumenta la probabilidad de encontrar una mejora en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962742099054592
+    m_Localized: Aumenta la probabilidad de encontrar un Fragmento de pesadilla en
+      {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962757521510400
+    m_Localized: Reduce el coste de tus habilidades en un {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962767357153280
+    m_Localized: Aumenta tu velocidad de movimiento en {0}%
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962779017318400
+    m_Localized: "Aumenta el da\xF1o a todo tipo de enemigos en {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 4534377800979185666
+  - m_Id: 962795215720448
+    m_Localized: Reduce la cantidad de experiencia necesaria para subir nivel en
+      {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2469497052270592
+    m_Localized: "Desbloquea el hechizo R\xE1faga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2469429884686336
+    m_Localized: "R\xE0faga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3907677483896832
+    m_Localized: Desbloquea el hechizo Vendaval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3907641190584320
+    m_Localized: Vendaval
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4534377800979185666
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 373789233152
+        - id: 559945027584
+        - id: 584192299008
+        - id: 592346025984
+        - id: 602005508096
+        - id: 609618169856
+        - id: 618690449408
+        - id: 628110856192
+        - id: 635685769216
+        - id: 706296877056
+        - id: 722994401280
+        - id: 962779017318400
+        - id: 962767357153280
+        - id: 962757521510400
+        - id: 962742099054592
+        - id: 962726638850048
+        - id: 962706338418688
+        - id: 961335606317056
