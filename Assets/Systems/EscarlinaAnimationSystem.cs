@@ -18,7 +18,7 @@ partial struct EscarlinaAnimationSystem : ISystem
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (transform, playerComponent, entity) in SystemAPI.Query<LocalTransform, PlayerComponent>().WithEntityAccess())
+        foreach (var (transform, _, entity) in SystemAPI.Query<LocalTransform, PlayerComponent>().WithEntityAccess())
         {
             if (!_entityManager.HasComponent<VisualsReferenceComponent>(entity))
             {

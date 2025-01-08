@@ -25,6 +25,7 @@ partial struct BossSystem : ISystem
 
         DynamicBuffer<SelectedSpellsComponent> selectedSpellsBuffer = _entityManager.GetBuffer<SelectedSpellsComponent>(bossEntity);
 
+        // Add default spells if none are selected
         if (selectedSpellsBuffer.Length == 0)
         {
             entityCommandBuffer.AppendToBuffer(bossEntity, new SelectedSpellsComponent { SpellID = 7 });

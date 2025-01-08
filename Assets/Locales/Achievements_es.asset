@@ -91,11 +91,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1531450691584
-    m_Localized: "Despeja tu primer Punto de inter\xE9s."
+    m_Localized: Despeja tu primer Fragmento de pesadilla.
     m_Metadata:
       m_Items: []
   - m_Id: 1542691426304
-    m_Localized: "Despeja 3 Puntos de inter\xE9s."
+    m_Localized: Despeja 3 Fragmentos de pesadilla.
     m_Metadata:
       m_Items: []
   - m_Id: 4756958547968

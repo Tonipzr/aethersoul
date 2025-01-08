@@ -32,7 +32,11 @@ partial struct AchievementsSystem : ISystem
         {
             if (achievementComponent.ValueRO.IsProcessed) continue;
 
-            if (UnlockedAchievementsInSave.Contains(achievementComponent.ValueRO.AchievementID))
+            if (
+                UnlockedAchievementsInSave.IsCreated &&
+                UnlockedAchievementsInSave.Length > 0 &&
+                UnlockedAchievementsInSave.Contains(achievementComponent.ValueRO.AchievementID)
+            )
             {
                 achievementComponent.ValueRW.IsCompleted = true;
             }
@@ -51,6 +55,7 @@ partial struct AchievementsSystem : ISystem
 
                 var buffer = _entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
 
+                // Find the right upgrade ID for the reward type
                 var upgradeID = upgradeType switch
                 {
                     UpgradeType.ExploreChance1 => 18,
@@ -64,18 +69,7 @@ partial struct AchievementsSystem : ISystem
                     _ => 0,
                 };
 
-                float upgradeLevel = 0;
-                for (int i = 0; i < buffer.Length; i++)
-                {
-                    if (buffer[i].UpgradeID == upgradeID)
-                    {
-                        upgradeLevel = buffer[i].Value;
-                        buffer.RemoveAt(i);
-                        break;
-                    }
-                }
-
-                buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgradeID, Type = upgradeType, Value = rewardComponent.Value + upgradeLevel });
+                buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgradeID, Type = upgradeType, Value = rewardComponent.Value });
             }
         }
 

@@ -20,6 +20,7 @@ partial struct VelocitySystem : ISystem
 
             if (_entityManager.HasComponent<PlayerComponent>(entity))
             {
+                float extraVelocity = 0;
                 if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
                 {
                     var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
@@ -28,10 +29,12 @@ partial struct VelocitySystem : ISystem
                     {
                         if (upgrade.Type == UpgradeType.MoveSpeed)
                         {
-                            velocityCalc *= 1 + (upgrade.Value / 100);
+                            extraVelocity += upgrade.Value;
                         }
                     }
                 }
+
+                velocityCalc *= 1 + (extraVelocity / 100);
             }
 
             if (_entityManager.HasComponent<MonsterComponent>(entity))

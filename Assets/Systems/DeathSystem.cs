@@ -30,6 +30,7 @@ partial struct DeathSystem : ISystem
                   typeof(MovementTypeComponent),
                   typeof(VisualsReferenceComponent),
                   typeof(HealthComponent),
+                  typeof(DamageComponent),
                   typeof(LevelComponent),
                   typeof(ExperienceAfterDeathComponent),
                   typeof(MonsterStatsComponent),
@@ -76,6 +77,7 @@ partial struct DeathSystem : ISystem
 
         foreach (var (_, entity) in SystemAPI.Query<RefRO<DeathComponent>>().WithEntityAccess())
         {
+            // Monster Death
             if (_entityManager.HasComponent<MonsterComponent>(entity) && !_entityManager.HasComponent<DestroyAfterDelayComponent>(entity))
             {
                 entityCommandBuffer.AddComponent(entity, new DestroyAfterDelayComponent
@@ -343,6 +345,7 @@ partial struct DeathSystem : ISystem
                 }
             }
 
+            // Spawn Point dissapear
             if (SystemAPI.HasComponent<SpawnPointComponent>(entity))
             {
                 entityCommandBuffer.DestroyEntity(entity);
@@ -514,10 +517,32 @@ partial struct DeathSystem : ISystem
                     ExperienceAfterDeath = MonsterExperiencePerLevel.CalculateExperience(spawnComponent.SpawnLevel, spawnComponent.MonsterType)
                 });
 
+                Element monsterElement = spawnComponent.MonsterType switch
+                {
+                    MonsterType.Bat => Element.Air,
+                    MonsterType.Crab => Element.Water,
+                    MonsterType.Golem => Element.Earth,
+                    MonsterType.Rat => Element.Earth,
+                    MonsterType.Slime => Element.Earth,
+                    MonsterType.Boss => Element.Fire,
+                    _ => Element.Air
+                };
+
+                int damage = spawnComponent.MonsterType switch
+                {
+                    MonsterType.Bat => 10,
+                    MonsterType.Crab => 15,
+                    MonsterType.Rat => 20,
+                    MonsterType.Slime => 25,
+                    MonsterType.Golem => 30,
+                    MonsterType.Boss => 40,
+                    _ => 2
+                };
+
                 _entityManager.SetComponentData(monsterEntity, new MonsterStatsComponent
                 {
-                    Damage = 10,
-                    Element = Element.Fire,
+                    Damage = damage * spawnComponent.SpawnLevel * (spawnComponent.Difficulty == MonsterDifficulty.MiniBoss ? 2 : 1),
+                    Element = monsterElement,
                 });
 
                 _entityManager.SetComponentData(monsterEntity, new MonsterComponent

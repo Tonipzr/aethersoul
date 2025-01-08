@@ -48,6 +48,7 @@ partial struct EnemySpawnPositionSystem : ISystem
         LevelComponent playerLevel = state.EntityManager.GetComponentData<LevelComponent>(playerEntity);
         TimeCounterComponent gameTime = state.EntityManager.GetComponentData<TimeCounterComponent>(mapEntity);
 
+        // Spawn Boss if Boss Phase
         if (gameState.GamePhase == GamePhase.PhaseBoss)
         {
             if (!SystemAPI.TryGetSingletonEntity<BossComponent>(out Entity _))
@@ -99,6 +100,7 @@ partial struct EnemySpawnPositionSystem : ISystem
         }
         else
         {
+            // Classic Spawn
             int monsterLevel = GetMonsterLevel(gameTime.ElapsedTime, playerLevel.Level);
             int roundLevel = GetRoundLevel(gameTime.ElapsedTime, playerLevel.Level);
 
@@ -209,6 +211,7 @@ partial struct EnemySpawnPositionSystem : ISystem
 
         float normalizedTime = Mathf.Min(elapsedTime / 60f + (playerLevel * playerLevelFactor), maxElapsedTime);
 
+        // Calculate the monster level based on time and player level
         int monsterLevel = Mathf.Max(Mathf.FloorToInt(baseLevel + normalizedTime * timeFactor), 1);
 
         return monsterLevel;

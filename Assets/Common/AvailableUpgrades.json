@@ -17,22 +17,6 @@
             "Type": "FireDamage"
         },
         {
-            "UpgradeID": 3,
-            "Name": "Water Damage",
-            "Description": "Increase the damage of your water spells by %=chance%%",
-            "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 10,
-            "Type": "WaterDamage"
-        },
-        {
-            "UpgradeID": 4,
-            "Name": "Earth Damage",
-            "Description": "Increase the damage of your earth spells by %=chance%%",
-            "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 10,
-            "Type": "EarthDamage"
-        },
-        {
             "UpgradeID": 5,
             "Name": "Air Damage",
             "Description": "Increase the damage of your air spells by %=chance%%",
@@ -61,7 +45,7 @@
             "Name": "Health Regen",
             "Description": "Increase your health regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 25,
+            "UpgradePerLevel": 5,
             "Type": "HealthRegen"
         },
         {
@@ -69,7 +53,7 @@
             "Name": "Mana Regen",
             "Description": "Increase your mana regeneration by %=chance%",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 25,
+            "UpgradePerLevel": 5,
             "Type": "ManaRegen"
         },
         {
@@ -125,7 +109,7 @@
             "Name": "Lifeleech",
             "Description": "Gain %=chance%% of the damage you deal as health",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 5,
+            "UpgradePerLevel": 1,
             "Type": "Lifeleech"
         },
         {
@@ -133,7 +117,7 @@
             "Name": "Manaleech",
             "Description": "Gain %=chance%% of the damage you deal as mana",
             "Icon": "UpgradeIcon",
-            "UpgradePerLevel": 5,
+            "UpgradePerLevel": 1,
             "Type": "Manaleech"
         },
         {

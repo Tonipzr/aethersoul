@@ -112,7 +112,7 @@ partial struct CollisionSystem : ISystem
 
                 MonsterStatsComponent monsterStatsComponent = _entityManager.GetComponentData<MonsterStatsComponent>(monsterEntity);
 
-                entityCommandBuffer.AddComponent(playerEntity, new DamageComponent
+                entityCommandBuffer.AppendToBuffer(playerEntity, new DamageComponent
                 {
                     DamageAmount = monsterStatsComponent.Damage
                 });
@@ -237,8 +237,8 @@ partial struct CollisionSystem : ISystem
                         };
 
                         int spellIncreaseByCurrentGameBuffsPercentage = 0;
-                        int lifeLeech = 0;
-                        int manaLeech = 0;
+                        float lifeLeech = 0;
+                        float manaLeech = 0;
 
                         if (_entityManager.HasComponent<ActiveUpgradesComponent>(playerEntity))
                         {
@@ -273,31 +273,48 @@ partial struct CollisionSystem : ISystem
 
                                 if (upgrade.Type == UpgradeType.Lifeleech)
                                 {
-                                    lifeLeech = (int)upgrade.Value;
+                                    lifeLeech += upgrade.Value;
                                 }
 
                                 if (upgrade.Type == UpgradeType.Manaleech)
                                 {
-                                    manaLeech = (int)upgrade.Value;
+                                    manaLeech += upgrade.Value;
                                 }
                             }
                         }
 
-                        damage = Mathf.RoundToInt(spellDamage.Damage * (1 + ((float)spellIncreasePercentage / 100)) * (1 + (spellIncreaseByCurrentGameBuffsPercentage / 100)));
+                        damage = Mathf.RoundToInt(spellDamage.Damage * (1 + ((float)spellIncreasePercentage / 100)));
+                        damage = Mathf.RoundToInt(damage * (1 + ((float)spellIncreaseByCurrentGameBuffsPercentage / 100)));
 
-                        if (lifeLeech > 0)
+                        // Debug.Log("Damage: " + damage + " with increase by " + spellIncreaseByCurrentGameBuffsPercentage + " (DC: " + spellIncreasePercentage + ") and leech " + lifeLeech + " | " + manaLeech);
+
+                        if (lifeLeech > 0 && !_entityManager.IsComponentEnabled<HealthLeechCooldownComponent>(playerEntity))
                         {
                             entityCommandBuffer.AddComponent(playerEntity, new HealthRestoreComponent
                             {
                                 HealAmount = Mathf.RoundToInt(damage * (1 + ((float)lifeLeech / 100)))
                             });
+
+                            entityCommandBuffer.SetComponentEnabled<HealthLeechCooldownComponent>(playerEntity, true);
+                            entityCommandBuffer.AddComponent(playerEntity, new HealthLeechCooldownComponent
+                            {
+                                Cooldown = 1,
+                                CurrentTimeOnCooldown = 0
+                            });
                         }
 
-                        if (manaLeech > 0)
+                        if (manaLeech > 0 && !_entityManager.IsComponentEnabled<ManaLeechCooldownComponent>(playerEntity))
                         {
                             entityCommandBuffer.AddComponent(playerEntity, new ManaRestoreComponent
                             {
                                 RestoreAmount = Mathf.RoundToInt(damage * (1 + ((float)manaLeech / 100)))
+                            });
+
+                            entityCommandBuffer.SetComponentEnabled<ManaLeechCooldownComponent>(playerEntity, true);
+                            entityCommandBuffer.AddComponent(playerEntity, new ManaLeechCooldownComponent
+                            {
+                                Cooldown = 1,
+                                CurrentTimeOnCooldown = 0
                             });
                         }
                     }
@@ -329,7 +346,7 @@ partial struct CollisionSystem : ISystem
                     }
                 }
 
-                entityCommandBuffer.AddComponent(targetEntity, new DamageComponent
+                entityCommandBuffer.AppendToBuffer(targetEntity, new DamageComponent
                 {
                     DamageAmount = damage
                 });

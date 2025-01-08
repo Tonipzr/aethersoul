@@ -33,6 +33,7 @@ partial struct AutoAttackSystem : ISystem
             return;
         }
 
+        // Search the AA Spell entity
         Entity spell = Entity.Null;
         foreach (var (spellComponentLookup, spellEntityLookup) in SystemAPI.Query<RefRO<SpellComponent>>().WithEntityAccess())
         {

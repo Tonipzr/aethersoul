@@ -31,8 +31,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider expBar;
     [SerializeField]
-    private Image expFill;
-    [SerializeField]
     private TextMeshProUGUI levelText;
 
     [Space(10)]
@@ -104,8 +102,6 @@ public class UIManager : MonoBehaviour
     [Space(10)]
 
     [Header("Objectives")]
-    [SerializeField]
-    private GameObject objectivesContainer;
     [SerializeField]
     private GameObject objective1;
     [SerializeField]
@@ -330,7 +326,7 @@ public class UIManager : MonoBehaviour
 
         if (levelUpCardPickerContainer.activeSelf)
         {
-            List<UpgradeData> randomUpgrades = selectRandomUpgrades();
+            List<UpgradeData> randomUpgrades = SelectRandomUpgrades();
 
             BuildCard(Card1, randomUpgrades[0]);
             BuildCard(Card2, randomUpgrades[1]);
@@ -365,7 +361,7 @@ public class UIManager : MonoBehaviour
     {
         TextMeshProUGUI cardTextComponents = card.GetComponentInChildren<TextMeshProUGUI>();
         Image[] cardImage = card.GetComponentsInChildren<Image>();
-        cardTextComponents.text = getUpgradeDescription(upgrade);
+        cardTextComponents.text = GetUpgradeDescription(upgrade);
         cardImage[1].sprite = cardUpgradeImage;
 
         EventTrigger eventTrigger = card.GetComponent<EventTrigger>();
@@ -426,18 +422,7 @@ public class UIManager : MonoBehaviour
 
             var buffer = entityManager.GetBuffer<ActiveUpgradesComponent>(playerEntity);
 
-            float upgradeLevel = 0;
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                if (buffer[i].UpgradeID == upgrade.UpgradeID)
-                {
-                    upgradeLevel = buffer[i].Value;
-                    buffer.RemoveAt(i);
-                    break;
-                }
-            }
-
-            buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel + upgradeLevel });
+            buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgrade.UpgradeID, Type = upgradeType, Value = upgrade.UpgradePerLevel });
             AudioManager.Instance.PlayAudio(AudioType.Buff);
         }
 
@@ -451,12 +436,12 @@ public class UIManager : MonoBehaviour
         eventTrigger.triggers.Clear();
     }
 
-    private string getUpgradeDescription(UpgradeData upgrade)
+    private string GetUpgradeDescription(UpgradeData upgrade)
     {
         return LanguageManager.Instance.GetText("UPGRADE_" + upgrade.UpgradeID + "_DESCRIPTION", AvailableLocalizationTables.Upgrades, upgrade.UpgradePerLevel.ToString());
     }
 
-    private List<UpgradeData> selectRandomUpgrades()
+    private List<UpgradeData> SelectRandomUpgrades()
     {
         List<UpgradeData> result = new();
 

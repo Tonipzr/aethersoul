@@ -28,6 +28,7 @@ partial struct HealthSystem : ISystem
                 continue;
             }
 
+            float extraHealth = 0;
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
             {
                 var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
@@ -36,10 +37,12 @@ partial struct HealthSystem : ISystem
                 {
                     if (upgrade.Type == UpgradeType.MaxHealth)
                     {
-                        health.ValueRW.MaxHealth = health.ValueRO.BaseMaxHealth + Mathf.RoundToInt(upgrade.Value);
+                        extraHealth += upgrade.Value;
                     }
                 }
             }
+
+            health.ValueRW.MaxHealth = health.ValueRO.BaseMaxHealth + Mathf.RoundToInt(extraHealth);
         }
 
         entityCommandBuffer.Playback(_entityManager);

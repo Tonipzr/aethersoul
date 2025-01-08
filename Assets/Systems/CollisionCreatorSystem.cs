@@ -1,13 +1,8 @@
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.VisualScripting;
-using UnityEngine;
 
 partial struct CollisionCreatorSystem : ISystem
 {
@@ -24,6 +19,7 @@ partial struct CollisionCreatorSystem : ISystem
         _entityManager = state.EntityManager;
         var entityCommandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
+        // Add collisions to Entities World
         foreach (var (collision, entity) in SystemAPI.Query<RefRW<CollisionComponent>>().WithEntityAccess())
         {
             if (collision.ValueRO.IsCreated)

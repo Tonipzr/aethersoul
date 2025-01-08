@@ -96,7 +96,7 @@ partial struct NightmareFragmentEnemySpawnSystem : ISystem
                         });
                         state.EntityManager.SetComponentData(spawnPointEntity, new SpawnPointComponent
                         {
-                            SpawnLevel = (endlessSiegeFound.Round - 1) * 5 + 5,
+                            SpawnLevel = (endlessSiegeFound.Round - 1) * 2 + 2,
                             Type = SpawnType.NightmareFragment,
                             Parent = entity,
                             MonsterType = monsterType,

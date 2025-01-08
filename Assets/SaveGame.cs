@@ -72,7 +72,7 @@ public class SaveAchievements
 
     public SaveAchievements(int[] achievements = null)
     {
-        this.UnlockedAchievements = achievements;
+        UnlockedAchievements = achievements;
     }
 }
 

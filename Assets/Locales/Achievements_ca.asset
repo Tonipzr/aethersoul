@@ -91,11 +91,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1531450691584
-    m_Localized: "Completa el teu primer Punt d'inter\xE8s."
+    m_Localized: Completa el teu primer Fragment de malson.
     m_Metadata:
       m_Items: []
   - m_Id: 1542691426304
-    m_Localized: "Completa 3 punts d'inter\xE8s.\r"
+    m_Localized: "Completa 3 Fragments de malson.\r"
     m_Metadata:
       m_Items: []
   - m_Id: 4756958547968
@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4792098426880
-    m_Localized: Redueix el cost de totes les teves habilitats en 5%.
+    m_Localized: Redueix el cost de tots els teus encanteris en 5%.
     m_Metadata:
       m_Items: []
   - m_Id: 4794841501696
@@ -123,11 +123,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4801128763392
-    m_Localized: Cap
+    m_Localized: Cap.
     m_Metadata:
       m_Items: []
   - m_Id: 4802663878656
-    m_Localized: "Redueix lexperi\xE8ncia necess\xE0ria per pujar nivell en 5.\r"
+    m_Localized: "Redueix l'experi\xE8ncia necess\xE0ria per pujar nivell en 5.\r"
     m_Metadata:
       m_Items: []
   - m_Id: 4804215771136

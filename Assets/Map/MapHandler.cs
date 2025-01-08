@@ -137,13 +137,13 @@ public class MapHandler : MonoBehaviour
             switch (upgrade.Type)
             {
                 case UpgradeType.ExploreChance1:
-                    increasedPercentages["Checkpoint"] = upgrade.Value;
+                    increasedPercentages["Checkpoint"] += upgrade.Value;
                     break;
                 case UpgradeType.ExploreChance2:
-                    increasedPercentages["Buff"] = upgrade.Value;
+                    increasedPercentages["Buff"] += upgrade.Value;
                     break;
                 case UpgradeType.ExploreChance3:
-                    increasedPercentages["POI"] = upgrade.Value;
+                    increasedPercentages["POI"] += upgrade.Value;
                     break;
             }
         }
@@ -198,6 +198,7 @@ public class MapHandler : MonoBehaviour
 
                 newChunkData.tiles[localPos] = tileToPlace;
 
+                // Create NightmareFragment
                 if (UnityEngine.Random.Range(0f, 75f) < (0.02f * (1 + (increasedPercentages["POI"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(3, 3), true))
                 {
                     GameObject POIInstance = Instantiate(POI, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
@@ -344,6 +345,7 @@ public class MapHandler : MonoBehaviour
                     newChunkData.nightmareFragmentEntities[localPos] = entity;
                 }
 
+                // Create Buff Pillar
                 if (UnityEngine.Random.Range(0f, 75f) < (0.07f * (1 + (increasedPercentages["Buff"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false))
                 {
                     GameObject buffInstance = Instantiate(buff, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
@@ -378,6 +380,7 @@ public class MapHandler : MonoBehaviour
                     BlockArea(new Vector2Int(tileX - 1, tileY), new Vector2Int(2, 2), false);
                 }
 
+                // Create checkpoint
                 if (UnityEngine.Random.Range(0f, 75f) < (0.02f * (1 + (increasedPercentages["Checkpoint"] / 100))) && !IsTileAreaBlocked(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true))
                 {
                     GameObject checkPointInstance = Instantiate(checkPoint, map.CellToWorld(tilePos), Quaternion.identity, world.transform);
@@ -453,6 +456,7 @@ public class MapHandler : MonoBehaviour
                     BlockArea(new Vector2Int(tileX, tileY), new Vector2Int(2, 2), true);
                 }
 
+                // Add tree
                 if (isGrass && UnityEngine.Random.Range(0f, 1f) < 0.07f && !IsTileAreaBlocked(new Vector2Int(tileX - 2, tileY), new Vector2Int(4, 4), false))
                 {
                     GameObject treePrefab = UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree1 : UnityEngine.Random.Range(0f, 1f) < 0.5f ? Tree2 : Tree3;

@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 961276521156608
-    m_Localized: "\rRastreig de punts d'inter\xE8s"
+    m_Localized: "\rRastreig de Fragments de malson"
     m_Metadata:
       m_Items: []
   - m_Id: 961307454148608
@@ -211,7 +211,7 @@ MonoBehaviour:
       m_Items:
       - rid: 4534377800979185664
   - m_Id: 962742099054592
-    m_Localized: "Augmenta la probabilitat de trobar un punt d'inter\xE8s a {0}%"
+    m_Localized: Augmenta la probabilitat de trobar un Fragment de malson a {0}%
     m_Metadata:
       m_Items:
       - rid: 4534377800979185664

@@ -17,7 +17,8 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         AddComponent(playerEntity, new PositionComponent { Position = new float2(0, 0) });
         AddComponent(playerEntity, new MousePositionComponent { Position = new float2(0, 0) });
         AddComponent(playerEntity, new MovementTypeComponent { MovementType = MovementType.PlayerInput });
-        AddComponent(playerEntity, new HealthComponent { MaxHealth = 200, CurrentHealth = 200, BaseMaxHealth = 200 });
+        AddComponent(playerEntity, new HealthComponent { MaxHealth = 100, CurrentHealth = 100, BaseMaxHealth = 100 });
+        AddBuffer<DamageComponent>(playerEntity);
         AddComponent(playerEntity, new ManaComponent { MaxMana = 100, CurrentMana = 100, BaseMaxMana = 100 });
         AddComponent(playerEntity, new LevelComponent { Level = 1 });
         AddComponent(playerEntity, new ExperienceComponent { Experience = 0, ExperienceToNextLevel = ExperienceToNextLevel.CalculateExperienceToNextLevel(1, 0) });
@@ -33,6 +34,10 @@ class PlayerAuthoringBaker : Baker<PlayerAuthoring>
         SetComponentEnabled<InvulnerableStateComponent>(playerEntity, false);
         AddComponent(playerEntity, new DashCooldownComponent { Cooldown = 1, CurrentTimeOnCooldown = 0 });
         SetComponentEnabled<DashCooldownComponent>(playerEntity, false);
+        AddComponent(playerEntity, new ManaLeechCooldownComponent { Cooldown = 1, CurrentTimeOnCooldown = 0 });
+        SetComponentEnabled<ManaLeechCooldownComponent>(playerEntity, false);
+        AddComponent(playerEntity, new HealthLeechCooldownComponent { Cooldown = 1, CurrentTimeOnCooldown = 0 });
+        SetComponentEnabled<HealthLeechCooldownComponent>(playerEntity, false);
         AddComponent(playerEntity, new PlayerComponent());
     }
 }

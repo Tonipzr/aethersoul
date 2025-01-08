@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 961276521156608
-    m_Localized: "Rastreo de puntos de inter\xE9s"
+    m_Localized: Rastreo de Fragmentos de pesadilla
     m_Metadata:
       m_Items: []
   - m_Id: 961307454148608
@@ -206,8 +206,8 @@ MonoBehaviour:
       m_Items:
       - rid: 4534377800979185666
   - m_Id: 962742099054592
-    m_Localized: "Aumenta la probabilidad de encontrar un punto de inter\xE9s en
-      {0}%"
+    m_Localized: Aumenta la probabilidad de encontrar un Fragmento de pesadilla en
+      {0}%
     m_Metadata:
       m_Items:
       - rid: 4534377800979185666

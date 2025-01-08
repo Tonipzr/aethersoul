@@ -120,18 +120,7 @@ partial struct ObjectivesSystem : ISystem
                             _ => 0,
                         };
 
-                        float upgradeLevel = 0;
-                        for (int i = 0; i < buffer.Length; i++)
-                        {
-                            if (buffer[i].UpgradeID == upgradeID)
-                            {
-                                upgradeLevel = buffer[i].Value;
-                                buffer.RemoveAt(i);
-                                break;
-                            }
-                        }
-
-                        buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgradeID, Type = upgradeType, Value = rewardComponent.Value + upgradeLevel });
+                        buffer.Add(new ActiveUpgradesComponent { UpgradeID = upgradeID, Type = upgradeType, Value = rewardComponent.Value });
                     }
                 }
             }

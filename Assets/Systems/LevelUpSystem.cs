@@ -65,6 +65,7 @@ partial class LevelUpSystem : SystemBase
             entityCommandBuffer.AddComponent(entity, new LevelUpdatedComponent { NewLevel = level.ValueRO.Level });
 
             int coins = 5 + (level.ValueRO.Level - 1);
+            float percentageIncrease = 0;
             if (_entityManager.HasComponent<ActiveUpgradesComponent>(entity))
             {
                 var activeUpgrades = _entityManager.GetBuffer<ActiveUpgradesComponent>(entity);
@@ -73,9 +74,11 @@ partial class LevelUpSystem : SystemBase
                 {
                     if (upgrade.Type == UpgradeType.GoldBonusOnKill)
                     {
-                        coins = (int)(coins * (1 + ((float)upgrade.Value / 100)));
+                        percentageIncrease += upgrade.Value;
                     }
                 }
+
+                coins = (int)(coins * (1 + (percentageIncrease / 100)));
             }
             DreamCityStatsGameObject.IncreaseCoins(coins);
 

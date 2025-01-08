@@ -29,6 +29,7 @@ partial struct SpellCastSystem : ISystem
         }
 
 
+        // If player, check InputComponent for spell casting
         if (SystemAPI.TryGetSingletonEntity<PlayerComponent>(out Entity playerEntity))
         {
             DynamicBuffer<SelectedSpellsComponent> selectedSpellsBuffer = _entityManager.GetBuffer<SelectedSpellsComponent>(playerEntity);
@@ -64,6 +65,7 @@ partial struct SpellCastSystem : ISystem
             }
         }
 
+        // If Boss, cast spells whenever possible
         if (SystemAPI.TryGetSingletonEntity<BossComponent>(out Entity bossEntity))
         {
             DynamicBuffer<SelectedSpellsComponent> selectedSpellsBuffer = _entityManager.GetBuffer<SelectedSpellsComponent>(bossEntity);
@@ -189,7 +191,7 @@ partial struct SpellCastSystem : ISystem
             {
                 if (upgrade.Type == UpgradeType.AnySpellCostReduce)
                 {
-                    percentageReduction = upgrade.Value;
+                    percentageReduction += upgrade.Value;
                 }
             }
         }

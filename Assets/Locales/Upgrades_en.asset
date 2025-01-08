@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 961276521156608
-    m_Localized: Tracking points of interest
+    m_Localized: Tracking Nightmare fragments
     m_Metadata:
       m_Items: []
   - m_Id: 961307454148608
@@ -211,7 +211,7 @@ MonoBehaviour:
       m_Items:
       - rid: 4534377800979185665
   - m_Id: 962742099054592
-    m_Localized: Increases the probability of finding a point of interest by {0}%.
+    m_Localized: Increases the probability of finding a Nightmare fragment by  {0}%.
     m_Metadata:
       m_Items:
       - rid: 4534377800979185665
