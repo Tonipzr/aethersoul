@@ -65,7 +65,9 @@ Estas mejoras se perderán si nuestro personaje muere, pero podremos utilizar el
 - La **E** nos permite interactuar.
 - Los botones **1, 2 ,3 y 4** sirven para utilizar las habilidades.
 - El botón **Escape** accede al menú de pausa.
-- En las builds de desarrollo, mediante el botón **P** accedemos al menú de debug que nos permite aprender cualquier habilidad.
+- Mediante el botón **P** accedemos al menú de habilidades.
+
+*Nota*: Todos los controles pueden modificarse desde la interfaz del juego.
 
 ### DreamCity
 La Dream City es el sistema de mejoras persistentes que se ha desarrollado para que no se pierda por completo el progreso de la partida.
@@ -96,6 +98,21 @@ El código está dividido siguiendo la estructura ECS.
 
 ## **Créditos**
 
+1. Nature Landscapes (https://free-game-assets.itch.io/nature-landscapes-free-pixel-art) Con licencia disponible en el siguiente en https://craftpix.net/file-licenses/.
+2. Enemy Galore I (https:/admurin.itch.io/enemy-galore-1). Con licencia disponible en la página del asset. 
+3. Pixel Crystal Animation (https://pekschi.itch.io/crystal-animation). Con licencia disponible en la página del asset. 
+4. Pixel Art Top Down Basic (https://cainos.itch.io/pixel-art-top-down-basic). Con licencia disponible en la página del asset. 
+5. Effect and Bullet (https://bdragon1727.itch.io/free-effect-and-bullet-16x16). Con licencia disponible en la página del asset. 
+6. 750 Effect and FX Pixel All (https://bdragon1727.itch.io/750-effect-and-fx-pixel-all). Con licencia disponible en la página del asset, versión Free. 
+7. Hooded Protagonist (https://penzilla.itch.io/hooded-protagonist). Con licencia disponible en la página del asset. 
+8. Pixel Art GUI Elements (https://mounirtohami.itch.io/pixel-art-gui-elements). Con licencia disponible en la página del asset.
+9. MinimalPixel Font (https://mounirtohami.itch.io/minimalpixel-font). Con licencia disponible en la página del asset.
+10. Silver Font (https://poppyworks.itch.io/silver). Con licencia disponible en la página del asset.
+11. RPG Essentials SFX (https://leohpaz.itch.io/rpg-essentials-sfx-free). Con licencia disponible en la página del asset. 
+12. Fantasy RPG Soundtrack (https://alkakrab.itch.io/fantasy-rpg-soundtrack-music). Con licencia disponible en la página del asset.
+
 ---
 
 ## **Licencia**
+
+[GNU GPLv3](LICENSE)
